@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="572" 
+	height="400" 
+	backgroundAlpha="0.0" 
+	borderColor="#293640"
+	horizontalCenter="0"
+	verticalCenter="0"
+	creationComplete="Iniciar()" 
+	label="CvPrincipal" 
+	backgroundColor="#000000">
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+						
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			//botoes
+			private function showCad():void {
+			Bt_Cad.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Cadastro, true));
+			}
+			private function showImp():void {
+			Bt_Import.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Import, true));
+			}
+			private function showRota():void {
+			Bt_Rotas.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Rota, true));
+			}
+			private function showConsul():void {
+			Bt_Cons.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Consultar, true));
+			} 
+		]]>
+	</mx:Script>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FEFEFE" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0" 
+		cornerRadius="8" 
+		themeColor="#009DFF" 
+		horizontalCenter="-118" 
+		verticalCenter="-73" 
+		id="Bt_Cad" 
+		click="showCad()" 
+		icon="@Embed(source='../img/Cadastro.png')" 
+		textAlign="center" 
+		downIcon="@Embed(source='../img/Cadastro.png')" 
+		overIcon="@Embed(source='../img/Cadastro2.png')"/>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FFFFFF" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0"
+		cornerRadius="8" 
+		horizontalCenter="110" 
+		verticalCenter="40" 
+		id="Bt_Rotas" 
+		click="showRota()" 
+		icon="@Embed(source='../img/Roteirizacao.png')"
+		downIcon="@Embed(source='../img/Roteirizacao.png')" 
+		overIcon="@Embed(source='../img/Roteirizacao2.png')"/>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FFFFFF" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0"
+		cornerRadius="8" 
+		horizontalCenter="-115" 
+		verticalCenter="40" 
+		id="Bt_Cons" 
+		click="showConsul()" 
+		icon="@Embed(source='../img/Consulta.png')"
+		downIcon="@Embed(source='../img/Consulta.png')" 
+		overIcon="@Embed(source='../img/Consulta2.png')"/>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FFFFFF" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0" 
+		cornerRadius="8" 
+		horizontalCenter="106" 
+		verticalCenter="-73" 
+		id="Bt_Import" 
+		click="showImp()" 
+		icon="@Embed(source='../img/Importacao.png')"
+		downIcon="@Embed(source='../img/Importacao.png')" 
+		overIcon="@Embed(source='../img/Importacao2.png')"/>
+</mx:Canvas>

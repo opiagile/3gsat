@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="600" 
+	height="400" 
+ 	color="#000000" 
+ 	backgroundAlpha="0.0">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.effects.Glow;
+	    	import mx.effects.Effect;
+	    	import mx.containers.TitleWindow;
+	    	import flash.events.MouseEvent;
+        
+        public function doZoom(event:MouseEvent):void {
+                if (zoomAll.isPlaying) {
+                    zoomAll.reverse();
+                }
+                else {
+                    // Se este é um evento ROLL_OUT, reproduzir o efeito contrário
+                    // Se este é um evento ROLL_OVER, reproduzir o efeito em frente.
+                    zoomAll.play([event.target], event.type == MouseEvent.ROLL_OUT ? true : false);
+                }
+            }
+        private function smoothImage(ev:Event):void{
+                //imagem definida de modo a suavização da imagem fica melhor quando transformadas.
+                var bmp:Bitmap = ev.target.content as Bitmap;
+                bmp.smoothing = true;
+            }
+            
+		private function get rollOverEffect():Effect {
+           		var effect:Glow = new Glow();
+            	effect.blurXTo = effect.blurYTo = 10;
+            	effect.alphaFrom = 0;
+            	effect.alphaTo = 0.6;
+            	effect.color = 0xFFFFFF;
+            	return effect;
+         		}
+
+        private function get rollOutEffect():Effect {
+	            var effect:Glow = new Glow();
+	            effect.blurXTo = effect.blurYTo = 0;
+	            effect.alphaFrom = 0.6;
+	            effect.alphaTo = 0;
+	            effect.color = 0xFFFFFF;
+            	return effect;
+        		}
+			
+			//Click Iniciar Fechar
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.Bt_contato.enabled=true;
+			}
+			
+			//Acesso Map
+			private function show_Mapa(): void {
+			navigateToURL(new URLRequest('http://maps.google.com/maps?cid=8061525274531793942&ssa=1&ved=0CA8Q6Ac&sa=X&ei=abk9TJG0Ep7uyAWGvezRCA'),'_blank');
+			} 
+		]]>
+	</mx:Script>
+	 <mx:Zoom 
+	 	id="zoomAll" 
+	 	zoomWidthTo="1" 
+	 	zoomHeightTo="1" 
+	 	zoomWidthFrom=".5" 
+	 	zoomHeightFrom=".5"  />
+	 <mx:Glow 
+	    	id="glowImage" 
+	    	duration="1000" 
+	    	alphaFrom="1.0" 
+	    	alphaTo="0.3" 
+	    	blurXFrom="0.0" 
+	    	blurXTo="50.0" 
+	    	blurYFrom="0.0" 
+	    	blurYTo="50.0" 
+	    	color="#8a6911"/>
+	    			  
+    <mx:Glow 
+    		id="unglowImage" 
+    		duration="1000" 
+    		alphaFrom="0.3" 
+    		alphaTo="1.0" 
+    		blurXFrom="50.0" 
+    		blurXTo="0.0" 
+    		blurYFrom="50.0" 
+    		blurYTo="0.0" 
+    		color="#00ff06"/>
+	<mx:Image 
+			x="137.75" 
+			y="55" 
+			source="img/contato.png" 
+			width="330.25" 
+			height="312.8" alpha="0.41"/>
+	<mx:TitleWindow 
+		height="380.8" 
+		layout="absolute" 
+		width="600" 
+		horizontalCenter="0" 
+		verticalCenter="0" 
+		title="ICC Brasil - Contato" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar();" 
+		titleIcon="@Embed(source='../img/l_static.gif')" 
+		borderColor="#000000" 
+		themeColor="#000000" 
+		alpha="1.0" 
+		backgroundAlpha="0.81" 
+		cornerRadius="6" color="#FFFFFF">
+		<mx:Label 
+			x="28.5" 
+			y="25.7" 
+			text="Nome:" color="#3F3F3F"/>
+		<mx:TextInput
+			x="28.5" 
+			y="42.7" 
+			width="222" enabled="false" color="#3F3F3F"/>
+		<mx:Label 
+			x="28.5" 
+			y="71.7" 
+			text="E-mail" color="#3F3F3F"/>
+		<mx:TextInput 
+			x="28.5" 
+			y="88.75" 
+			width="222" enabled="false" color="#3F3F3F"/>
+		<mx:Label 
+			x="28.5" 
+			y="131.75" 
+			text="Assunto:" color="#3F3F3F"/>
+		<mx:ComboBox 
+			x="90.5" 
+			y="129.75" 
+			editable="false" 
+			enabled="false" 
+			id="Cb_Assunto" 
+			dataProvider="Contato" 
+			width="160" 
+			textAlign="center" 
+			>
+		</mx:ComboBox>
+		<mx:Label 
+			x="28.5" 
+			y="158.75" 
+			text="Mensagem" color="#3F3F3F"/>
+		<mx:TextInput 
+			x="28.5" 
+			y="175.75" 
+			width="222" 
+			height="93" 
+			editable="true" 
+			enabled="false" color="#3F3F3F"/>
+		<mx:Button 
+			x="115.5" 
+			y="283.75" 
+			label="Limpar" 
+			styleName="Button2" 
+			themeColor="#111607" enabled="false"/>
+		<mx:Button 
+			x="188.5" 
+			y="283.75" 
+			label="Enviar" 
+			styleName="Button2" 
+			themeColor="#111607" enabled="false"/>
+		<mx:VRule 
+			height="319.94998" 
+			strokeWidth="1" 
+			width="11.266666" 
+			horizontalCenter="-1" 
+			verticalCenter="0"/>
+		<mx:Text 
+			y="207.95" 
+			width="248" 
+			height="63.85" 
+			fontWeight="normal" 
+			textAlign="left" 
+			fontFamily="Verdana" enabled="true" left="322" fontSize="10" color="#454545">
+			<mx:text><![CDATA[Rua Com. Araújo, 143 Conj. 82 - 8º And 
+CEP: 80420-000 - Curitiba - PR
+Ed. Executive Center Everest
+www.iccbrasil.com.br]]></mx:text>
+		</mx:Text>
+		<mx:Image x="383" y="61.75" 
+			source="img/Google_Maps.png"
+			click="show_Mapa()" 
+			themeColor="#5B5F14" 
+			scaleContent="true"
+			scaleX=".5" 
+			scaleY=".5" 
+			rollOver="doZoom(event)" 
+			rollOut="doZoom(event)" 
+			creationComplete="smoothImage(event);"
+			/>
+		<mx:Label x="317" y="279.8" text="(0xx)41 3045-8281" fontWeight="bold" fontSize="24" fontFamily="Arial" alpha="0.63" color="#646464"/>
+		<mx:Label x="322" y="169.75" text="E-mail:" color="#222222"/>
+		<mx:Label 
+			x="370" 
+			y="170" 
+			text="contato@iccbrasil.com.br "
+			color="#0833EA" 
+			fontWeight="bold" 
+			fontSize="12"
+			rollOverEffect="{glowImage}"
+			click="navigateToURL(new URLRequest('mailto:contato@iccbrasil.com.br'),'_self');"
+			/>
+	</mx:TitleWindow>
+
+</mx:Canvas>

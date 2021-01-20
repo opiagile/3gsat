@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	horizontalAlign="center" 
+	verticalAlign="middle" 
+	layout="absolute" 
+	width="690" height="420" 
+	themeColor="#FF4200" 
+	creationComplete="Iniciar()" 
+	title="S3G SERV - Sistema de Serviços" 
+	borderColor="#727272" 
+	showCloseButton="true" 
+	close="Fechar()" 
+	alpha="1.0" 
+	backgroundAlpha="1.0" 
+	backgroundColor="#575757"  
+	color="#FFFFFF" 
+	status="Sair" 
+	titleIcon="@Embed(source='../../IMG/3gsatICO.png')" 
+	enabled="true" 
+	borderStyle="solid" 
+	cornerRadius="15" 
+	fontWeight="bold" 
+ backgroundImage="@Embed(source='../../IMG/fnd_plasma.png')">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.controls.Alert;
+			import form.*
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+			
+			//botoes
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtServico.enabled=true;
+			}
+			
+			
+			
+		]]>
+	</mx:Script>
+	<mx:Fade id="fadeOut" duration="1000" alphaFrom="1.0" alphaTo="0.0"/>
+    <mx:Fade id="fadeIn" duration="1000" alphaFrom="0.0" alphaTo="1.0"/>
+    <mx:TextArea height="35" editable="false" left="10" right="10" bottom="0" alpha="0.0" color="#000000" textAlign="left">
+        <mx:text>Sistema para Agendar compromissos e enviar avisos via email</mx:text>
+    </mx:TextArea>
+    <mx:Label 
+    	text="Boleto 2ª Via (Enviar E-mail)" 
+    	color="#4B5062" 
+    	textAlign="left" 
+    	x="29" 
+    	y="69"/>
+    <mx:Label 
+    	text="Gerar Boletos" 
+    	color="#4B5062" 
+    	textAlign="left" 
+    	x="108" 
+    	y="40"/>
+    <mx:Button x="199" y="67" label="Gerar" color="#000000"/>
+    <mx:Label 
+    	text="Negativar Cliente (SPC)" 
+    	color="#4B5062" 
+    	textAlign="left" 
+    	x="54" 
+    	y="99"/>
+    <mx:Button x="199" y="97" label="Gerar" color="#000000"/>
+    <mx:Button x="265" y="97" label="Retirar" color="#000000"/>
+    <mx:Button x="339" y="97" label="Visualizar" color="#000000"/>
+    <mx:Button x="199" y="37" label="Gerar" color="#000000"/>
+    <mx:Button x="265" y="37" label="Visualizar" color="#000000"/>
+    <mx:Label 
+    	text="Comissão Vendedor" 
+    	color="#4B5062" 
+    	textAlign="left" 
+    	x="74" 
+    	y="128"/>
+    <mx:Button x="199" y="126" label="Gerar" color="#000000"/>
+    <mx:Button x="265" y="126" label="Visualizar" color="#000000"/>
+</mx:TitleWindow>

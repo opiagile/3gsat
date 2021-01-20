@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" 
+	height="100%" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	horizontalCenter="0"
+	verticalCenter="0"
+	backgroundColor="#FCFAFA" 
+	creationComplete="Iniciar()" 
+	borderColor="#FFFFFF">
+<mx:TitleWindow id="Tw_Import" 
+	width="531" height="237"
+	title="S3G.BPLOG - Importar arquivo"
+	showCloseButton="true"
+	close="Fechar()"  
+	borderColor="#2D2E44" 
+	themeColor="#FFFFFF" 
+	cornerRadius="15" 
+	horizontalCenter="0" 
+	verticalCenter="0" 
+	titleIcon="@Embed(source='../img/ICOS3G.png')" 
+	backgroundColor="#E2E2E2" 
+	color="#313E56" 
+	borderStyle="solid" 
+	borderThickness="1" horizontalAlign="center" verticalAlign="middle">
+	
+	<mx:TabNavigator 
+		id="tab" 
+		width="510" 
+		height="143" 
+		horizontalAlign="left"
+		verticalCenter="0"
+		borderColor="#2D2E44" 
+		alpha="1.0" 
+		dropShadowColor="#2D2E44" cornerRadius="4">
+		<mx:VBox 
+			label="Enviar arquivo" 
+			width="95%" 
+			height="95%" 
+			horizontalAlign="center" 
+			verticalAlign="middle">
+			<mx:Form 
+				id="form" 
+				borderColor="#2D2E44" width="97%" height="85%">
+		 		
+				<mx:FormItem 
+					label="Imagem:" 
+					width="436" 
+					id="formitem8" 
+					horizontalAlign="center" 
+					required="true" 
+					height="30">
+					<mx:HBox 
+						width="315" 
+						verticalAlign="middle" 
+						horizontalAlign="center" 
+						height="31">
+						<mx:TextInput 
+							width="183"
+							 backgroundColor="#F0F0F0" 
+							 id="txtImagem"
+							 editable="false" 
+							 enabled="false" 
+							 textAlign="center" 
+							 borderColor="#2D2E44" 
+							 height="26"/>
+						<mx:Button 
+							label="Procurar..." 
+							icon="@Embed(source='../img/btPesquisar.png')" 
+							click="procuraImg()" 
+							width="116" 
+							height="26" 
+							borderColor="#2D2E44"/>
+					</mx:HBox>
+				</mx:FormItem>
+			</mx:Form>
+		</mx:VBox>
+	</mx:TabNavigator>
+	
+	<mx:ControlBar 
+		verticalGap="0" height="58" horizontalAlign="center" verticalAlign="middle">
+		<mx:HBox 
+			width="100%" 
+			verticalAlign="middle" 
+			horizontalAlign="center" height="100%">
+			<mx:Spacer 
+				width="249" 
+				height="100%"/>
+			<mx:Button 
+				id="btLimpar" 
+				label="Limpar" 
+				toolTip="Limpa o Formulario." 
+				icon="@Embed(source='../img/btLimpar.png')" 
+				width="100" 
+				click="setDefault()" 
+				height="30" 
+				borderColor="#2D2E44"/>
+			<mx:Button 
+				id="btSalvar" 
+				label="Enviar / Validar" 
+				icon="@Embed(source='../img/btSalvar.png')" 
+				enabled="true" 
+				click="fazerUpload()" 
+				toolTip="Salva o Formulario de Cadastro."
+				width="142" 
+				height="30" 
+				borderColor="#2D2E44"/>
+		</mx:HBox>
+	</mx:ControlBar>
+
+	</mx:TitleWindow>
+	
+	<mx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			import mx.controls.Alert;
+			import mx.controls.Button;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			import mx.containers.Canvas;
+			import mx.containers.TitleWindow;
+			
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			}
+			
+			private var file:FileReference;
+			
+			private function fechar():void
+			{
+				navigateToURL(new URLRequest("javascript:window.close()"), "_self");
+			}
+			
+			public function setDefault():void
+			{
+				txtNomeImagem.text = "";
+				txtImagem.text     = "";
+				txtNomeImagem.setFocus();
+			}
+			
+			/**
+			* Fun��es para Upload
+			*/
+			public function procuraImg():void 
+			{
+				file = new FileReference();
+				
+				//Ao Selecionar....
+				file.addEventListener(Event.SELECT,
+					function(event:Event):void 
+					{
+						txtImagem.text = file.name;
+					} 
+				);
+				
+				//Enquanto estiver fazendo o Upload..
+				file.addEventListener(ProgressEvent.PROGRESS,
+					function(event:ProgressEvent):void 
+					{
+						var numPerc:Number = Math.round((Number(event.bytesLoaded) / Number(event.bytesTotal)) * 100);
+						Tw_Import.status = "Carregando Arquivo..."+numPerc+"%";
+					} 
+				);
+				
+				//Ao ocorrer um erro.....
+				file.addEventListener(IOErrorEvent.IO_ERROR, 
+					function(event:IOErrorEvent):void 
+					{
+						currentState = "";
+						Alert.show("Ocurreu um erro ao Realizar o Upload \nDetalhes: "+event.text);
+					}
+				);
+				
+				//Ao Terminar o Upload.....
+				file.addEventListener(Event.COMPLETE, 
+					function(event:Event):void 
+					{
+						file = null;
+						Tw_Import.status = "Upload efetuado com sucesso!"
+						setDefault();
+					}
+				);
+				
+				//utilizando filtro para upload somente de imagem 
+				var tipos:FileFilter = new FileFilter("Arquivos *.txt; *.zip; *.xls;"
+													 ,"*.txt; *.zip; *.xls");
+				var tiposArray:Array = new Array(tipos);
+				file.browse(tiposArray);
+			}
+			
+			public function fazerUpload():void 
+			{
+				if (txtImagem.text != "" || file != null)
+				{
+					//aproximadamente 4MB.
+					if (file.size <= 4096000)
+					{
+						//Endereco onde esta o aquivo php, ou java.
+						var request:URLRequest = new URLRequest("FileUpload.java");
+						var vars:URLVariables  = new URLVariables();
+					
+						vars.nomeImagem = txtNomeImagem.text+file.type;
+						request.data = vars;
+						request.method = URLRequestMethod.GET;
+						file.upload(request);	
+					}
+					else
+					{
+						Tw_Import.status = "Selecione Arquivos 5Mb";
+					}
+				}
+				else
+				{
+					Tw_Import.status = "Selecione um arquivo"; 	
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>

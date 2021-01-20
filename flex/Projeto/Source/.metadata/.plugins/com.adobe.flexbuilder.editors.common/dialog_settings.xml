@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.use.iis" value="true"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.webroot" value="C:\Inetpub\wwwroot\weborb30"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.project.parent" value="R:\site\Flex.Net"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.server.type" value="0"/>
+	<item key="com.adobe.flexbuilder.editors.common.use.default.location" value="true"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.apptype" value="true"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.url" value="http://localhost/werborb30"/>
+	<item key="" value="W:\cli"/>
+	<section name="com.adobe.flexbuilder.help.ModulesPropertyPage">
+		<item key="sortColumnIndex" value="0"/>
+		<item key="outputSWFColumnWidth" value="125"/>
+		<item key="optimizeColumnWidth" value="125"/>
+		<item key="moduleColumnWidth" value="225"/>
+		<item key="sortColumnAscending" value="true"/>
+	</section>
+	<section name="com.adobe.flexbuilder.editors.common.ui.pi.PropertiesView">
+		<item key="Style" value="true"/>
+		<item key="ViewOption" value="1"/>
+		<item key="Common" value="true"/>
+		<item key="Layout" value="true"/>
+	</section>
+</section>

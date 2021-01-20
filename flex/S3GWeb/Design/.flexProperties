@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexProperties aspUseIIS="true" flexServerType="32" serverContextRoot="/cli" serverRoot="C:/Inetpub/wwwroot/cli" serverRootURL="http://localhost" toolCompile="true" useServerFlexSDK="false" version="1"/>

@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 05/02/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Tela CRUD para a área de segurança.
+*****************************************************************************************************
+-->
+
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="922" 
+	height="562" 
+	title="Área de Segurança" 
+	color="#D4D4D4" 
+	borderColor="#000000" 
+	xmlns:controls="com.brightPoint.controls.*" 
+	showCloseButton="false"
+	creationComplete="Iniciar()"
+	close="Fechar()"	
+	themeColor="#FFFFFF"
+	backgroundColor="#040404"
+	backgroundDisabledColor="#000000" 
+	borderStyle="none">
+
+	<maps:Map3D 
+		xmlns:maps="com.google.maps.*" 
+		id="map" 
+		mapevent_mapready="onMapReady(event)"  
+        key="ABQIAAAA_TQEyyv5-SbCDgXXQiIZ1xQU5CXJEcoQxTGe0PYRT24IzhECkhSvoHD1DnlPejMusOey1E8-od7CDw" 
+        top="45" 
+        bottom="119" 
+        left="2" 
+        right="2"/> 
+	<mx:Canvas 
+		id="can1" 
+		bottom="150" 
+		right="2" 
+		backgroundColor="#000000" 
+		width="202" 
+		backgroundAlpha="0.85" 
+		top="44">
+		<mx:Button 
+			y="11" 
+			label="Excluir último ponto" 
+			themeColor="#FFFFFF" 
+			id="btn_ExcluiPonto" 
+			click="DeletarUltimoPonto(event);" 
+			enabled="false" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			fillColors="[#FF0000, #FF0000]" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			left="27" 
+			width="152">
+			<mx:toolTip>Exclui o último ponto criado da área de segurança.</mx:toolTip>
+		</mx:Button>
+		<mx:Button 
+			x="27" 
+			y="40" 
+			label="Cancelar ação" 
+			themeColor="#FFFFFF" 
+			id="btn_Cancelar" 
+			click="Cancelar(event);" 
+			enabled="false" 
+			width="152" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			fillColors="[#FF0000, #FF0000]" 
+			color="#D4D4D4" 
+			borderColor="#D4D4D4" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			toolTip="Cancela qualquer ação que esteja sendo realizada."/>
+		<mx:Button 
+			y="115" 
+			label="Limpar" 
+			themeColor="#FFFFFF" 
+			enabled="false" 
+			click="LimparMapa(event);" 
+			id="btn_LimparMapa" 
+			width="75" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			fillColors="[#FF0000, #FF0000]" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			left="104" 
+			toolTip="Limpar o mapa."/>
+		<mx:Button 
+			y="115" 
+			label="Salvar" 
+			id="btn_salvar" 
+			enabled="false"
+			click="SalvarArea();" 
+			themeColor="#FFFFFF" 
+			width="75" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			borderColor="#B7BABC" 
+			fillColors="[#FF0000, #FF0000]" 
+			disabledColor="#D4D4D4" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			left="27" 
+			toolTip="Salvar a área."/>
+		<mx:TextInput 
+			y="82" 
+			width="152" 
+			id="txt_NomeArea" 
+			themeColor="#FF0000" 
+			enabled="false" 
+			cornerRadius="0" 
+			toolTip="Digite um nome para a nova área criada" 
+			borderColor="#000000" 
+			color="#000000" 
+			left="27"/>
+		<mx:Label 
+			x="27" 
+			y="66" 
+			text="Descrição" 
+			color="#D4D4D4" 
+			id="lbl_NomeArea" 
+			enabled="false"/>
+	</mx:Canvas>
+	<mx:VSlider 
+		id="zoomSlider" 
+		height="112" 
+		minimum="3" 
+		maximum="20" 
+		snapInterval="1" 
+		tickInterval="1" 
+		dataTipPrecision="0" 
+		value="3" 
+		showTrackHighlight="true" 
+		borderColor="#FFFFFF" 
+		tickColor="#ff0000" 
+		change="onSliderChanged(event);"  
+		width="26" 
+		themeColor="#FF0000" 
+		alpha="1.0" 
+		x="18" top="89"/>
+	<mx:MenuBar 
+		id="cabecalho" 
+		left="2" 
+		right="2" 
+		top="1" 
+		height="43" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#D4D4D4">
+	</mx:MenuBar>
+	<mx:Button 
+		x="138" 
+		y="12" 
+		label="Alterar Área" 
+		id="btn_AlterarArea" 
+		themeColor="#FFFFFF" 
+		click="AtivaModoEdicao(event);" 
+		width="125" 
+		height="22" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		icon="@Embed(source='../../img/Editar.png')" 
+		textAlign="right" 
+		labelPlacement="right" 
+		toolTip="Alterar área de segurança existente."/>
+	<mx:Button 
+		x="266" 
+		y="12" 
+		label="Associar Veículo" 
+		id="btn_AssociarVeiculo" 
+		themeColor="#FFFFFF" 
+		click="show_AssociaVeiculo()" 
+		width="125" 
+		height="22" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		icon="@Embed(source='../../img/Editar.png')" 
+		textAlign="right" 
+		labelPlacement="right" 
+		toolTip="Alterar área de segurança existente."/>
+	<mx:Label 
+		y="-1" 
+		text="Digite o endereço de referência" 
+		color="#D4D4D4" 
+		id="lbl_endereco" 
+		enabled="true" 
+		x="452"/>
+	<mx:TextInput 
+		y="15" 
+		enabled="true" 
+		id="txt_endereco" 
+		enter="doGeocode(event);"
+		x="452" 
+		borderColor="#B7BABC" 
+		themeColor="#FF0000" 
+		width="224" 
+		color="#000000">
+		<mx:toolTip>O endereço de referência é utilizado como parâmetro de localização da região onde se pretende criar a área de segurança. Ex.: Av Marechal Deodoro, 100 Curitiba</mx:toolTip>
+	</mx:TextInput>
+	<mx:Button 
+		x="684" 
+		y="15" 
+		id="btn_buscar" 
+		themeColor="#FFFFFF" 
+		click="doGeocode(event);" 
+		width="65" 
+		height="22" 
+		labelPlacement="bottom" 
+		label="Buscar" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillColors="[#FF0000, #FF0000]" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF">
+		<mx:toolTip>O endereço de referência é utilizado como parâmetro de localização da região onde se pretende criar a área de segurança. Ex.: Av Marechal Deodoro, 100 Curitiba</mx:toolTip>
+	</mx:Button>
+	<mx:Button 
+		x="10" 
+		label="Criar Área" 
+		id="btn_CriarArea" 
+		themeColor="#FFFFFF" 
+		click="AtivaModoDesenho(event);" 
+		width="125" 
+		height="22" 
+		top="12" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		borderColor="#D4D4D4" 
+		icon="@Embed(source='../../img/area_seguranca.png')" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		toolTip="Clique para criar uma nova área de segurança."/>
+	<mx:Button 
+		label="Fechar" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		width="87" 
+		labelPlacement="left" 
+		id="btn_logout"
+		click="Fechar();"  
+		right="5" 
+		fillColors="[#FF0000, #FF0000]" 
+		textRollOverColor="#FFFFFF" 
+		textSelectedColor="#FFFFFF" 
+		icon="@Embed(source='../img/cancel.png')" 
+		toolTip="Sair da área de criação." 
+		top="13"/>
+	<mx:MenuBar 
+		id="rodape" 
+		left="2" 
+		right="2" 
+		height="31" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" 
+		bottom="1">
+	</mx:MenuBar>
+	<mx:Image 
+		height="32" 
+		source="../img/3GSAT-black.png" 
+		right="1" 
+		bottom="1" 
+		width="79" 
+		scaleContent="true"/>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Image;
+			import mx.effects.AddItemAction;
+			import flash.events.Event; 
+			import flash.events.MouseEvent; 
+			import flash.geom.Point; 
+			import flash.display.DisplayObject; 
+			import flash.display.Sprite; 
+			import flash.display.Shape; 
+			import flash.text.TextField; 
+			import flash.text.TextFieldAutoSize; 
+			import flash.text.TextFormat; 
+		 	import com.google.maps.ProjectionBase; 
+			import com.google.maps.controls.MapTypeControl; 
+			import com.google.maps.controls.PositionControl; 
+			import com.google.maps.controls.ControlPosition; 
+			import com.google.maps.controls.ControlBase; 
+			import com.google.maps.interfaces.IMap; 
+			 		
+			import mx.messaging.channels.StreamingAMFChannel;
+			import flash.utils.setInterval;
+			import flash.utils.setTimeout;
+			import mx.controls.Text;
+			import flash.trace.Trace;
+			import mx.events.ListEvent;
+			import mx.events.ItemClickEvent;
+			import mx.controls.advancedDataGridClasses.SortInfo;
+			import mx.controls.dataGridClasses.DataGridColumn;
+		    import mx.effects.Fade;
+		    import mx.containers.ControlBar;
+		    import mx.effects.WipeUp;
+		    import mx.effects.WipeDown; 	    
+	        import mx.controls.Alert;
+	        import mx.events.ResizeEvent;            
+	        import mx.containers.Form;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.core.Application;          
+	        import mx.containers.TitleWindow;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+		    import mx.effects.WipeRight;
+		    import mx.effects.WipeLeft;
+		    import mx.events.StyleEvent;
+			import mx.controls.Alert;
+            import mx.events.CloseEvent;	    
+	
+		    import com.google.maps.InfoWindowOptions;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.interfaces.IMapType;
+			import com.google.maps.LatLngBounds;
+		    import com.google.maps.controls.ZoomControlOptions;
+		    import com.google.maps.MapOptions;	    
+		    import com.google.maps.controls.PositionControl;
+			import com.google.maps.MapEvent; 
+			import com.google.maps.MapType; 
+	        import com.google.maps.Map;
+	        import com.google.maps.LatLng;
+	        import com.google.maps.MapMouseEvent;
+	        import com.google.maps.MapZoomEvent;
+	        import com.google.maps.overlays.Polygon;
+	        import com.google.maps.overlays.Polyline;
+	        import com.google.maps.controls.ZoomControl;
+	        import com.google.maps.controls.ScaleControl;
+	        import com.google.maps.View;        
+	        import com.google.maps.services.ClientGeocoder;
+	        import com.google.maps.services.GeocodingEvent;
+	        import com.google.maps.services.GeocodingResponse;
+	        import com.google.maps.services.Placemark;
+	
+			import mapeamento.get_veiculos_por_cliente;
+			import mapeamento.get_historico_veiculos;
+			import mapeamento.area_seguranca;
+	
+			import util.ObjetoRemoto;
+		    import util.InfoWindowComp;
+	
+			import flash.text.Font;		
+	        import flash.display.StageDisplayState;
+		    import flash.sampler.NewObjectSample;
+	
+			import form.*;
+	
+		    import adobe.utils.CustomActions;
+		
+		    private var polyLatLngs:Array = new Array();
+	        private var marker:Marker;
+	        private var status_area:int;
+	        private var area: String;
+	        private var editando: Boolean;
+	        private var cercaeletronciaid: int;
+	        private var nome_area: String;
+	        [Bindable]
+	        public var _arrayArea:ArrayCollection;
+
+			private function show_AssociaVeiculo():void 
+			{
+				btn_AssociarVeiculo.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.AssociaVeiculoXArea, true));
+			}	
+
+			private function onMapZoomChanged(event:Event):void 
+			{ 
+				zoomSlider.value = map.getZoom();
+      		}
+      		
+      		private function onSliderChanged(event:Event):void 
+      		{
+      			if (map && map.isLoaded()) 
+      			{
+      				map.setZoom(zoomSlider.value);
+           		}
+      		}
+
+			private function onZoomIn():void
+			{
+				zoomSlider.value = zoomSlider.value + 1;
+				map.setZoom(zoomSlider.value);
+			}
+
+			private function onZoomOut():void
+			{
+				zoomSlider.value = zoomSlider.value - 1;
+				map.setZoom(zoomSlider.value);
+			}
+	        
+	        private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+				
+			    var remoteObj:ObjetoRemoto = new ObjetoRemoto(area_seguranca.NAMESPACE, rstSucesso_ini);                            
+				remoteObj.getOperation("SelecionaArea").send(Application.application._clienteid);  
+				
+			}
+
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+	        private function onMapReady(event:Event):void 
+	        { 	
+	        	map.setCenter(new LatLng(-25.366085, -49.220698), 3, MapType.NORMAL_MAP_TYPE); 
+	        	map.addEventListener(MapEvent.MAP_READY, onMapReady);	        	
+	        } 	        
+	
+	        private function mapClick(e:MapMouseEvent):void 
+	        {
+            	var latlngClicked:LatLng = e.latLng;
+            	polyLatLngs.push(latlngClicked);
+            	DesenhaCoordenadas();
+            }
+            
+            // Ativar o mapa para aceitar a criação do poligono
+            private function AtivaModoDesenho(e:Event):void 
+            {
+                this.map.clearOverlays();
+                polyLatLngs.length = 0;
+                map.addEventListener(MapMouseEvent.CLICK , mapClick);
+                DesenhaCoordenadas();
+                btn_ExcluiPonto.enabled=true;
+                btn_LimparMapa.enabled=true;
+                btn_Cancelar.enabled=true;
+                btn_salvar.enabled = true;
+                lbl_NomeArea.enabled = true;
+                txt_NomeArea.enabled = true;
+                
+                btn_AlterarArea.enabled = false;
+                btn_CriarArea.enabled=false;
+                editando = false;
+            }
+            
+            private function AtivaModoEdicao(e:Event):void 
+            {
+                if (polyLatLngs.length == 0)
+                {
+                	Alert.show("Para alterar é necessário que uma área seja selecionada, verifique a grade abaixo a área desejada e clique sobre ela.","Atenção");					
+                }
+                else
+                {
+	                map.addEventListener(MapMouseEvent.CLICK , mapClick);
+	                DesenhaCoordenadas();
+	                btn_ExcluiPonto.enabled=true;
+	                btn_LimparMapa.enabled=true;
+	                btn_Cancelar.enabled=true;
+	                btn_salvar.enabled = true;
+	                lbl_NomeArea.enabled = true;
+	                txt_NomeArea.enabled = true;
+	                txt_NomeArea.text = nome_area ;
+	                btn_AlterarArea.enabled = false;
+	                btn_CriarArea.enabled=false;
+	                editando = true;
+                }
+            }
+            //Exclui o último ponto criado
+            private function DeletarUltimoPonto(e:Event):void 
+            {
+            	if (polyLatLngs.length > 0) 
+            	{
+            		polyLatLngs.pop();
+                }
+                DesenhaCoordenadas();
+            }
+            
+            private function Cancelar(e:Event):void
+            {
+            	this.map.clearOverlays();
+            	this.map.removeEventListener(MapMouseEvent.CLICK , mapClick);
+                polyLatLngs.length = 0;
+                btn_ExcluiPonto.enabled=false;
+                btn_LimparMapa.enabled=false;
+                btn_Cancelar.enabled=false;
+                btn_salvar.enabled=false;
+                lbl_NomeArea.enabled = false;
+                txt_NomeArea.enabled = false;
+                btn_CriarArea.enabled=true;            
+                btn_AlterarArea.enabled=true;	
+            }
+                        
+            //Função que limpa o mapa de qualquer ponto inserido
+            private function LimparMapa(e:Event):void 
+            {
+            	this.map.clearOverlays();
+                polyLatLngs.length = 0;
+            }
+
+ 			private function DesenhaCoordenadas():void 
+ 			{
+ 				map.clearOverlays();				
+                if (polyLatLngs.length > 1) 
+                {
+                	//Recria o poligono
+                    map.addOverlay(new Polygon(polyLatLngs));
+                }
+                       
+                if (polyLatLngs.length > 0) 
+                {
+                	// captura o último ponto do polyPoints para add o novo marcador
+                    var tmpLatLng:LatLng = polyLatLngs[polyLatLngs.length -1];
+                    map.addOverlay(new Marker(tmpLatLng));
+                }
+            }
+            
+            public function SalvarArea():void
+            {
+					var I: int;
+					
+					area = null;
+					
+					for(I = 0; I < polyLatLngs.length; I++) 
+				    { 
+				    	if (area == null)
+				    		area = polyLatLngs[I]
+				    	else
+				    		area = area + ',' + polyLatLngs[I]
+				    }
+				    				    
+				    var salvar_area: area_seguranca = new area_seguranca;
+				    
+				    salvar_area.nome = txt_NomeArea.text;
+				    salvar_area.area = area;
+					salvar_area.sequencia = 0;
+				    salvar_area.clienteid = Application.application._clienteid;
+				    	
+				    if (editando)
+				    {
+				    	salvar_area.cercaeletronicaid = cercaeletronciaid;
+				    	var remoteObj_insere:ObjetoRemoto = new ObjetoRemoto(area_seguranca.NAMESPACE, rstSucesso);                            
+						remoteObj_insere.getOperation("AlterarArea").send(salvar_area); 				    	
+				    }
+					else
+				    {
+				        var remoteObj_altera:ObjetoRemoto = new ObjetoRemoto(area_seguranca.NAMESPACE, rstSucesso);                            
+						remoteObj_altera.getOperation("SalvarArea").send(salvar_area); 
+				    }
+	                polyLatLngs.length = 0;
+	                btn_ExcluiPonto.enabled = false;
+	                btn_LimparMapa.enabled = false;
+	                btn_Cancelar.enabled = false;
+	                btn_salvar.enabled = false;
+	                lbl_NomeArea.enabled = false;
+	                txt_NomeArea.text = "";
+	                txt_NomeArea.enabled = false;	                
+	                btn_CriarArea.enabled = true;  
+	                btn_AlterarArea.enabled = true;      
+	                
+	                Iniciar();  
+	                map.removeEventListener(MapMouseEvent.CLICK , mapClick);
+            }
+
+			private function rstSucesso_ini(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arrayArea = ArrayCollection(evt.result);	
+			}
+            	
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				Iniciar();
+				map.removeEventListener(MapMouseEvent.CLICK , mapClick);
+				
+				if (evt.result)
+				{
+					if (editando)
+						Alert.show("Área de segurança alterada com sucesso!", "Confirmação");
+					else	
+						Alert.show("Área de segurança salva com sucesso!", "Confirmação");
+				}
+				else
+				{
+					if (editando)
+						Alert.show("Não foi possível salvar a área de segurança!", "Erro");
+					else
+						Alert.show("Não foi possível alterar a área de segurança!", "Erro");	
+				}	
+			}
+
+			private function onGridItemClick( linha : int ):void
+			{		
+				var I: int;
+				var limpa: int;
+				var _formata_area0: String = null;
+				var _formata_area1: String = null;
+				var _formata_area2: String = null;
+				var _formata_area_final: String = null;
+				var Lat: String;
+				var Long: String;
+				var _coord_area0: Array  = new Array();
+				var _coord_area1: Array  = new Array(); 
+				var _coord_area_final: Array  = new Array();
+
+            	this.map.clearOverlays();
+            	polyLatLngs.length = 0;
+				map.removeEventListener(MapMouseEvent.CLICK , mapClick);
+				
+				_coord_area0.length = 0;
+				_coord_area1.length = 0;
+				_coord_area_final.length = 0;
+				
+				cercaeletronciaid = _arrayArea[linha].cercaeletronicaid;
+				nome_area = _arrayArea[linha].nome;
+				
+				_formata_area0  = _arrayArea[linha].area;	
+				_coord_area0 = _formata_area0.split("(");
+				
+				_formata_area1 = _coord_area0.valueOf();
+				_coord_area1 = _formata_area1.split(")");
+				
+				_formata_area2  = _coord_area1.valueOf();
+				_coord_area_final = _formata_area2.split(",");
+				
+				for(I = 0; I < _coord_area_final.length; I++)
+				{ 		
+					if (_coord_area_final[I].valueOf() != "")
+					{
+						Lat  = _coord_area_final[I].valueOf();
+						I++;
+						Long = _coord_area_final[I].valueOf();
+						
+						var Redesenha: LatLng = new LatLng(Number(Lat),Number(Long));
+						polyLatLngs.push(Redesenha);
+						DesenhaCoordenadas();												
+					}					
+				}
+				map.setCenter(Redesenha, 11, MapType.NORMAL_MAP_TYPE); 
+				zoomSlider.value = 11;
+			}
+			
+			private function doGeocode(event:Event):void 
+			{ 
+				var geocoder:ClientGeocoder = new ClientGeocoder(); 
+			    this.map.clearOverlays();      
+			    geocoder.addEventListener( 
+			           	GeocodingEvent.GEOCODING_SUCCESS, 
+			           	function(event:GeocodingEvent):void 
+			           	{ 
+				           	var placemarks:Array = event.response.placemarks; 
+				           	if (placemarks.length > 0) 
+				           	{ 
+				            	map.setCenter(placemarks[0].point, 13, MapType.NORMAL_MAP_TYPE);
+				             	var marker:Marker = new Marker(placemarks[0].point); 				              
+				             	marker.addEventListener(MapMouseEvent.CLICK, function (event:MapMouseEvent):void 
+				             	{ 
+				                	marker.openInfoWindow(new InfoWindowOptions({content: placemarks[0].address})); 
+				             	}); 
+				            	map.addOverlay(marker); 
+				            } 
+			         	}); 
+						geocoder.addEventListener( 
+           					GeocodingEvent.GEOCODING_FAILURE, 
+           					function(event:GeocodingEvent):void 
+           					{ 
+	             				Alert.show("Não foi possível encontrar o endereço","Erro na localização"); 
+	             				trace(event); 
+	             				trace(event.status); 
+           					}); 
+         				geocoder.geocode(txt_endereco.text); 		
+       		} 
+       		
+			public function imgExclui_click():void
+			{								
+				Alert.yesLabel = "Sim";
+				Alert.noLabel = "Não";
+ 
+				if ((gridArea.selectedIndex >= 0) && (gridArea.enabled))
+					Alert.show("Tem certeza que deseja excluir?", "Confirme", 3, null, exclui)
+				else
+					Alert.show("Para excluir é necessário que uma área seja selecionada, verifique a área desejada e clique sobre ela.","Atenção");	
+			}       		
+
+			private function rstExclui(evt:ResultEvent):void
+			{
+				Iniciar();
+				onGridItemClick(0);
+				map.removeEventListener(MapMouseEvent.CLICK , mapClick);	
+			}
+																				
+			private function exclui(evt:CloseEvent):void
+			{
+				if (evt.detail == Alert.YES)
+				{												
+					var remote_exclui:ObjetoRemoto = new ObjetoRemoto(area_seguranca.NAMESPACE, rstExclui);
+					remote_exclui.getOperation("ExcluirArea").send(cercaeletronciaid);
+				}
+			}
+
+		]]>
+	</mx:Script>	
+	<mx:Canvas 
+		height="119" 
+		id="can0" 
+		bottom="32" 
+		right="2" 
+		left="2" 
+		backgroundColor="#000000">
+		<mx:DataGrid 
+			id="gridArea"
+			alternatingItemColors="[#0C0D0C, #000000]" 
+			color="#D4D4D4" 
+			alpha="1.0"			
+			verticalScrollPolicy="on"	
+			sortableColumns="false" 
+			headerColors="#787878" 
+			rowHeight="20" 
+			fontFamily="Arial" 
+			horizontalGridLineColor="#3a3a3a" 
+			verticalGridLineColor="#3a3a3a"
+			itemClick="onGridItemClick(gridArea.selectedIndex)"
+			dataProvider="{_arrayArea}"
+			bottom="0" 
+			top="1" 
+			right="0" 
+			enabled="true" 
+			left="0" 
+			textSelectedColor="#000000" 
+			textRollOverColor="#D4D4D4" 
+			selectionColor="#D4D4D4" 
+			rollOverColor="#FF0000">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Descrição" dataField="nome"/>
+				<mx:DataGridColumn headerText="Situação" dataField="status" width="80"/>
+				<mx:DataGridColumn headerText="Data \ Hora Cadastro" dataField="dataHoraCadastro"/>
+				<mx:DataGridColumn headerText="Data \ Hora Alteração" dataField="dataHoraAlteracao"/>
+				<mx:DataGridColumn width="20">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:VBox horizontalAlign="center">
+								<mx:Image 
+									id="imgExclui" 
+									source="@Embed('../img/del.png')" 
+									height="16" 
+									width="16" 
+									click="outerDocument.imgExclui_click();"
+									toolTip="Excluir a área de segurança "/>	
+							</mx:VBox>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Canvas>	
+	<mx:Button 
+		color="#000000" 
+		icon="@Embed(source='../../img/zoom-in.png')"
+		downIcon="@Embed(source='../../img/zoom-in.png')"
+		overIcon="@Embed(source='../../img/zoom-in1.png')" 
+		height="10" 
+		width="10" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		click="onZoomIn();" left="15" top="65"/>
+	<mx:Button 
+		color="#000000" 
+		icon="@Embed(source='../../img/zoom-out.png')" 
+		downIcon="@Embed(source='../../img/zoom-out.png')"
+		overIcon="@Embed(source='../../img/zoom-out1.png')" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		width="10" 
+		height="10" 
+		click="onZoomOut();" top="210" left="15"/>
+	
+</mx:TitleWindow>

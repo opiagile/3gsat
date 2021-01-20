@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="750" 
+	height="438" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Button;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			import mx.containers.Canvas;
+			import mx.containers.TitleWindow;
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			}
+			
+						
+			//botoes
+			private function showCadcli():void {
+			Bt_CadCli.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Cadastro_Cli, true));
+			}
+			private function showCadVeic():void {
+			Bt_CadVeic.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Cadastro_Veic, true));
+			}
+			private function showCadRota():void {
+			Bt_CadRota.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Cadastro_Rota, true));
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3GBPLOG - Cadastro" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		width="596" 
+		height="390" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#CED2DB" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" 
+ 		themeColor="#FFE400" 
+ 		titleIcon="@Embed(source='../img/ICOS3G.png')">
+		<mx:Button 
+			id="Bt_CadCli" 
+			height="0" 
+			width="0" 
+			borderColor="#000000" 
+			color="#000000" 
+			cornerRadius="8" 
+			horizontalCenter="-186" 
+			verticalCenter="-64"
+			textAlign="center" 
+			alpha="1.0" 
+			labelPlacement="left" 
+			icon="@Embed(source='../img/CadCliente.png')"
+			overIcon="@Embed(source='../../IMG/CadCliente2.png')" 
+			downIcon="@Embed(source='../../IMG/CadCliente.png')"
+			click="showCadcli()"
+			 />
+	</mx:TitleWindow>
+	<mx:Button 
+		id="Bt_CadVeic" 
+		height="0" 
+		width="0" 
+		borderColor="#000000" 
+		color="#000000" 
+		cornerRadius="8" 
+		horizontalCenter="-6" 
+		verticalCenter="-51"
+		textAlign="center" 
+		alpha="1.0" 
+		labelPlacement="left" 
+		icon="@Embed(source='../img/CadVeic.png')"
+		overIcon="@Embed(source='../../IMG/CadVeic2.png')" 
+		downIcon="@Embed(source='../../IMG/CadVeic.png')"
+		click="showCadVeic()"
+		 />
+	<mx:Button 
+		id="Cliente" 
+		height="0" 
+		width="0" 
+		borderColor="#000000" 
+		color="#000000" 
+		cornerRadius="8" 
+		horizontalCenter="184" 
+		verticalCenter="-51"
+		textAlign="center" 
+		alpha="1.0" 
+		labelPlacement="left" 
+		enabled="false" 
+		icon="@Embed(source='../img/CadastroOutros.png')"/>
+	<mx:Button 
+		label="Cliente" 
+		height="0" 
+		width="0" 
+		borderColor="#000000" 
+		color="#000000" 
+		cornerRadius="8" 
+		horizontalCenter="184" 
+		verticalCenter="69"
+		textAlign="center" 
+		alpha="1.0" 
+		labelPlacement="left" 
+		icon="@Embed(source='../img/CadastroOutros.png')"
+		 />
+	<mx:Button 
+		id="Bt_CadRota" 
+		height="0" 
+		width="0" 
+		borderColor="#000000" 
+		color="#000000" 
+		cornerRadius="8" 
+		horizontalCenter="-186" 
+		verticalCenter="69"
+		textAlign="center" 
+		alpha="1.0" 
+		labelPlacement="left" 
+		icon="@Embed(source='../img/CadRota.png')"
+		overIcon="@Embed(source='../../IMG/CadRota2.png')" 
+		downIcon="@Embed(source='../../IMG/CadRota.png')"
+		click="showCadRota()"
+		 />
+	<mx:Button 
+		label="Cliente" 
+		height="0" 
+		width="0" 
+		borderColor="#000000" 
+		color="#000000" 
+		cornerRadius="8" 
+		horizontalCenter="-6" 
+		verticalCenter="69"
+		textAlign="center" 
+		alpha="1.0" 
+		labelPlacement="left" 
+		icon="@Embed(source='../img/CadastroOutros.png')"
+		 />
+</mx:Canvas>

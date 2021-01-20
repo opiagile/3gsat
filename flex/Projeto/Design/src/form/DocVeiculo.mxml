@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="631" height="898">
+<mx:Image right="0" left="0" top="0" bottom="0" source="file:///W|/flex/img/DOCUMENTO-VEICULO-CRLC.png"/>
+	<mx:TextInput x="422" y="74" backgroundAlpha="0.0" width="170" height="29" alpha="0.46" borderColor="#658296" themeColor="#FC3C01"/>
+	<mx:TextInput x="121" y="135" backgroundAlpha="0.0" width="44" height="38" alpha="1.0" borderColor="#436B9C" themeColor="#FC3C01" text="Via" borderStyle="solid"/>
+	<mx:TextInput x="167" y="135" backgroundAlpha="0.0" width="188" height="38" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Renavam" borderStyle="solid"/>		
+	<mx:TextInput x="359" y="135" backgroundAlpha="0.0" width="174" height="38" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="RNTRC" borderStyle="solid"/>	
+	<mx:TextInput x="536" y="135" backgroundAlpha="0.0" width="73" height="38" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Exercício" borderStyle="solid"/>
+	<mx:TextInput x="121" y="185" backgroundAlpha="0.0" width="488" height="114" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Nome / Endereço" borderStyle="solid"/>
+	<mx:TextInput x="120" y="309" backgroundAlpha="0.0" width="294" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="CPF / CNPJ" borderStyle="solid"/>
+	<mx:TextInput x="430" y="309" backgroundAlpha="0.0" width="179" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Placa" borderStyle="solid"/>
+	<mx:TextInput x="120" y="358" backgroundAlpha="0.0" width="163" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Placa Anterior" borderStyle="solid"/>
+	<mx:TextInput x="296" y="358" backgroundAlpha="0.0" width="313" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Chassi" borderStyle="solid"/>
+	<mx:TextInput x="76" y="409" backgroundAlpha="0.0" width="366" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Espécie / Tipo" borderStyle="solid"/>
+	<mx:TextInput x="447" y="409" backgroundAlpha="0.0" width="162" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Combustível" borderStyle="solid"/>
+	<mx:TextInput x="76" y="459" backgroundAlpha="0.0" width="366" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Marca / Modelo" borderStyle="solid"/>
+	<mx:TextInput x="447" y="459" backgroundAlpha="0.0" width="72" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Ano Fab." borderStyle="solid"/>
+	<mx:TextInput x="531" y="459" backgroundAlpha="0.0" width="78" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Ano Mod." borderStyle="solid"/>
+	<mx:TextInput x="76" y="507" backgroundAlpha="0.0" width="221" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Cap / Pot / Cil" borderStyle="solid"/>
+	<mx:TextInput x="311" y="507" backgroundAlpha="0.0" width="119" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Categoria" borderStyle="solid"/>
+	<mx:TextInput x="444" y="507" backgroundAlpha="0.0" width="165" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Cor Predominante" borderStyle="solid"/>
+	<mx:TextInput x="104" y="559" backgroundAlpha="0.0" width="192" height="39" alpha="0.0" themeColor="#FC3C01" borderColor="#436B9C" text="Cota Única"/>
+	<mx:TextInput x="296" y="559" backgroundAlpha="0.0" width="164" height="39" alpha="0.0" themeColor="#FC3C01" borderColor="#436B9C" text="Venc. Cota Única"/>
+	<mx:TextInput x="460.35" y="559" backgroundAlpha="0.0" width="143.90002" height="31" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="1º Venc. Cotas"/>
+	<mx:TextInput x="460.35" y="589" backgroundAlpha="0.0" width="143.9" height="27.300003" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="2º Venc. Cotas"/>
+	<mx:TextInput x="460.35" y="616" backgroundAlpha="0.0" width="143.9" height="27" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="3º Venc. Cotas"/>
+	<mx:TextInput x="104" y="603" backgroundAlpha="0.0" width="134" height="39" alpha="0.0" themeColor="#FC3C01" borderColor="#436B9C" text="Faixa / IPVA"/>
+	<mx:TextInput x="236" y="603" backgroundAlpha="0.0" width="224" height="39" alpha="0.0" themeColor="#FC3C01" borderColor="#436B9C" text="Parcelamento / Cotas"/>
+	<mx:TextInput x="76" y="658" backgroundAlpha="0.0" width="153" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Prêmio Tarifário (R$)" borderStyle="solid"/>
+	<mx:TextInput x="228" y="658" backgroundAlpha="0.0" width="92" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="IOF (R$)" borderStyle="solid"/>
+	<mx:TextInput x="319" y="658" backgroundAlpha="0.0" width="154" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Prêmio Total (R$)" borderStyle="solid"/>
+	<mx:TextInput x="472" y="658" backgroundAlpha="0.0" width="136" height="39" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Data de Pagamento" borderStyle="solid"/>
+	<mx:TextInput x="76" y="705" backgroundAlpha="0.0" width="532" height="87" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Observações" borderStyle="solid"/>
+	<mx:TextInput x="76" y="806" backgroundAlpha="0.0" width="383" height="37" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Local" borderStyle="solid"/>
+	<mx:TextInput x="472" y="806" backgroundAlpha="0.0" width="136" height="37" alpha="1.0" themeColor="#FC3C01" borderColor="#436B9C" text="Data" borderStyle="solid"/>
+	
+	
+</mx:Canvas>

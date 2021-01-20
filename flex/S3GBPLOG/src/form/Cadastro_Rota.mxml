@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="750" 
+	height="438" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF" xmlns:ns1="com.flexpernambuco.controls.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtCaixa.enabled=true;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G.BPLOG - Cadastro de Rotas" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="730" 
+		height="368" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#C0BBCA" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" id="Tw_CadRotas">
+		<mx:TabNavigator 
+		left="11" right="9" top="11" bottom="8">
+			<mx:Canvas 
+				width="100%" 
+				height="100%" 
+				color="#585454"
+				id="Cv_CadRotas" label="Rotas Fixas">
+				<mx:Label 
+					text="Nome da Rota" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="10"/>
+				<ns1:MasterTextInput 
+					x="11" 
+					y="26" 
+					width="321" 
+					color="#FF210A" 
+					borderColor="#3F5B93" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_fantasia" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true" themeColor="#3F5B93"/>
+				<mx:DataGrid x="10" y="113" width="655" height="113" borderColor="#3F5B93">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Cliente" dataField="col1"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Label 
+					x="13" 
+					y="52" 
+					text="Código cliente" color="#4B5062"/>
+				<mx:Label 
+					x="154" 
+					y="52" 
+					text="Nome cliente" color="#4B5062"/>
+				<mx:Button 
+					x="136" 
+					y="77" 
+					width="6" 
+					id="bt_pesquisacli" height="0" themeColor="#3F5B93">
+				<mx:icon>@Embed(source='../img/btPesquisar.png')</mx:icon>
+				</mx:Button>
+				<ns1:MasterTextInput 
+					x="12" 
+					y="68" 
+					width="111" 
+					id="in_codcliente" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="152" 
+					y="68" 
+					width="513" 
+					id="in_nomecliente" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000" 
+					editable="false"
+					nextFocusOnEnter="true" themeColor="#3F5B93"/>
+			</mx:Canvas>
+		</mx:TabNavigator>
+		<mx:Button 
+			x="22" 
+			y="288" 
+			label="Novo" 
+			color="#606068" 
+			id="BT_NovoCadCli" 
+			borderColor="#000000" width="63"/>
+		<mx:Button 
+			x="90" 
+			y="288" 
+			label="Editar" 
+			color="#606068" 
+			id="BT_RegAntCli" 
+			borderColor="#000000" width="63"/>
+		<mx:Button 
+			x="158" 
+			y="288" 
+			label="Excluir" 
+			color="#606068" 
+			id="BT_RegProxCli" 
+			borderColor="#000000" width="63"/>
+		<mx:Button 
+			x="225" 
+			y="288" 
+			label="Salvar" 
+			color="#FF0000" 
+			id="Bt_PesquisarCli" borderColor="#000000" width="63"/>
+	</mx:TitleWindow>
+</mx:Canvas>

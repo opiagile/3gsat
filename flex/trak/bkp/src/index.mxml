@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#F96300, #000000]">
+	<mx:Label text="CLAN TRAK BRASIL" fontSize="60" fontWeight="bold" fontFamily="Verdana" color="#FFFFFF" alpha="1.0" horizontalCenter="-1" verticalCenter="0" width="666.6667" height="114"/>
+	
+</mx:Application>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#2D2D2D, #2D2D2D]" 
+	            borderStyle="none" xmlns:s3g="form.*">
+    <mx:Fade id="fadeIn" alphaFrom="0.0" alphaTo="1.0" /> 
+    <mx:Fade id="fadeOut" alphaFrom="1.0" alphaTo="0.0" /> 	
+
+	<mx:HBox left="7" right="0" top="51" bottom="41" horizontalAlign="center" verticalAlign="middle">
+		<s3g:menu id="telamenu" height="100%" width="25%" visible="true" hideEffect="{fadeOut}" showEffect="{fadeIn}">
+		</s3g:menu>
+	</mx:HBox>	
+    <s3g:login id="telalogin" visible="false" hideEffect="{fadeOut}" showEffect="{fadeIn}"/>
+	<mx:HBox left="7" right="0" top="51" bottom="41" horizontalAlign="center" verticalAlign="middle">	
+		<s3g:mapa id="telamapa" width="75%" height="100%" left="0" right="0" top="0" bottom="0" visible="true" hideEffect="{fadeOut}" showEffect="{fadeIn}">
+		</s3g:mapa>
+	</mx:HBox>
+	<s3g:Top_menu id="telacabecalho" left="0" right="0" top="0" backgroundColor="#0F0F0F" visible="true" hideEffect="{fadeOut}" showEffect="{fadeIn}">
+	</s3g:Top_menu>
+	<s3g:barra_menu id="telarodape" bottom="1" left="0" right="0" visible="true" hideEffect="{fadeOut}" showEffect="{fadeIn}">
+	</s3g:barra_menu>
+	<mx:Style source="Css_cliente.css"/>	
+</mx:Application>

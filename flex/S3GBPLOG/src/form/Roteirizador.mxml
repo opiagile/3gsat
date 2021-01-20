@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ns1="com.flexpernambuco.controls.*"
+	width="926" 
+	height="532" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF"
+	xmlns:controls="com.brightPoint.controls.*" 
+	xmlns:components="components.*"
+	xmlns:tx="util.*"
+	xmlns:filters="flash.filters.*" 	
+	xmlns:maps="com.google.maps.*">
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G.BPLOG - Roteiro" 
+		showCloseButton="true" 
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="906" 
+		height="512" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#A1B9D1" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" 
+ 		styleName="tabNavigatorTab" 
+ 		id="In_cadcli">
+		<mx:Script>
+		<![CDATA[
+		import mx.controls.Alert;
+		import flash.events.Event;
+		import com.google.maps.*;
+		import com.google.maps.overlays.*;
+		import com.google.maps.services.*;
+		import mx.managers.PopUpManager;
+		import mx.containers.Form;
+		import mx.core.Application;
+		import mx.controls.Alert;
+		import mx.rpc.events.ResultEvent;
+		import form.*;
+		import mx.rpc.events.ResultEvent;
+		
+		private var dir:Directions;
+		private var turnCounter:uint = 0;
+		
+		private function Fechar()
+		{
+			PopUpManager.removePopUp(this);
+		}
+		
+		private function onMapReady(event:MapEvent):void {
+		 
+		  PopUpManager.centerPopUp(this);
+		 		
+		  map.setCenter(new LatLng(-25.366090,-49.220755), 8, MapType.NORMAL_MAP_TYPE);
+		  dir = new Directions();
+		  dir.addEventListener(DirectionsEvent.DIRECTIONS_SUCCESS, onDirLoad);
+		  dir.addEventListener(DirectionsEvent.DIRECTIONS_FAILURE, onDirFail);
+		  processDirections(event);
+		}
+		
+		private function processDirections(event:Event):void {
+		  //dir.load("from: " + from.text + " to: " + to.text);
+		  dir.loadFromWaypoints(['RUA OLIVEIRA VIANA, 50 HAUER CURITIBA',
+								 'AVENIDA MARECHAL FLORIANO PEIXOTO, 100 CENTRO CURITIBA',
+								 'AVENIDA ANITA GARIBALDI, 1204 AHU CURITIBA']);
+		  // Reset turnCounter to zero for new directions
+		  //turnCounter = 0;
+		  //step.htmlText = "Start at " + from.text;
+		}
+		
+		private function onDirFail(event:DirectionsEvent):void {
+		  Alert.show("Status: " + event.directions.status);
+		}
+		
+		private function onDirLoad(event:DirectionsEvent):void {
+		  var dir:Directions = event.directions;       
+		  var startMarker:Marker;
+		  var endMarker:Marker;
+		        
+		  map.clearOverlays();
+		  map.addOverlay(dir.createPolyline());
+		  map.setZoom(map.getBoundsZoomLevel(dir.bounds));
+		  map.setCenter(dir.bounds.getCenter());
+		  /*
+		  startMarker = new Marker(dir.getRoute(0).startGeocode.point, new MarkerOptions({fillStyle: {color:Color.GREEN}}));
+		  endMarker = new Marker(dir.getRoute(0).endGeocode.point, new MarkerOptions({fillStyle: {color:Color.BLUE}}));
+		  map.addOverlay(startMarker);
+		  map.addOverlay(endMarker);*/
+		}
+		
+		private function processTurnByTurn():void  {
+/*		  
+		  var stepText:String;
+		  var stepMarker:Marker;
+		  turnCounter++;
+		  
+		  if (turnCounter <= dir.getRoute(0).numSteps) {
+		    stepText = dir.getRoute(0).getStep(turnCounter-1).descriptionHtml;
+		    stepMarker = new Marker(dir.getRoute(0).getStep(turnCounter-1).latLng, new MarkerOptions({label: turnCounter.toString()}));
+		    map.addOverlay(stepMarker);
+		    step.htmlText = "Step " + turnCounter + ": " + stepText;  
+		  } else {
+		    getTurnByTurnDirections.enabled = false;
+		    //step.htmlText = "Arrive at " + to.text + " : " + dir.getRoute(0).summaryHtml;
+		  }  */
+		}
+		]]>
+		</mx:Script>
+		<mx:MenuBar 
+			id="cabecalho" 
+			left="2" 
+			right="2" 
+			top="3" 
+			fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+			fillColors="[#A1B9D1, #000000, #A1B9D1, #2C2929]" 
+			borderColor="#D4D4D4" 
+			height="44">
+		</mx:MenuBar>
+		<mx:Image 
+			height="32" 
+			source="../img/3GSAT-black.png" 
+			right="1" 
+			bottom="1" 
+			width="79" scaleContent="true"/>
+		<mx:Button 
+			label="Sair" 
+			color="#D4D4D4" 
+			borderColor="#D4D4D4" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			width="70" 
+			labelPlacement="left" 
+			id="btn_logout"
+			click="Fechar()"  
+			right="10" 
+			fillColors="[#FF0000, #FF0000]" 
+			textRollOverColor="#FFFFFF" 
+			textSelectedColor="#FFFFFF" 
+			icon="@Embed(source='../img/cancel.png')" 
+			toolTip="Desconectar do sistema." 
+			top="14"/>
+		<maps:Map3D 
+			id="map" 
+			mapevent_mapready="onMapReady(event);"   
+			key="ABQIAAAA_TQEyyv5-SbCDgXXQiIZ1xQUL8oYsp-LEqmgLCEfC9cju6JvfRSZeBCsYJ6iuAve_Qaafynqa46WZw"
+		    top="48" 
+		    bottom="10" 
+		    left="3" 
+		    right="3" 
+		    themeColor="#000000"/>
+		<mx:VSlider 
+			id="zoomSlider" 
+			height="112" 
+			minimum="3" 
+			maximum="20" 
+			snapInterval="1" 
+			tickInterval="1" 
+			dataTipPrecision="0" 
+			value="16" 
+			showTrackHighlight="true" 
+			borderColor="#FFFFFF" 
+			tickColor="#ff0000"  
+			width="26" 
+			themeColor="#FF0000" 
+			alpha="1.0" 
+			x="16" 
+			top="89" 
+			toolTip="Controle de zoom do mapa."/>
+		<mx:MenuBar 
+			id="cabecalho0" 
+			left="2" 
+			right="2" 
+			height="31" 
+			fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+			fillColors="[#1A1717, #A1B9D1, #2C2929, #A1B9D1]" 
+			borderColor="#D4D4D4" 
+			bottom="1">
+		</mx:MenuBar>
+		<mx:ProgressBar 
+			labelPlacement="center" 
+			height="21" 
+			id="ProgressBar" 
+			indeterminate="true" 
+			color="#D4D4D4" 
+			themeColor="#390000" 
+			enabled="true" 
+			fontSize="10" 
+			fontFamily="Verdana" 
+			alpha="1.0" 
+			borderColor="#FFFFFF" 
+			label=" "
+			visible="false" 
+			left="3" 
+			right="3" 
+			bottom="201"/>		
+	</mx:TitleWindow>
+</mx:Canvas>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	backgroundColor="0x000000" 
+	creationComplete="initApp()" 
+	xmlns:ns1="*">
+    <mx:Script source="MainCode.as"/>
+    <mx:Label 
+    	text="INOVA" 
+    	color="#FFFFFF" 
+    	fontWeight="bold" 
+    	fontFamily="Verdana" 
+    	fontSize="25"/>
+</mx:Application>

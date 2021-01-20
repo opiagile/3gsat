@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright 2008 Google Inc. 
+ Licensed under the Apache License, Version 2.0:
+    http://www.apache.org/licenses/LICENSE-2.0
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:maps="com.google.maps.*" layout="absolute" width="100%" height="100%" viewSourceURL="srcview/index.html">
+  <mx:Panel title="Criando vários marcadores" width="100%" height="100%">
+  <maps:Map 
+    id="map" 
+    key="ABQIAAAA60Yi54TYljE0FQ-0E4d0nBQbQQtspPKytngpyCGhFiH97vLYsRT_WtomBMsPuZncSsVrLzD7ulJ7wQ" 
+    mapevent_mapready="onMapReady(event)"
+    width="100%" height="100%"/>
+ </mx:Panel>
+ <mx:Script>
+    <![CDATA[
+      import com.google.maps.LatLng;
+      import com.google.maps.LatLngBounds;
+      import com.google.maps.Map;
+      import com.google.maps.MapEvent;
+      import com.google.maps.MapMouseEvent;
+      import com.google.maps.MapZoomEvent;
+      import com.google.maps.MapType;
+      import com.google.maps.services.ClientGeocoder;
+      import com.google.maps.services.GeocodingEvent;
+      import com.google.maps.overlays.Marker;
+      import com.google.maps.overlays.MarkerOptions;
+      import com.google.maps.InfoWindowOptions;
+      import mx.controls.Alert;
+      import com.google.maps.controls.ZoomControl;
+
+      private var marker:Marker;
+      private var _icons:Array = ["green-dot.png", "purple-dot.png"]; 
+
+      private function onMapReady(event:Event):void {
+        map.enableScrollWheelZoom();
+        map.enableContinuousZoom();
+        map.setCenter(new LatLng(-25.366085, - 49.220698),
+                      14,
+                      MapType.NORMAL_MAP_TYPE);
+        map.addControl(new ZoomControl());        
+        
+        var latlng:LatLng = new LatLng(-25.364696619361925, -49.22269821166992);          
+        CriaMarcador(-25.364696619361925, -49.22269821166992, 1, "Teste");
+        var latlng1:LatLng = new LatLng(-25.366577351303473, -49.22475814819336);                    
+        CriaMarcador(-25.366577351303473, -49.22475814819336, 1, "Teste");
+        var latlng2:LatLng = new LatLng(-25.368089671221348, -49.22353506088257);          
+        CriaMarcador(-25.368089671221348, -49.22353506088257, 1, "Teste");
+        var latlng3:LatLng = new LatLng(-25.368496831042392, -49.21952247619629);          
+        CriaMarcador(-25.368496831042392, -49.21952247619629, 1, "Teste");
+        var latlng4:LatLng = new LatLng(-25.367449845873594, -49.21632528305054);
+        CriaMarcador(-25.367449845873594, -49.21632528305054, 1, "Teste");
+        var latlng5:LatLng = new LatLng(-25.36508440153891, -49.21608924865723);
+        CriaMarcador(-25.36508440153891, -49.21608924865723, 1, "Teste");
+      }
+
+      public function CriaMarcador(lat:Number, lon:Number, iconIndex:int, html1:String): void {
+        var request:URLRequest;
+        request = new URLRequest("http://gmaps-samples-flash.googlecode.com/svn/trunk/images/" + _icons[iconIndex]);
+        var Imagem:Loader = new Loader();
+        Imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, function(event:Event):void {
+          var options:MarkerOptions = new MarkerOptions({hasShadow: true, icon: Imagem, label: "hi"});
+          var ponto:LatLng = new LatLng(lat, lon);
+          var markerLocal:Marker = new Marker(ponto, options);
+          markerLocal.addEventListener(MapMouseEvent.CLICK, function(e:MapMouseEvent):void {
+            markerLocal.openInfoWindow(new InfoWindowOptions({title: "Cabeçalho", content: "Informações sobre o veículo", hasShadow: true, pointOffset: new Point(15,12)}));
+            request = new URLRequest("http://gmaps-samples-flash.googlecode.com/svn/trunk/images/blue-dot.png");
+          });
+          map.addOverlay(markerLocal);
+         });
+        Imagem.load(request);  
+     } 
+    ]]>
+  </mx:Script>
+</mx:Application>

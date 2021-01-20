@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ns1="com.flexpernambuco.controls.*"
+	width="750" 
+	height="440" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF"
+	>
+	<mx:Script>
+		<![CDATA[
+			import classes.cliente;
+			
+			import util.ObjetoRemoto;
+			
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			
+			import flash.events.Event;
+			import mx.events.ListEvent;
+			import mx.events.CloseEvent;
+			import mx.events.ItemClickEvent;
+			
+			import form.*;
+
+			[Bindable]
+			public var busca_cliente: cliente = new cliente;			
+			
+			private var editando: Boolean = false;	
+			private var SalvarNovo: Boolean = true;
+		    private var TipoPessoa:Array = new Array(
+		        										{data:0, label:"Jurídica"},
+		        										{data:1, label:"Física"}
+		        									);									
+		    private var UF:Array = new Array(
+		        								{data:"AC", label:"AC"},
+		        								{data:"AL", label:"AL"},
+		        								{data:"AP", label:"AP"},
+		        								{data:"AM", label:"AM"},
+		        								{data:"BA", label:"BA"},
+		        								{data:"CE", label:"CE"},
+		        								{data:"DF", label:"DF"},
+		        								{data:"ES", label:"ES"},
+		        								{data:"GO", label:"GO"},
+		        								{data:"MA", label:"MA"},
+		        								{data:"MT", label:"MT"},
+		        								{data:"MS", label:"MS"},
+		        								{data:"MG", label:"MG"},
+		        								{data:"PA", label:"PA"},
+		        								{data:"PB", label:"PB"},
+		        								{data:"PR", label:"PR"},
+		        								{data:"PE", label:"PE"},
+		        								{data:"PI", label:"PI"},
+		        								{data:"RJ", label:"RJ"},
+		        								{data:"RN", label:"RN"},
+		        								{data:"RS", label:"RS"},
+		        								{data:"RO", label:"RO"},
+		        								{data:"RR", label:"RR"},
+		        								{data:"SC", label:"SC"},
+		        								{data:"SP", label:"SP"},
+		        								{data:"SE", label:"SE"},
+		        								{data:"TO", label:"TO"}
+		        							);									
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+				In_bairro.text = "";
+				In_cnpj.text = "";
+				In_codcli.text = "";
+				In_email.text = "";
+				In_endereco.text = "";
+				In_fantasia.text = "";
+				In_inscricaoestadual.text = "";
+				In_nomecli.text = "";
+				In_numero.text = "";				
+				In_observacao.text = "";
+				In_tel1.text = "";
+				In_tel2.text = "";
+				Cb_natureza.text = "";
+				In_cidade.text = "";
+				Cb_uf.text = "";
+				In_complemento.text = "";
+				
+				In_codcli.setFocus();
+				
+				Bt_salvarcli.enabled = false;
+				Bt_novocli.enabled = true;
+				Bt_editcli.enabled = false;
+				Bt_excluicli.enabled = false;
+				Bt_cancela.enabled = false;
+				
+				In_bairro.editable = false;									
+				In_cidade.editable = false;
+				Cb_uf.editable = false;
+				Cb_natureza.editable = false;
+				In_cnpj.editable = false;
+				In_codcli.editable = false;
+				In_complemento.editable = false;
+				In_email.editable = false;
+				In_endereco.editable = false;
+				In_fantasia.editable = false;
+				In_inscricaoestadual.editable = false;
+				In_nomecli.editable = false;
+				In_numero.editable = false;
+				In_observacao.editable = false;
+				In_tel1.editable = false;
+				In_tel2.editable = false;				
+			}
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+				Application.application.BtCaixa.enabled=true;
+			}
+			
+			private function contachar():void
+			{
+				var total:int = (250 - (In_observacao.length));
+				In_ContChar.text = "(Caracteres restantes: " + total + ")";
+			}
+			
+			private function alteratipo():void
+			{
+				if (Cb_natureza.selectedIndex == 0)
+				{
+					lb_tipo.text = "CNPJ";
+					In_cnpj.inputMask = "99.999.999/9999-99";
+					In_inscricaoestadual.enabled = true;
+					lb_inscricaoestadual.enabled = true;
+				}
+				else
+				{
+					lb_tipo.text = "CPF";
+					In_cnpj.inputMask = "999.999.999-99";
+					In_inscricaoestadual.enabled = false;
+					lb_inscricaoestadual.enabled = false;						
+				}
+			}
+						
+			private function cancela():void
+			{
+				In_bairro.text = "";
+				In_cnpj.text = "";
+				In_codcli.text = "";
+				In_email.text = "";
+				In_endereco.text = "";
+				In_fantasia.text = "";
+				In_inscricaoestadual.text = "";
+				In_nomecli.text = "";
+				In_numero.text = "";
+				In_observacao.text = "";
+				In_tel1.text = "";
+				In_tel2.text = "";
+				Cb_natureza.text = "";
+				In_cidade.text = "";
+				Cb_uf.text = "";
+				In_complemento.text = "";
+				In_codcli.setFocus();
+				Bt_salvarcli.enabled = false;
+				Bt_novocli.enabled = true;
+				Bt_editcli.enabled = false;
+				Bt_cancela.enabled = false;
+				Bt_excluicli.enabled = false;
+				editando = false;
+			}
+			
+			private function novo():void
+			{
+				In_bairro.text = "";
+				In_cnpj.text = "";
+				In_codcli.text = "";
+				In_email.text = "";
+				In_endereco.text = "";
+				In_fantasia.text = "";
+				In_inscricaoestadual.text = "";
+				In_nomecli.text = "";
+				In_numero.text = "";
+				In_observacao.text = "";
+				In_tel1.text = "";
+				In_tel2.text = "";
+				Cb_natureza.text = "";
+				In_cidade.text = "";
+				Cb_uf.text = "";
+				In_complemento.text = "";
+				In_codcli.setFocus();
+				Bt_salvarcli.enabled = true;
+				Bt_novocli.enabled = false;
+				Bt_editcli.enabled = false;
+				Bt_cancela.enabled = true;
+				Bt_excluicli.enabled = false;
+				editando = false;
+
+				In_bairro.editable = true;									
+				In_cidade.editable = true;
+				Cb_uf.editable = true;
+				Cb_natureza.editable = true;
+				In_cnpj.editable = true;
+				In_codcli.editable = true;
+				In_complemento.editable = true;
+				In_email.editable = true;
+				In_endereco.editable = true;
+				In_fantasia.editable = true;
+				In_inscricaoestadual.editable = true;
+				In_nomecli.editable = true;
+				In_numero.editable = true;
+				In_observacao.editable = true;
+				In_tel1.editable = true;
+				In_tel2.editable = true;				
+				
+			}
+
+			private function alterar():void
+			{
+				editando = true;
+				
+				In_bairro.editable = true;									
+				In_cidade.editable = true;
+				Cb_uf.editable = true;
+				Cb_natureza.editable = true;
+				In_cnpj.editable = true;
+				In_codcli.editable = true;
+				In_complemento.editable = true;
+				In_email.editable = true;
+				In_endereco.editable = true;
+				In_fantasia.editable = true;
+				In_inscricaoestadual.editable = true;
+				In_nomecli.editable = true;
+				In_numero.editable = true;
+				In_observacao.editable = true;
+				In_tel1.editable = true;
+				In_tel2.editable = true;	
+				
+				In_codcli.setFocus();			
+			}
+
+			private function excluir():void
+			{
+				
+			}
+
+			private function showConsul():void 
+			{
+				In_bairro.editable = false;									
+				In_cidade.editable = false;
+				Cb_uf.dropdown.enabled = false;
+				Cb_natureza.dropdown.enabled = false;
+				In_cnpj.editable = false;
+				In_codcli.editable = false;
+				In_complemento.editable = false;
+				In_email.editable = false;
+				In_endereco.editable = false;
+				In_fantasia.editable = false;
+				In_inscricaoestadual.editable = false;
+				In_nomecli.editable = false;
+				In_numero.editable = false;
+				In_observacao.editable = false;
+				In_tel1.editable = false;
+				In_tel2.editable = false;
+				
+				Application.application._pesquisa = 0;
+				var codcliente: Consultar = Consultar(PopUpManager.createPopUp(this, form.Consultar, true));								
+			} 
+			
+			public function atualiza(): void
+			{
+				var remoteObj_atual:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso_busca);                            
+				remoteObj_atual.getOperation("localizacliente").send(Application.application._clienteid); 
+			}	
+									
+			private function rstSucesso_busca(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+				{
+					busca_cliente = evt.result.valueOf();
+
+					In_bairro.text = busca_cliente.bairro;									
+					In_cidade.text = busca_cliente.cidade;
+					Cb_uf.text = busca_cliente.estado;
+					if (busca_cliente.natureza == 0) 
+					{
+						Cb_natureza.text = 'Jurídica';
+						In_inscricaoestadual.enabled = true;
+					}
+					else
+					{	
+						Cb_natureza.text = 'Fisíca';
+						In_inscricaoestadual.enabled = false;
+					}
+					In_cnpj.text = busca_cliente.cpf_cnpj.toString();
+					In_codcli.text = busca_cliente.codcli.toString();
+					In_complemento.text = busca_cliente.complemento;
+					In_email.text = busca_cliente.email;
+					In_endereco.text = busca_cliente.endereco;
+					In_fantasia.text = busca_cliente.fantasia;	
+					In_inscricaoestadual.text = busca_cliente.inscricaouf.toString();
+					In_nomecli.text = busca_cliente.razaosocial;
+					In_numero.text = busca_cliente.numero.toString();	
+					In_observacao.text = busca_cliente.observacao;
+					In_tel1.text = busca_cliente.telefone1.toString();
+					In_tel2.text = busca_cliente.telefone2.toString();
+					Bt_salvarcli.enabled = false;
+					Bt_novocli.enabled = false;
+					Bt_editcli.enabled = true;
+					Bt_cancela.enabled = true;
+					Bt_excluicli.enabled = true;									
+				}					
+			}
+			
+			private function exlcuir():void
+			{
+				Alert.yesLabel = "Sim";
+				Alert.noLabel = "Não";
+				Alert.show("Tem certeza que deseja excluir?", "Confirme", 3, null, exclui)
+			}
+						
+			private function exclui(evt:CloseEvent):void
+			{
+				if (evt.detail == Alert.YES)
+				{												
+					var remoteObj_excluir:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso_exclui);                            
+					remoteObj_excluir.getOperation("excluircliente").send(Application.application._clienteid); 
+				}
+			}
+						
+			private function salvar():void
+			{
+				if (Cb_natureza.text == "")
+				{
+					Alert.show("É obrigatório o preenchimento do campo Natureza!", "atenção");
+					Cb_natureza.setFocus();
+					SalvarNovo = false;
+				}
+				else 
+				{
+					if (In_cnpj.text == "")
+					{
+						if (Cb_natureza.selectedIndex == 0)
+							Alert.show("É obrigatório o preenchimento do campo CNPJ!", "atenção");
+						else
+							Alert.show("É obrigatório o preenchimento do campo CPF!", "atenção");
+							
+						In_cnpj.setFocus();
+						SalvarNovo = false;
+					}
+					else 
+					{
+						if (In_nomecli.text == "")
+						{
+							Alert.show("É obrigatório o preenchimento do campo Nome/Razão Social!", "atenção");
+							In_nomecli.setFocus();
+							SalvarNovo = false;
+						}
+						else
+						{			
+							if (In_endereco.text == "")
+							{
+								Alert.show("É obrigatório o preenchimento do campo Endereço!", "atenção");
+								In_endereco.setFocus();
+								SalvarNovo = false;
+							}
+							else
+							{
+								if (In_numero.text == "")
+								{
+									Alert.show("É obrigatório o preenchimento do campo Número!", "atenção");
+									In_numero.setFocus();
+									SalvarNovo = false;
+								}
+								else 
+								{
+									if (In_bairro.text == "")
+									{
+										Alert.show("É obrigatório o preenchimento do campo Bairro!", "atenção");
+										In_bairro.setFocus();
+										SalvarNovo = false;
+									}
+									else
+									{ 
+										if (Cb_uf.text == "")
+										{
+											Alert.show("É obrigatório o preenchimento do campo Estado!", "atenção");
+											Cb_uf.setFocus();
+											SalvarNovo = false;
+										}
+										else
+										{
+											if (In_cidade.text == "")
+											{
+												Alert.show("É obrigatório o preenchimento do campo Cidade!", "atenção");
+												In_cidade.setFocus();
+												SalvarNovo = false;
+											}
+											else
+											  SalvarNovo = true;
+										}
+									}	
+
+								}
+
+							}
+
+						}
+						
+					}
+
+				}
+				
+				if (SalvarNovo) 
+				{
+					var salvarcliente: cliente = new cliente;			 
+					salvarcliente.codcli = In_codcli.numChildren;
+					salvarcliente.adminid = Application.application._adminid;
+					salvarcliente.natureza = Cb_natureza.selectedIndex;
+					salvarcliente.cpf_cnpj = In_cnpj.numChildren;
+					salvarcliente.inscricaouf = In_inscricaoestadual.numChildren;
+					salvarcliente.fantasia = In_fantasia.text;
+					salvarcliente.razaosocial = In_nomecli.text;
+					salvarcliente.endereco = In_endereco.text;
+					salvarcliente.bairro = In_bairro.text;
+					salvarcliente.numero = In_numero.numChildren;
+					salvarcliente.complemento = In_complemento.text;
+					salvarcliente.cidade = In_cidade.text;
+					salvarcliente.estado = Cb_uf.text;
+					salvarcliente.telefone1 = In_tel1.numChildren;
+					salvarcliente.telefone2 = In_tel2.numChildren;
+					salvarcliente.email = In_email.text;
+					salvarcliente.observacao = In_observacao.text;
+					salvarcliente.inativo = 0;
+					
+					if (editando)
+					{
+						Application.application._clienteid;
+					}	
+					else
+					{
+						var remoteObj_salvar:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso);                            
+						remoteObj_salvar.getOperation("cadastrarcliente").send(salvarcliente); 
+						Bt_editcli.enabled = false;
+						Bt_excluicli.enabled = false;
+						Bt_novocli.enabled = true;
+						Bt_salvarcli.enabled = false;
+						Bt_cancela.enabled = false;
+					}	
+				}
+			}
+
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				novo();
+				if (evt.result)
+				{
+					if (editando)
+						Alert.show("Cliente alterado com sucesso!", "Confirmação");
+					else	
+						Alert.show("Cliente salvo com sucesso!", "Confirmação");
+				}
+				else
+				{
+					if (editando)
+						Alert.show("Não foi possível alterar o cliente !", "Erro");
+					else
+						Alert.show("Não foi possível salvar o cliente!", "Erro");	
+				}	
+			}
+			
+			private function rstSucesso_exclui(evt:ResultEvent):void
+			{
+				novo();
+				if (evt.result)
+					Alert.show("Cliente excluído com sucesso!", "Confirmação");
+				else
+					Alert.show("Não foi possível excluir o cliente!", "Erro");	
+			}
+
+		]]>
+	</mx:Script>
+	<mx:Style source="form/layout.css"/>
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G - Cadastro de Clientes" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="730" 
+		height="406" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#A1B9D1" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		styleName="tabNavigatorTab" 
+ 		id="In_cadcli" x="10" y="10">
+ 		<mx:Button 
+			x="10" 
+			y="330" 
+			label="Novo" 
+			color="#606068" 
+			id="Bt_novocli" 
+			borderColor="#000000" 
+			width="79"
+			click="novo()"/>
+		<mx:Button 
+			x="175" 
+			y="330" 
+			label="Editar" 
+			color="#606068" 
+			id="Bt_editcli" 
+			borderColor="#000000" 
+			width="79" 
+			enabled="true"
+			click="alterar()"/>
+		<mx:Button 
+			x="257" 
+			y="330" 
+			label="Excluir" 
+			color="#606068" 
+			id="Bt_excluicli" 
+			borderColor="#000000" 
+			width="79" 
+			enabled="true" 
+			click="exlcuir()"/>
+		<mx:Button 
+			x="339" 
+			y="330" 
+			label="Salvar" 
+			color="#FF0000" 
+			id="Bt_salvarcli" 
+			borderColor="#000000" 
+			width="79" enabled="false"
+			click="salvar()"/>
+		<mx:TabNavigator 
+			left="11" 
+			right="9" 
+			top="5" 
+ 			bottom="73">
+			<mx:Canvas 
+				label="Cliente" 
+				width="100%" 
+				height="100%" 
+				color="#585454"
+				id="Cv_CadCli">
+				<mx:Label 
+					text="Nome / Razão Social" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="9" 
+					y="38"/>
+				<mx:Label 
+					text="Nome Fantasia" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="363" 
+					y="38"/>
+				<mx:Label 
+					text="CNPJ" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="234" 
+					y="3" id="lb_tipo"/>
+				<mx:Label 
+					text="Insc. Estadual" 
+					color="#4B5062" 
+					textAlign="left" 
+					width="91" 
+					x="462" 
+					y="3" id="lb_inscricaoestadual"/>
+				<mx:Label 
+					text="Endereço" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="9" 
+					y="72"/>				
+				<mx:Label 
+					text="Bairro" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="407" 
+					y="72"/>
+				<mx:Label 
+					text="Complemento" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="294" 
+					y="72"/>
+				<mx:Label 
+					text="Número" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="231" 
+					y="72"/>
+				<mx:Label 
+					text="Cidade" 
+					color="#4B5062" 
+					width="57" 
+					textAlign="left" 
+					x="593" 
+					y="71"/>
+				<mx:Label 
+					text="Estado" 
+					color="#4B5062" 
+					width="57" 
+					textAlign="left" 
+					x="513" 
+					y="71"/>			
+				<mx:Label 
+					text="Tel. 1" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="321" 
+					y="106"/>					
+				<mx:Label 
+					text="Tel. 2" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="506" 
+					y="106"/>
+				<mx:Label 
+					x="9" 
+					y="4" 
+					text="Cód cliente"/>
+				<mx:Label 
+					x="146" 
+					y="4" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="63" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="277" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="443" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="553" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="631" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="8" 
+					y="231" 
+					text="* Campo de preenchimento obrigatório" color="#FF0000"/>
+				<mx:Label 
+					x="264" 
+					y="3" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="130" 
+					y="38" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="93" 
+					y="4" 
+					text="Natureza"/>
+				<ns1:MasterTextInput
+					x="10" 
+					y="20" 
+					width="73" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_codcli" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<mx:ComboBox 
+					x="92" 
+					y="20" 
+					width="133" 
+					height="18" 
+					id="Cb_natureza" 
+					color="#3D0303" 
+					dataProvider="{TipoPessoa}" 
+					fontSize="11"
+					change="alteratipo()">
+					</mx:ComboBox>			
+				<ns1:MasterTextInput 
+					x="234" 
+					y="20" 
+					width="219" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_cnpj" 
+					fontSize="11"
+					inputMask="99.999.999/9999-99"
+					blankMaskChar=" "
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="462" 
+					y="20" 
+					width="223" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_inscricaoestadual" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"
+					inputMask="999.999.999.999"
+					blankMaskChar=" "/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="54" 
+					width="345" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_nomecli" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="364" 
+					y="54" 
+					width="321" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_fantasia" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="89" 
+					width="212" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_endereco" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="231" 
+					y="89" 
+					width="54" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_numero" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput
+					x="294" 
+					y="90" 
+					width="106" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_complemento"
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput
+					x="408" 
+					y="89" 
+					width="95" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_bairro"
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>																																			
+				<mx:ComboBox 
+					x="513" 
+					y="89" 
+					width="71" 
+					height="18" 
+					id="Cb_uf" 
+					color="#3D0303" 
+					dataProvider="{UF}" 
+					fontSize="11">
+					</mx:ComboBox>
+				<ns1:MasterTextInput 
+					x="592" 
+					y="89" 
+					width="92" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_cidade" 
+					fontSize="11"
+					onlyRestrict="alphabetic"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>					
+				<ns1:MasterTextInput
+					x="10" 
+					y="124" 
+					width="297" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_email" 
+					fontSize="11"
+					capsType="normal"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="321" 
+					y="124" 
+					width="176" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_tel1" 
+					textAlign="center" 
+					fontSize="11"
+					nextFocusOnEnter="true"
+					inputMask="(99)9999-9999"
+					onlyRestrict="number"/>
+				<ns1:MasterTextInput 
+					x="507" 
+					y="124" 
+					width="176" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_tel2" 
+					textAlign="center" 
+					fontSize="11"
+					nextFocusOnEnter="true"
+					inputMask="(99)9999-9999"
+					onlyRestrict="number"/>	
+				<mx:TextArea 
+					x="10" 
+					y="159" 
+					width="673" 
+					height="70" 
+					id="In_observacao" 
+					maxChars="250"
+					change="contachar()" 
+					cornerRadius="6" 
+					fontSize="11"/>														
+				<mx:Label 
+					text="E-mail" 
+					color="#4B5062" 
+					textAlign="center" 
+					x="9" 
+					y="106"/>
+				<mx:Label 
+					text="Observação" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="143"/>
+				<mx:Label 
+					text="(Caracteres restantes: 250)" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="83" 
+					y="143" 
+					id="In_ContChar"/>
+			</mx:Canvas>
+		</mx:TabNavigator>		
+		<mx:Button 
+			x="421" 
+			y="330" 
+			label="Cancelar" 
+			color="#606068" 
+			id="Bt_cancela" 
+			borderColor="#000000" 
+			width="79" enabled="false"
+			click="cancela()"/>
+		<mx:Button 
+			x="93" 
+			y="330" 
+			label="Consultar" 
+			color="#606068" 
+			id="Bt_consultar" 
+			borderColor="#000000" 
+			width="79" 
+			enabled="true"
+			click="showConsul()"/>
+	</mx:TitleWindow>
+</mx:Canvas>

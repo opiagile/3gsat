@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+                layout="absolute"
+                horizontalAlign="left"
+                backgroundColor="#f6f6f6"
+                backgroundGradientColors="[#f6f6f6, #bbbbbb]"
+                width="710"
+                height="620"
+                creationComplete="init()"
+                viewSourceURL="056/index.html">
+    <mx:Style source="style_01.css" />
+    <mx:Script>
+        <![CDATA[
+            import com.empresa.SimpleProc;
+            import com.diaztorres.window.*;
+
+            public var ewin:Window;
+
+            private function init ():void
+            {
+                ewin = new Window( TOP );
+                ewin.registerWindowStyle( 'win', customWindowProperties );
+                ewin.registerWindowStyle( 'mac', macStyleWindow );
+            }
+
+            private function abrir ():void
+            {
+
+                ewin.closeEffect = closeEffectType.selectedValue;
+                var w:RPanelBasic = ewin.open( new com.empresa.SimpleProc, "SimpleProc", WindowConstants.WINDOW_NORMAL, TOP, wintype.selectedValue.toString() );
+                //w.addChild( controlbar );		// así se añadiría un controlBar a la ventana
+
+            }
+
+            // OSX style
+            private function macStyleWindow ():WindowProperties
+            {
+                var wp:WindowProperties = new WindowProperties();
+                wp.styleName = "mac";
+                wp.alertStyleName = "macAlertStyle";
+                wp.lateralStyleName = "macLateralStyle";
+                wp.generate();
+                return wp;
+            }
+
+            // Crea el estilo MSWindows para la ventana
+            private function customWindowProperties ():WindowProperties
+            {
+                var wp:WindowProperties = new WindowProperties();
+                wp.iconsWidth = 21;
+                wp.titleButtonsPosition = "right";
+                wp.enableSound = enableSnd.selected;
+                wp.styleName = "winPanelSty";
+                wp.alertStyleName = "winAlertStyle";
+                wp.lateralStyleName = "winLateralStyle";
+                wp.generate();
+                return wp;
+            }
+            private function customEasingFunction ( t:Number, b:Number, c:Number, d:Number ):Number 
+            {
+                 var ts:Number=(t/=d)*t;
+                 var tc:Number=ts*t;
+                 return b+c*(-7.047058823529404*tc*ts + 27.58823529411764*ts*ts + -37.576470588235296*tc + 20.352941176470587*ts + -2.317647058823529*t);
+             } 
+        ]]>
+    </mx:Script>
+    <mx:Parallel id="zoomOutFadeOutBlur" duration="500">
+        <mx:Fade alphaFrom="1.0" alphaTo="0.0" />
+        <mx:Blur blurXFrom="0.0"
+                 blurXTo="100.0"
+                 blurYFrom="0.0"
+                 blurYTo="100.0" />
+        <mx:Zoom zoomWidthTo="0"
+                 zoomHeightTo="0"
+                 zoomWidthFrom="1"
+                 zoomHeightFrom="1" />
+    </mx:Parallel>
+    <mx:AnimateProperty id="scaley"
+                        property="scaleY"
+                        fromValue="1"
+                        toValue="0"
+                        duration="1000" />
+    <mx:Parallel id="scalexy" duration="500">
+        <mx:AnimateProperty property="scaleY"
+                            fromValue="1"
+                            toValue="0" />
+        <mx:AnimateProperty property="scaleX"
+                            fromValue="1"
+                            toValue="0" />
+    </mx:Parallel>
+    <mx:Parallel id="blurFadeOut" duration="200">
+        <mx:Fade id="fadeOut"
+                 alphaFrom="1.0"
+                 alphaTo="0.0" />
+        <mx:Blur id="blurImage"
+                 blurXFrom="0.0"
+                 blurXTo="10.0"
+                 blurYFrom="0.0"
+                 blurYTo="10.0" />
+    </mx:Parallel>
+    <mx:Zoom id="zoomOut"
+             zoomWidthTo="0"
+             zoomHeightTo="0"
+             zoomWidthFrom="1"
+             zoomHeightFrom="1"
+             duration="200" />
+    <mx:Parallel id="movex" duration="1000">
+        <mx:AnimateProperty property="x"
+                            toValue="-50"
+                            easingFunction="customEasingFunction" />
+        <mx:Fade alphaFrom="1.0" alphaTo="0.0" />
+        <mx:Blur blurXFrom="0.0"
+                 blurXTo="100.0"
+                 blurYFrom="0.0"
+                 blurYTo="100.0" />
+    </mx:Parallel>
+    <!--
+
+         CONTROLES
+
+    -->
+    <mx:Box width="100%"
+            height="100%"
+            verticalAlign="middle"
+            horizontalAlign="center">
+        <mx:Box styleName="mainBox" backgroundColor="#255386">
+            <mx:HBox width="100%">
+                <mx:Label text="Ventanas"
+                          styleName="negrita"
+                          color="#333333"
+                          width="100%" />
+                <mx:Label text="beta 0.1"
+                          styleName="negrita"
+                          color="#333333" />
+            </mx:HBox>
+            <mx:HRule width="100%" />
+            <mx:Label text="Estilo:" styleName="negrita" />
+            <mx:RadioButtonGroup id="wintype" />
+            <mx:RadioButton groupName="wintype"
+                            value="mac"
+                            label="OSX (por defecto)"
+                            selected="true" />
+            <mx:RadioButton groupName="wintype"
+                            value="win"
+                            label="Windows" />
+            <mx:Label text="Tipo de efecto al cerrar la ventana:" styleName="negrita" />
+            <mx:RadioButtonGroup id="closeEffectType" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value="{zoomOutFadeOutBlur}"
+                            label="Zoom out + Fade out + Blur"
+                            selected="true" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value="{blurFadeOut}"
+                            label="Blur + Fade out" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value="{zoomOut}"
+                            label="Zoom out" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value="{scaley}"
+                            label="Scale Y" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value="{scalexy}"
+                            label="Scale XY" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value=""
+                            label="Ninguno" />
+            <mx:RadioButton groupName="closeEffectType"
+                            value="{movex}"
+                            label="Move X + Fade out + Blur + easingFunction" />
+            <mx:CheckBox id="enableSnd"
+                         selected="true"
+                         label="Habilitar efectos de sonido ?"
+                         styleName="negrita" />
+            <mx:Button label="Nueva ventana"
+                       width="100%"
+                       click="abrir()" />
+            <mx:Button label="Cerrar todas las ventanas"
+                       width="100%"
+                       click="ewin.closeAll()" />
+            <mx:Button label="Ocultar/Mostrar el contenedor de las ventanas"
+                       width="100%"
+                       click="TOP.visible=!TOP.visible" />
+            <mx:HRule width="100%" />
+            <mx:LinkButton label="blog.diaztorres.com"
+                           fontSize="9"
+                           click="navigateToURL(new URLRequest('http://blog.diaztorres.com'));" />
+        </mx:Box>
+    </mx:Box>
+    <!--
+
+         CONTENEDOR DE TODAS LAS VENTANAS
+
+    -->
+    <mx:Box id='TOP'
+            width="100%"
+            height="100%" />
+</mx:Application>

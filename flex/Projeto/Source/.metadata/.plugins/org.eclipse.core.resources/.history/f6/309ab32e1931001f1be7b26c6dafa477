@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="340" height="170" backgroundColor="#434242">
+	<mx:Panel width="340" height="170" layout="absolute" horizontalCenter="0" verticalCenter="0" title="3GSAT - Sistema de Rastreamento" alpha="1.0" borderColor="#6B6B6B" color="#FFFFFF" cornerRadius="8" id="CvLogin">
+		<mx:Label x="50" y="30" text="Usuário:" width="66" color="#494948" textAlign="right" id="LblUser"/>
+		<mx:Label x="50" y="56" text="Senha:" width="66" color="#494948" textAlign="right" id="LblSenha"/>
+		<mx:TextInput x="124" y="26" id="ImpLoginUser" color="#FD0606" themeColor="#FA2C03" borderColor="#535353" cornerRadius="4" borderStyle="solid"/>
+		<mx:TextInput x="124" y="53" displayAsPassword="true" id="ImpLoginSenha" color="#FB0404" themeColor="#FC2805" borderColor="#414141" cornerRadius="4" borderStyle="solid" alpha="1.0"/>
+		<mx:Button x="189" y="83" label="Entrar" id="BtnLogin" color="#6F6C6C" themeColor="#FA0F03" width="95" fontSize="10" icon="@Embed(source='../../img/Security_Card.png')" borderColor="#CED0D1"  click="btnAcessar_click(event)"/>
+		<mx:Image x="10" y="86" width="32" height="32" source="../img/3gsat32.png" alpha="1.0"/>
+	</mx:Panel>
+<mx:Script>
+	<![CDATA[
+		import mx.containers.Form;
+		import mx.collections.ArrayCollection;
+		import mx.rpc.remoting.mxml.RemoteObject;
+		import mx.rpc.events.ResultEvent;
+		import mx.rpc.events.FaultEvent;            
+		import mx.controls.Alert; 
+		import mx.core.Application;           
+		import mapeamento.ValidaLogin;
+
+		private function preparaRemoteObj(fncFalha:Function, fncOk:Function = null):RemoteObject
+		{    		
+			var remoteObj:RemoteObject = new RemoteObject("fluorine");    
+			
+			remoteObj.source = ValidaLogin.NAMESPACE;    
+			remoteObj.showBusyCursor = true;        
+	
+			remoteObj.addEventListener(FaultEvent.FAULT, fncFalha);         
+	
+			if (fncOk != null)         
+				remoteObj.addEventListener(ResultEvent.RESULT, fncOk);                                                                         
+			
+			return remoteObj; //retorna o objeto remoto configurado.
+		}
+
+		private function rstFalha(evt:FaultEvent):void
+		{    
+			Alert.show("Ocorreu o seguinte erro ao tentar executar o método:\n" + evt.fault.message, "Erro");
+		}
+		private function rstSucesso(evt:ResultEvent):void
+		{    
+			var validando: Boolean = evt.result;
+			 
+			if (validando)
+			{        
+				Application.application.telalogin.visible = false;
+				Application.application.telacabecalho.visible = true;
+				Application.application.telamapa.visible = true;
+				Application.application.telamenu.visible = true;   
+			}
+			else
+			{
+				Alert.show("Usuário ou senha incorretos", "Erro");    
+			}
+		}
+		private function btnAcessar_click(evt:MouseEvent):void
+		{    
+			if (evt.type == MouseEvent.CLICK)
+			{                
+				var login:ValidaLogin = new ValidaLogin;        
+				
+				login.Usuario  = ImpLoginUser.text;
+				login.Senha    = ImpLoginSenha.text;
+				login.Validado = false;
+				
+				var remoteObj:RemoteObject = preparaRemoteObj(rstFalha, rstSucesso);                            
+				remoteObj.getOperation("validacao").send(login);    
+			}
+		}						
+	]]>
+</mx:Script>
+</mx:Canvas>

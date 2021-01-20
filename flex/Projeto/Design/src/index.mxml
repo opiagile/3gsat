@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	backgroundGradientAlphas="[1.0, 1.0]" 
+	backgroundGradientColors="[#000000, #2D2D2D]" 
+	borderStyle="none" 
+	width="100%" height="100%"
+	xmlns:ns1="form.*">
+	
+	<ns1:cadastro left="0" right="0" verticalCenter="0" >
+	</ns1:cadastro>
+	<mx:Style source="Css_cliente.css"/>
+	
+	<!--
+	<mx:HBox left="10" right="10" top="100" bottom="61">
+	</mx:HBox>
+	-->
+</mx:Application>

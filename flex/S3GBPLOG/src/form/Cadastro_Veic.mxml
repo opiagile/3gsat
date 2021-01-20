@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="796" 
+	height="400" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function Fechar():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function contachar():void
+			{
+				var total:int = (250 - (In_observacao.length));
+				In_ContChar.text = "(Caracteres restantes: " + total + ")";
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G.BPLOG - Cadastro de Veículos" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="674" 
+		height="358" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#D5DBCE" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" 
+ 		id="Tw_CadVeic">
+		<mx:Button 
+			label="Novo" 
+			color="#606068" 
+			id="BT_NovoCadVeic" 
+			borderColor="#000000" 
+			width="63" 
+			left="11" 
+			bottom="17" 
+			height="22"/>
+		<mx:Button 
+			label="Editar" 
+			color="#606068" 
+			id="BT_EditCadVeic" 
+			borderColor="#000000" 
+			width="63" 
+			left="79" 
+			bottom="17" 
+			height="22"/>
+		<mx:Button 
+			label="Excluir" 
+			color="#606068" 
+			id="BT_DelCadCli" 
+			borderColor="#000000" 
+			width="63" 
+			left="147" 
+			bottom="17" 
+			height="22"/>
+		<mx:Button 
+			label="Salvar" 
+			color="#FF0000" 
+			id="Bt_SalveCadVeic" 
+			borderColor="#000000" 
+			width="63" 
+			left="214" 
+			bottom="17" 
+			height="22"/>
+		<mx:TabNavigator 
+		color="#092A03" 
+		height="269" 
+		width="648" 
+		horizontalCenter="-1" 
+		top="14" styleName="tabNavigatorTab">
+			<mx:Canvas 
+				width="100%" 
+				height="100%" 
+				color="#585454"
+				id="Cv_CadVeic" 
+				label="Cadastro de Veículo">
+				<mx:Label 
+					text="Placa de Veículo" 
+					color="#4B5062" 
+					textAlign="left" 
+					horizontalCenter="-262" 
+					top="19"/>
+				<mx:Label 
+					text="Nome Veículo" 
+					color="#4B5062" 
+					textAlign="left" 
+					horizontalCenter="-153" 
+					top="19"/>
+				<mx:TextInput 
+					width="408" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_placa0" 
+					top="36" fontSize="10" x="130"/>
+				<mx:Label 
+					text="Observação" 
+					color="#4B5062" 
+					textAlign="left" 
+					horizontalCenter="-274" 
+					top="148"/>
+				<mx:TextInput 
+					width="111" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_placa" 
+					horizontalCenter="-258" 
+					top="36" fontSize="10"/>
+				<mx:TextArea 
+					width="619" 
+					height="58" 
+					id="In_observacao" 
+					borderColor="#B7BABC" 
+					color="#817F7F" 
+					top="167" 
+					left="13" 
+					cornerRadius="6" 
+					change="contachar()" 
+					maxChars="250" fontSize="10"/>
+				<mx:Label 
+					text="Peso (Kg)" 
+					color="#4B5062" 
+					textAlign="left" 
+					width="86" 
+					x="546" 
+					y="19"/>
+				<mx:TextInput 
+					width="86" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_peso" 
+					x="546" 
+					y="36" fontSize="10"/>
+				<mx:Canvas x="14" 
+					width="618" 
+					height="66" 
+					cornerRadius="6" 
+					borderStyle="solid" 
+					alpha="1.0" 
+					backgroundColor="#B9BBBC" 
+					backgroundAlpha="0.23" 
+					y="68">
+					<mx:Label 
+						text="Altura (mm)" 
+						color="#4B5062" 
+						textAlign="left" 
+						width="81" 
+						top="14" left="31.25"/>
+					<mx:TextInput 
+						width="72" 
+						color="#FF210A" 
+						borderColor="#B7BABC" 
+						borderStyle="solid" 
+						height="18" 
+						id="In_altura" 
+						top="32" 
+						left="32.25" fontSize="10"/>
+					<mx:Label 
+						text="Largura (mm)" 
+						color="#4B5062" 
+						textAlign="left" 
+						width="89" 
+						top="14" left="170.25"/>
+					<mx:TextInput 
+						width="72" 
+						color="#FF210A" 
+						borderColor="#B7BABC" 
+						borderStyle="solid" 
+						height="18" 
+						id="In_largura" top="32" left="172.25" fontSize="10"/>
+					<mx:Label 
+						text="Comprimento (mm)" 
+						color="#4B5062" 
+						textAlign="left" 
+						width="119.25" 
+						top="14" left="323.25"/>
+					<mx:TextInput 
+						width="72" 
+						color="#FF210A" 
+						borderColor="#B7BABC" 
+						borderStyle="solid" 
+						height="18" 
+						id="In_comprimento" 
+						top="32" 
+						left="326.25" fontSize="10"/>
+					<mx:Label 
+						x="536.5" 
+						y="32" 
+						text="0,00" 
+						color="#FF0202" 
+						fontWeight="bold" 
+						fontSize="12" 
+						id="in_cubico"/>
+					<mx:Label 
+						x="514.5" 
+						y="14" 
+						text="Metros Cúbico" 
+						color="#4B5062"/>
+				</mx:Canvas>
+				<mx:Image x="9.5" source="img/Prop.png" y="66"/>
+				<mx:Label 
+					text="(Caracteres restantes: 250)" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="83" 
+					y="148" 
+					id="In_ContChar"/>
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:TitleWindow>
+	<mx:Style source="form/layout.css"/>
+</mx:Canvas>

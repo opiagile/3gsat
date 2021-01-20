@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="41" backgroundColor="#050505">
+	<mx:ApplicationControlBar left="0" right="0" verticalCenter="-1" height="41" cornerRadius="0" fillAlphas="[0.1, 0.1]" fillColors="[#DEDEDE, #DEDEDE]">
+	</mx:ApplicationControlBar>
+	<mx:Label text="© 2010 |                 " bottom="10" id="LblCopyright" textAlign="right" width="67.75" height="18" color="#FFFFFF" right="80"/>
+	
+</mx:Canvas>

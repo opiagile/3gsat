@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           width="100%"
+           height="100%">
+    <mx:Script>
+        <![CDATA[
+            import com.diaztorres.window.RPanelBasic;
+
+            public var targets:Array;
+
+            private function returnSelectedItem ( e:MouseEvent ):void
+            {
+
+                if ( targets != null )
+                {
+                    var t:*;
+
+                    for ( var x:Number = 0; x < targets.length; x++ )
+                    {
+                        t = targets[ x ][ 0 ]
+                        t[ targets[ x ][ 1 ] ] = deta.selectedItem.nombre;
+                    }
+                    t = null;
+                }
+                RPanelBasic( this.owner ).close();
+            }
+        ]]>
+    </mx:Script>
+    <mx:XML id="datos">
+        <da>
+            <item>
+                <nombre>PEPE</nombre>
+                <cantidad>3</cantidad>
+                <pvp>250</pvp>
+                <total>750</total>
+            </item>
+            <item>
+                <nombre>JUAN</nombre>
+                <cantidad>2</cantidad>
+                <pvp>25</pvp>
+                <total>50</total>
+            </item>
+            <item>
+                <nombre>ROSA</nombre>
+                <cantidad>1</cantidad>
+                <pvp>50</pvp>
+                <total>50</total>
+            </item>
+            <item>
+                <nombre>RAMON</nombre>
+                <cantidad>5</cantidad>
+                <pvp>10</pvp>
+                <total>50</total>
+            </item>
+            <item>
+                <nombre>ANA</nombre>
+                <cantidad>2</cantidad>
+                <pvp>20</pvp>
+                <total>40</total>
+            </item>
+        </da>
+    </mx:XML>
+    <mx:VBox verticalGap="0"
+             width="100%"
+             height="100%">
+        <mx:DataGrid id="deta"
+                     dataProvider="{datos.item}"
+                     rowCount="10"
+                     horizontalScrollPolicy="on"
+                     width="100%"
+                     height="100%"
+                     editable="false"
+                     horizontalGridLines="true"
+                     horizontalGridLineColor="#DDDDDD"
+                     doubleClickEnabled="true"
+                     doubleClick="returnSelectedItem(event)">
+            <mx:columns>
+                <mx:DataGridColumn dataField="nombre" headerText="Nombre" />
+                <mx:DataGridColumn dataField="cantidad" headerText="Cantidad" />
+                <mx:DataGridColumn dataField="pvp" headerText="PVP" />
+                <mx:DataGridColumn dataField="total" headerText="Total" />
+            </mx:columns>
+        </mx:DataGrid>
+    </mx:VBox>
+</mx:Canvas>

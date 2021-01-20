@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center" verticalAlign="middle" layout="absolute" width="690" height="420" themeColor="#FF4200" creationComplete="Iniciar()" title="S3G RH -  Recursos Humanos" borderColor="#FFFFFF" showCloseButton="true" close="Fechar()" alpha="1.0" backgroundAlpha="1.0" backgroundColor="#575757"  color="#FFFFFF" status="Sair" titleIcon="@Embed(source='../../IMG/3gsatICO.png')" enabled="true" fontWeight="bold" borderStyle="solid" cornerRadius="15" backgroundImage="@Embed(source='../../IMG/fnd_plasma.png')">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.controls.Alert;
+			import form.*
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+			
+			//botoes
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.Bt_acord_Fun.enabled=true;
+			}
+			private function showCadCli():void {
+			TitleWindow(PopUpManager.createPopUp(this, form.AR_Statistic, true));
+			}
+			
+			
+		]]>
+	</mx:Script>
+	<mx:Fade id="fadeOut" duration="1000" alphaFrom="1.0" alphaTo="0.0"/>
+    <mx:Fade id="fadeIn" duration="1000" alphaFrom="0.0" alphaTo="1.0"/>
+    <mx:TabNavigator left="5" right="5" top="5" bottom="43" color="#000000">
+        <mx:Canvas label="Folha de Pagamento" width="100%" height="100%">
+            <mx:TextArea height="20" editable="false" left="10" right="10" bottom="0" alpha="0.0" color="#CF0C0C" textAlign="center">
+                <mx:text>Ativação de pagamentos, inclusão de debitos entre outros.</mx:text>
+            </mx:TextArea>
+        </mx:Canvas>
+        <mx:Canvas label="Consulta Funcionários" width="100%" height="100%">
+            <mx:TextArea height="20" editable="false" left="10" right="10" bottom="0" alpha="0.0" color="#CF0C0C" textAlign="center">
+                <mx:text>Consulta de informações sobre os funcionários.</mx:text>
+            </mx:TextArea>
+        </mx:Canvas>
+    </mx:TabNavigator>
+    <mx:TextArea height="35" editable="false" left="10" right="10" bottom="0" alpha="0.0" color="#000000" textAlign="left">
+        <mx:text><![CDATA[Nossas atividades são o controle de freqüência, férias, licença prêmio, e solicitação de afastamentos com ou sem remuneração, implantação de averbação por tempo de serviço, recebimento de licenças e atestados médicos.
+]]></mx:text>
+    </mx:TextArea>
+</mx:TitleWindow>

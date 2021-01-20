@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	creationComplete="Iniciar()"
+	horizontalAlign="center"
+	verticalAlign="middle"
+	layout="absolute"
+	cornerRadius="8" 
+	borderStyle="solid" 
+	backgroundAlpha="1.0"
+	backgroundColor="#423F1A"
+	backgroundImage="@Embed(source='img/camuflagem.jpg')"
+	alpha="1.0" 
+	color="#FFFFFF" 
+	titleIcon="@Embed(source='img/trakPQ.png')" 
+	showCloseButton="true" 
+	close="Fechar();"
+	title="D.O. TRAK  - Alianças" 
+	fontWeight="bold" 
+	themeColor="#727646" width="538" height="485"
+	horizontalCenter="0" 
+ 	verticalCenter="0"  borderThickness="1">
+	
+	<mx:Script>
+		<![CDATA[
+		
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.containers.TabNavigator;
+			import mx.containers.TitleWindow;
+			import mx.core.UIComponent;
+				
+			//botões Abrir/fechar
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.Bt_Alianca.enabled=true;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label 
+		text="Alianças" 
+		color="#FFFFFF" 
+		fontWeight="bold" 
+		fontSize="11" 
+		y="11" 
+		x="7" 
+		fontFamily="Verdana"/>
+	<mx:TextInput 
+		width="175" 
+		borderStyle="solid" 
+		cornerRadius="4" 
+		alpha="0.77" 
+		borderThickness="1" 
+		themeColor="#000000" 
+		borderColor="#122618" 
+		x="68" 
+		y="10" color="#4B4F32" enabled="false"/>
+	<mx:ComboBox 
+		editable="false" 
+		enabled="false" 
+		dataProvider="Buscar" 
+		width="104" 
+		color="#202321" 
+		fontSize="10" 
+		borderColor="#0C0C0C" 
+		x="254" 
+		y="9" themeColor="#525925">
+	</mx:ComboBox>
+	
+	<mx:TabNavigator 
+		styleName="tabNavigatorTab" 
+		backgroundColor="#000000" top="47.95" bottom="0" left="0" right="0">
+		<mx:Canvas 
+			label="Diplomacia" 
+			width="100%" 
+			height="100%" borderColor="#000000" backgroundColor="#000000">
+			<mx:Image 
+				source="img/Pacto.jpg" 
+				width="515" 
+				height="378" 
+				x="0"
+				y="0" 
+				horizontalCenter="0"/>
+		</mx:Canvas>
+		<mx:Canvas 
+			label="Membros" 
+			width="100%" 
+			height="100%"
+			enabled="false">
+			<mx:DataGrid right="0" left="0" bottom="0" top="0">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+					<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+					<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+		<mx:Canvas 
+			label="Regras" 
+			width="100%" 
+			height="100%"
+			enabled="false">
+			<mx:DataGrid right="0" left="0" bottom="0" top="0">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+					<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+					<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+		<mx:Canvas label="Links" width="100%" height="100%"
+			enabled="false">
+			<mx:DataGrid right="0" left="0" bottom="0" top="0">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+					<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+					<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+	</mx:TabNavigator>
+	
+		
+</mx:TitleWindow>

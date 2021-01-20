@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="51" backgroundColor="#5F5F5F" backgroundAlpha="1.0" borderColor="#C8C8C8">
+	<mx:Image width="152" height="51" source="../img/3GSAT-menu.png">
+	</mx:Image>
+	<mx:ApplicationControlBar left="0" right="0" verticalCenter="0" height="51" cornerRadius="0" fillAlphas="[0.1, 0.1]" fillColors="[#DEDEDE, #DEDEDE]" horizontalAlign="right">
+		<mx:Button cornerRadius="20" height="20" width="20" borderColor="#FFFFFF" fillAlphas="[0.3, 1.0, 0.3, 1.0]" fillColors="[#2D2D2D, #FD0600]" color="#FFFFFF"/>
+		<mx:Button cornerRadius="20" height="20" width="20" borderColor="#FFFFFF" fillAlphas="[0.3, 1.0, 0.3, 1.0]" fillColors="[#2D2D2D, #FD9604]" color="#FFFFFF"/>
+		<mx:Button cornerRadius="20" height="20" width="20" borderColor="#FFFFFF" fillAlphas="[0.3, 1.0, 0.3, 1.0]" fillColors="[#2D2D2D, #06FA00]" color="#FFFFFF" textAlign="center"/>
+	</mx:ApplicationControlBar>
+</mx:Canvas>

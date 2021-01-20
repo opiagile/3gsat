@@ -1,0 +1,15 @@
+<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)"  
+  width="50%" height="100%" key="ABQIAAAA60Yi54TYljE0FQ-0E4d0nBQbQQtspPKytngpyCGhFiH97vLYsRT_WtomBMsPuZncSsVrLzD7ulJ7wQ"/> 
+<mx:Script> 
+    <![CDATA[ 
+    
+    import com.google.maps.LatLng; 
+    import com.google.maps.Map; 
+    import com.google.maps.MapEvent; 
+    import com.google.maps.MapType; 
+ 
+    private function onMapReady(event:Event):void { 
+      this.map.setCenter(new LatLng(40.736072,-73.992062), 14, MapType.NORMAL_MAP_TYPE); 
+    } 
+    ]]> 
+</mx:Script> 

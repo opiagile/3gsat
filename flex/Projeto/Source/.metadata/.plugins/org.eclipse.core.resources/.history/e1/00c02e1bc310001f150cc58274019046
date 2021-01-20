@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ns1="com.google.maps.controls.*"> 
+<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)" width="440" height="100%" key="your_api_key" x="0" y="0"/> 
+<mx:Script> 
+    <![CDATA[ 
+    
+    import com.google.maps.LatLng; 
+    import com.google.maps.Map; 
+    import com.google.maps.MapEvent; 
+    import com.google.maps.MapType; 
+    import formulario.TesteGoogleMaps;
+ 
+    private function onMapReady(event:Event):void { 
+      this.map.setCenter(new LatLng(-25.366085,-49.220698), 14, MapType.NORMAL_MAP_TYPE); 
+    } 
+    ]]> 
+</mx:Script> 
+	<ns1:ControlBase x="612" y="133"/>
+	<mx:Button x="448" y="10" label="Button" id="botao"/>
+	<mx:VBox x="521" y="0" height="100%" width="503">
+	</mx:VBox>
+</mx:Application>

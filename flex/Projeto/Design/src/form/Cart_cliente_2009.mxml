@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  width="954" height="343">
+			<mx:Image x="0" y="0" width="954" height="343" source="../img/CNH2009.png"/>
+			<mx:TextInput x="81.45" y="87" width="367.3333" height="27" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" text="Nome" editable="true" color="#0B3C24" themeColor="#FF4800"/>
+			<mx:TextInput x="237.8" y="119" width="210.90001" height="26.800001" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" text="Doc. Identidade / RG" color="#0B3C24" themeColor="#FF4800"/>
+			<mx:TextInput x="237.8" y="153.4" width="210.90001" height="26.800001" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="CPF" themeColor="#FF4800"/>
+			<mx:TextInput x="237.8" y="190.15" width="126" height="26.8" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Dta. Nascimento" themeColor="#FF4800"/>
+			<mx:TextInput x="366.3" y="190.15" width="82.4" height="26.8" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Dta. 1ª Hab." themeColor="#FF4800"/>
+			<mx:TextInput x="237.8" y="223.6" width="79.5" height="26.8" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Dta. Emissão" backgroundColor="#D0CBCB" themeColor="#FF4800"/>
+			<mx:TextInput x="319.3" y="223.6" width="77.3" height="26.8" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Dta. Validade" backgroundColor="#D0CBCB" themeColor="#FF4800"/>
+			<mx:TextInput x="397.55" y="223.6" width="51.15" height="26.8" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" text="Cat. Hab." color="#0B3C24" themeColor="#FF4800"/>	
+			<mx:TextInput x="86.8" y="267.65" width="140.65" height="27.3" fontWeight="bold" fontSize="15" text="Nº da Habilitação" textAlign="center" backgroundAlpha="0.0" borderStyle="solid" fontFamily="Times New Roman" borderColor="#F2F7D8" cornerRadius="6" color="#464747" themeColor="#FF4800"/>
+			<mx:Label x="45" y="190.15" height="130.85" width="24" id="TextNHabil"/>
+			<mx:TextInput x="237.8" y="257.4" width="210.9" height="73.5" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Endereço Completo:" themeColor="#FF4800"/>
+			<mx:TextInput x="555.3" y="25.55" width="134.25" height="26.25" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="CEP" themeColor="#FF4800"/>
+			<mx:TextInput x="694.55" y="25.55" width="141.75" height="26.25" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Cidade" themeColor="#FF4800"/>
+			<mx:TextInput x="843.3" y="25.55" width="76.75" height="27.349998" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Estado"  themeColor="#FF4800"/>
+			<mx:TextInput x="555.3" y="58.8" width="364.75" height="33" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="E-mail" themeColor="#FF4800"/>
+			<mx:TextInput x="555.3" y="103.8" width="117.45999" height="26.479996" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Tel. Fixo" themeColor="#FF4800"/>
+			<mx:TextInput x="678.8" y="103.8" width="117.45999" height="26.479996" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Celular" themeColor="#FF4800"/>
+			<mx:TextInput x="802.25" y="103.8" width="117.8" height="26.439999" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Outros Tel." themeColor="#FF4800"/>
+			<mx:TextInput x="555.3" y="137.2" width="364.75" height="89.1" backgroundAlpha="0.0" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#0B3C24" text="Observação:" themeColor="#FF4800"/>
+			<mx:TextInput x="86.8" y="302.1" width="140.65" height="28.849998" backgroundAlpha="0.82" borderColor="#818B7E" cornerRadius="9" borderStyle="solid" color="#9EA2A0" text="Nº do Registro" backgroundColor="#D0CBCB" editable="false"/>
+</mx:Canvas>

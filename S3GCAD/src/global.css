@@ -1,0 +1,42 @@
+/* CSS file */
+
+global
+{
+	cornerRadius: 0;
+	horizontalAlign: center;
+	verticalAlign: middle;
+}
+Accordion
+{
+	headerStyleName: accordionHeader;
+}
+ApplicationControlBar
+{
+	horizontalGap: 0;
+	horizontalAlign: center;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 0;
+	paddingBottom: 0;
+	cornerRadius: 0;
+}
+Panel
+{
+	borderStyle: outset;
+}
+.accordionHeader
+{
+	fillAlphas: 1.0, 1.0;
+	fillColors: #FFFFFF, #B8B7B7, #9A9A9A, #FFFFFF;
+	horizontalGap: 2;
+}
+TitleWindow
+{
+	backgroundAlpha: 0.27;
+	backgroundColor: #515C71;
+	borderColor: #BFBFBF;
+	borderThickness: 2;
+	color: #FFFFFF;
+	cornerRadius: 14;
+	fontWeight: bold;
+}

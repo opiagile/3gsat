@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 10/03/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Tela CRUD para a área de segurança.
+*****************************************************************************************************
+-->
+
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="634" 
+	height="498" 
+	horizontalAlign="center" 
+	verticalAlign="middle" 
+	showCloseButton="false" 
+	cornerRadius="8" 
+	borderColor="#FFFFFF" 
+	backgroundColor="#000000"
+	creationComplete="Iniciar()"
+	close="Fechar()"
+	xmlns:controls="com.brightPoint.controls.*" 
+	backgroundImage="@Embed(source='../../img/FND.png')" 
+	color="#D4D4D4"
+	themeColor="#FFFFFF" 
+	backgroundAlpha="1.0" 
+	borderStyle="none" 
+ 	title="Segurança">
+
+ <mx:Style> 
+	.controllerStyle 
+    { 
+    	top: 153; 
+        left: 0; 
+        paddingBottom: 10; 
+        paddingLeft: 6; 
+        paddingRight: 8; 
+        paddingTop: 6; 
+        alpha: 0; 
+        background-color: #000000; 
+        background-alpha: 0.5; 
+    }
+                              
+</mx:Style>
+	<mx:MenuBar 
+		id="cabecalho" 
+		left="2" 
+		right="2" 
+		top="2" 
+		height="33" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666">
+	</mx:MenuBar>
+	<mx:MenuBar 
+		id="rodape" 
+		left="1" 
+		right="1" 
+		height="32" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" 
+		bottom="1">
+	</mx:MenuBar>
+	<mx:Image 
+		height="32" 
+		source="../img/3GSAT-black.png" 
+		right="1" 
+		bottom="1" 
+		width="79" scaleContent="true"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.google.maps.MapAction;
+			import mx.containers.ApplicationControlBar;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.controls.Alert;
+			import form.*;
+			import form.ClienteF3G;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+			
+		    import com.google.maps.InfoWindowOptions;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.interfaces.IMapType;
+			import com.google.maps.LatLngBounds;
+		    import com.google.maps.controls.ZoomControlOptions;
+		    import com.google.maps.MapOptions;	    
+		    import com.google.maps.controls.PositionControl;
+			import com.google.maps.MapEvent; 
+			import com.google.maps.MapType; 
+	        import com.google.maps.Map;
+	        import com.google.maps.LatLng;
+	        import com.google.maps.MapMouseEvent;
+	        import com.google.maps.MapZoomEvent;
+	        import com.google.maps.overlays.Polygon;
+	        import com.google.maps.overlays.Polyline;
+	        import com.google.maps.controls.ZoomControl;
+	        import com.google.maps.controls.ScaleControl;
+	        import com.google.maps.View;        
+	        import com.google.maps.services.ClientGeocoder;
+	        import com.google.maps.services.GeocodingEvent;
+	        import com.google.maps.services.GeocodingResponse;
+	        import com.google.maps.services.Placemark;
+			
+			import util.ObjetoRemoto;
+		    import util.InfoWindowComp;
+			
+			import mapeamento.get_historico_veiculos;
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function show_areaseguranca():void 
+			{
+				//btn_areaseguranca.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.AreaSeguranca, true));
+			}			
+
+			private function show_limitevelociade():void 
+			{
+				//btn_areaseguranca.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.limitevelocidade, true));
+			}			
+
+		]]>
+	</mx:Script>
+	<mx:Button 
+		label="Fechar" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		width="87" 
+		labelPlacement="left" 
+		id="btn_logout"
+		click="Fechar();"  
+		right="5" 
+		fillColors="[#FF0000, #FF0000]" 
+		textRollOverColor="#FFFFFF" 
+		textSelectedColor="#FFFFFF" 
+		icon="@Embed(source='../img/cancel.png')" 
+		toolTip="Sair do histórico." 
+		top="7"/>
+	<mx:Button 
+		id="btn_areaseguranca" 
+		toolTip="Criar ou alterar aviso sobre Área de Segurança"
+		width="10" 
+		height="10" 
+		icon="@Embed(source='../../img/areaseguranca.png')" 
+		click="show_areaseguranca()" 
+		left="119" 
+		top="158"/>
+	<mx:Label 
+		text="Área de Segurança" 
+		left="73" 
+		top="83"/>
+	<mx:Button 
+		id="btn_limitevelocidade" 
+		toolTip="Criar ou alterar aviso sobre limite de velocidade"
+		width="10" 
+		height="10" 
+		icon="@Embed(source='../../img/velocimetro.png')" 
+		click="show_limitevelociade()" 
+		left="459" 
+		top="158"/>
+	<mx:Label 
+		text="Limite Velocidade" 
+		left="413" 
+		top="83"/>
+</mx:TitleWindow>

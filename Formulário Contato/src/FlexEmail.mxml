@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute">
+	
+	<mx:Script>
+		<![CDATA[		
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			import mx.collections.ArrayCollection;
+			import mapeamento.Email;
+
+			/********** EVENTOS DOS CONTROLES DO FORMULÁRIO **********/
+			//Preenche o combo box com as opções de assunto
+			private function preencheCombo():void{
+				var lista:ArrayCollection = new ArrayCollection();
+				lista.addItem("Selecione --");
+				lista.addItem("RH");
+				lista.addItem("Contabil");
+				lista.addItem("Fiscal");
+				lista.addItem("Assessoria Empresarial");
+				comboAssunto.dataProvider = lista;
+			}
+
+			//Retira o texto padrão dos inputs nome e email
+			private function removeTextoPadrao(t:TextInput):void{
+				if (t.text == "Nome" || t.text == "E-mail")
+					t.text = "";
+			}
+
+			//Adiciona o texto padrão dos inputs nome e email
+			private function addTextoPadrao(t:TextInput):void{
+				if (t.id == "txtNome" && t.text == "")
+					t.text = "Nome";
+				else if (t.id == "txtEmail" && t.text == "")
+					t.text = "E-mail";
+			}
+
+			//Remove texto padrão do textarea
+			private function removeTextoPadraoTextArea(ta:TextArea):void{
+				if (ta.text == "Mensagem")
+					ta.text = "";
+			}
+
+			//Adiciona texto padrão do textarea
+			private function addTextoPadraoTextArea(ta:TextArea):void{
+				if (ta.text == "")
+					ta.text = "Mensagem";
+			}
+
+			//Volta com todos os textos padrões
+			private function textoPadrao():void{
+				txtNome.text = "Nome";
+				txtEmail.text = "E-mail";
+				txtMensagem.text = "Mensagem";
+				comboAssunto.selectedIndex = 0;
+			}
+
+			/********** FUNÇÕES DE CONECXÃO COM A APLICAÇÃO .NET **********/
+			//Função que é executada se ocorreu algum erro ao enviar o e-mail
+			private function falhaEnviar(evt:FaultEvent):void{
+		    	Alert.show("Ocorreu o seguinte erro ao executar:\n" + evt.fault.message, "Ocorreu um Erro");
+			}
+
+			//Função que é executada se não ocorreu erros no envio de e-mail
+			private function resultadoEnviar(evt:ResultEvent):void{
+	        	textoPadrao();
+	        	Alert.show("E-mail enviado com sucesso!"); 
+		    }
+
+			//Função que é acionado com o clique do mouse
+			private function enviarEmail(evt:MouseEvent):void{
+		    	if (evt.type == MouseEvent.CLICK){
+		        	var email:Email = new Email;
+		        	email.Nome = txtNome.text;
+		        	email.UserMail = txtEmail.text;
+		        	email.Assunto = comboAssunto.selectedLabel;
+		        	email.Mensagem = txtMensagem.text;
+		        	roMail.getOperation("EnviarEmail").send(email);
+		    	}
+			}		
+		]]>
+	</mx:Script>
+	<mx:RemoteObject 
+		id="roMail" 
+		source="Email" 
+		destination="fluorine" 
+		showBusyCursor="true">
+		<mx:method 
+			name="EnviarEmail" 
+			result="{resultadoEnviar(event)}" 
+			fault="{falhaEnviar(event)}"/>
+	</mx:RemoteObject>
+
+	<mx:VBox 
+		height="384" 
+		width="300" 
+		horizontalCenter="0" 
+		verticalCenter="0" borderStyle="none">
+		<mx:TextInput 
+			id="txtNome" 
+			focusIn="removeTextoPadrao(this.txtNome)" 
+			focusOut="addTextoPadrao(this.txtNome)" 
+			text="Nome"/>
+		<mx:TextInput 
+			id="txtEmail" 
+			width="280" 
+			focusIn="removeTextoPadrao(this.txtEmail)" 
+			focusOut="addTextoPadrao(this.txtEmail)" 
+			text="E-mail"/>
+		<mx:ComboBox 
+			id="comboAssunto" 
+			creationComplete="preencheCombo()" 
+			width="241">
+		</mx:ComboBox>
+		<mx:TextArea 
+			width="300" 
+			height="120" 
+			id="txtMensagem" 
+			focusIn="removeTextoPadraoTextArea(this.txtMensagem)" 
+			focusOut="addTextoPadraoTextArea(this.txtMensagem)" 
+			text="Mensagem"/>
+		<mx:Button 
+			label="Enviar" 
+			id="btnEnviar"
+			click="enviarEmail(event)"/>
+	</mx:VBox>
+	
+</mx:Application>

@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute" 
+				themeColor="#FF5400" 
+				backgroundGradientAlphas="[0.6, 1.0]"
+				verticalScrollPolicy="off" 
+				horizontalScrollPolicy="off"
+				pageTitle="Sistema 3GSAT ERP - Interno"
+				backgroundColor="#6D6D6D" 
+				backgroundGradientColors="[#000000, #515C71]">
+	<mx:Script>
+		<![CDATA[
+			import mx.effects.effectClasses.WipeDownInstance;
+			import flash.net.navigateToURL;
+			import flash.net.URLRequest;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import form.*;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.effects.*
+
+			//menu		
+		 	private function showAdm():void {
+			Bt_acord_Adm.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3GAdmiinistrativo, true));
+			}		
+			private function showCom():void {
+			Bt_acord_Com.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3GComercial, true));
+			}		
+			private function showFin():void {
+			Bt_acord_Fin.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3GFinanc, true));
+			}		
+			private function showFun():void {
+			Bt_acord_Fun.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3G_RH, true));
+			}		
+			private function showCad():void {
+			Bt_acord_Cad.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3GCadastro, true));
+			}		
+			private function showRCred():void {
+			Bt_acord_RCred.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3GRedeCred, true));
+			}
+			private function showSup():void {
+			Bt_acord_Sup.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.TS3GSuporte, true));
+			}
+				
+			//Acesso Rapido
+			private function showAR_Caixa():void {
+			BtCaixa.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.AR_Caixa, true));
+			}	
+			private function showAR_Contato():void {
+			BtContato.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.AR_Contato, true));
+			}	
+			private function showAR_Webmail(): void {
+			navigateToURL(new URLRequest('http://www.3gsat.com.br/webmail'),'_blank');
+			} 
+			private function showAR_Agenda():void {
+			BtAgenda.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.AR_Servico, true));
+			}	
+			private function showAR_3gOn(): void {
+			navigateToURL(new URLRequest('http://3gserver:84'),'_blank');
+			} 
+			private function showAR_Servico():void {
+			BtServico.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, form.Cadastro_Inst, true));
+			}										
+		]]>
+		</mx:Script> 
+		<mx:WipeUp id="WipeIN" duration="4000">
+		</mx:WipeUp>
+		
+		<mx:WipeDown id="WipeOUT" duration="4000">
+		</mx:WipeDown>
+		
+		<mx:WipeLeft id="WipeLeft" duration="1000">
+		</mx:WipeLeft>
+		
+		<mx:WipeRight id="WipeRight" duration="1000" >
+		</mx:WipeRight>
+		
+		
+		<mx:Image 
+				source="../IMG/3GSAT-black.png" 
+				right="10" 
+				bottom="8"/>
+		<mx:Label 
+				text="© 2010 3GSAT" 
+				color="#FFFFFF" 
+				fontFamily="Arial" 
+				fontWeight="bold" 
+				left="16" 
+				bottom="16"/>
+		<mx:TitleWindow 
+						height="420" 
+						layout="absolute" 
+						title="SISTEMA S3G ERP" 
+						width="163" 
+						verticalCenter="0" 
+						alpha="1.0" 
+						id="MenuERP" 
+						horizontalCenter="-273" backgroundAlpha="1.0" borderStyle="solid" borderColor="#BFBFBF" backgroundColor="#515C71" cornerRadius="8" borderThickness="2" color="#BFBFBF">
+			<mx:Accordion 
+						left="0" 
+						right="0" 
+						top="0" 
+						borderColor="#FFFFFF" 
+						color="#000000" 
+						alpha="1.0" 
+						borderStyle="solid" 
+						bottom="147"  borderThickness="2">
+				<mx:Canvas 
+						label="Administrativo" 
+						width="100%" height="100%" 
+						click="showAdm();">
+						<mx:Button 
+								x="21.5" 
+								y="12" 
+								width="88" 
+								height="49" 
+								themeColor="#FF4800"  
+								fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+								icon="@Embed(source='../IMG/BT_Admin.jpg')" 
+								id="Bt_acord_Adm"/>
+				</mx:Canvas>
+				<mx:Canvas 
+						label="Comercial" 
+						width="100%" 
+						height="100%" 
+						click="showCom();">
+					<mx:Button 
+							x="21.5" 
+							y="12" 
+							width="88" 
+							height="49" 
+							icon="@Embed(source='../IMG/BT_COM.jpg')" 
+							themeColor="#FF4800"  
+							fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+							id="Bt_acord_Com"/>
+				</mx:Canvas>
+				<mx:Canvas 
+						label="Financeiro" 
+						width="100%" 
+						height="100%" 
+						click="showFin();">
+					<mx:Button 
+							x="21.5" 
+							y="12" 
+							width="88" 
+							height="49" 
+							icon="@Embed(source='../IMG/BT_FIN.jpg')" 
+							themeColor="#FF4800"  
+							fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+							alpha="1.0" 
+							id="Bt_acord_Fin"/>
+				</mx:Canvas>
+				<mx:Canvas 
+						label="Recursos Humanos" 
+						width="100%" 
+						height="100%" 
+						click="showFun();">
+					<mx:Button 
+							x="21.5" 
+							y="12" 
+							width="88" 
+							height="49" 
+							icon="@Embed(source='../IMG/BT_FUNC.jpg')" 
+							themeColor="#FF4800"  
+							fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+							id="Bt_acord_Fun"/>
+				</mx:Canvas>
+				<mx:Canvas 
+						label="Cadastro" 
+						width="100%" 
+						height="100%" 
+						click="showCad();">
+					<mx:Button 
+							x="21.5" 
+							y="12" 
+							width="88" 
+							height="49" 
+							icon="@Embed(source='../IMG/MiniCad.jpg')" 
+							themeColor="#FF4800"  
+							fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+							id="Bt_acord_Cad"/>
+				</mx:Canvas>
+				<mx:Canvas 
+						label="Rede Credenciada" 
+						width="100%" 
+						height="100%" 
+						click="showRCred();">
+					<mx:Button 
+							x="21.5" 
+							y="12" 
+							width="88" 
+							height="49" 
+							icon="@Embed(source='../IMG/BT_RCRED.jpg')" 
+							themeColor="#FF4800"  
+							fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+							id="Bt_acord_RCred"/>
+				</mx:Canvas>
+				<mx:Canvas 
+						label="Suporte" 
+						width="100%" 
+						height="100%" 
+						click="showSup();">
+					<mx:Button 
+							x="21.5" 
+							y="12" 
+							width="88" 
+							height="49" 
+							icon="@Embed(source='../IMG/BT_SUP.jpg')" 
+							themeColor="#FF4800"  
+							fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+							id="Bt_acord_Sup"/>
+				</mx:Canvas>
+			</mx:Accordion>
+			<mx:DateChooser 
+						left="0" 
+						right="0" 
+						bottom="0" 
+						top="237" 
+						color="#000000"  alpha="1.0" borderColor="#FFFFFF" cornerRadius="0"/>
+		</mx:TitleWindow>
+		<mx:Panel 
+				height="420" 
+				layout="absolute" 
+				borderStyle="solid" 
+				backgroundImage="@Embed(source='../IMG/FND.png')"
+				backgroundAlpha="1.0" 
+				borderColor="#BFBFBF" 
+				title="WORKSPACE" 
+				color="#BFBFBF" 
+				cornerRadius="12" 
+				alpha="1.0" 
+				verticalCenter="0" 
+				borderThickness="2" 
+				horizontalAlign="center" 
+				fontWeight="bold" 
+				backgroundColor="#515C71" 
+				width="536" 
+				horizontalCenter="84" verticalAlign="middle">
+				<mx:Button 
+						x="51" 
+						y="161" 
+						width="36" 
+						height="36" 
+						borderColor="#727272" 
+						themeColor="#FF5400" 
+						id="BtWebmail" 
+						textAlign="center" 
+						color="#000000" 
+						labelPlacement="bottom" 
+						enabled="true" 
+						cornerRadius="0" 
+						click="showAR_Webmail();" 
+						fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+						fillColors="[#727272, #727272]" 
+						icon="@Embed(source='../IMG/E-Mail.png')"
+						overIcon="@Embed(source='../IMG/E-Mail1.png')" 
+						downIcon="@Embed(source='../IMG/E-Mail.png')"
+						toolTip="Acesso Webmail" 
+				/>
+				<mx:Button 
+						borderColor="#727272" 
+						themeColor="#FF5400" 
+						id="BtCaixa" 
+						color="#FFFFFF" 
+						textAlign="center" 
+						labelPlacement="bottom" 
+						icon="@Embed(source='../IMG/caixa.png')" 
+						overIcon="@Embed(source='../IMG/caixa1.png')" 
+						downIcon="@Embed(source='../IMG/caixa.png')"
+						cornerRadius="0" 
+						click="showAR_Caixa();" 
+						toolTip="Registrar Vendas" 
+						emphasized="false" 
+						includeInLayout="true"
+					    fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+					    fillColors="[#727272, #727272]" 
+					    x="53" 
+					    y="48" 
+					    width="36" 
+					    height="36"
+				/>
+				<mx:Button 
+						x="55" 
+						y="268" 
+						width="36" 
+						height="36" 
+						borderColor="#000000" 
+						themeColor="#FF5400" 
+						color="#000000" 
+						labelPlacement="bottom" 
+						icon="@Embed(source='../IMG/Bt_3gsat.png')" 
+						overIcon="@Embed(source='../IMG/Bt_3gsat1.png')" 
+						downIcon="@Embed(source='../IMG/Bt_3gsat.png')"
+						cornerRadius="0" 
+						click="showAR_3gOn();" 
+						fillColors="[#727272, #727272]"  
+						id="BtEstatic" 
+						fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+						toolTip="Planilhas e Estatisticas"/>
+				<mx:Button 
+						x="161" 
+						y="46" 
+						width="36" 
+						height="36" 
+						borderColor="#000000" 
+						themeColor="#FF5400" 
+						color="#000000" 
+						labelPlacement="bottom" 
+						icon="@Embed(source='../IMG/contato.png')" 
+						overIcon="@Embed(source='../IMG/contato1.png')" 
+						downIcon="@Embed(source='../IMG/contato.png')"
+						cornerRadius="0" 
+						click="showCad();"  
+						fillColors="[#727272, #727272]" 
+						fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+						toolTip="Contatos 3GSAT" id="BtContato"/>
+				<mx:Button 
+						x="161" 
+						y="161" 
+						width="36" 
+						height="36" 
+						borderColor="#000000" 
+						themeColor="#FF5400" 
+						color="#000000" 
+						labelPlacement="bottom" 
+						cornerRadius="0" 
+						click="showAR_Agenda();" 
+						fillColors="[#727272, #727272]"  
+						id="BtAgenda" 
+						fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+						toolTip="Serviços 3GSAT" 
+						icon="@Embed(source='../IMG/Bt_Agenda.png')"
+						overIcon="@Embed(source='../IMG/Bt_Agenda1.png')" 
+						downIcon="@Embed(source='../IMG/Bt_Agenda.png')"/>
+				<mx:Label 
+						x="47" 
+						y="101" 
+						text="CAIXA" 
+						fontWeight="bold" 
+						color="#FFFFFF"/>
+				<mx:Label 
+						x="146" 
+						y="101" 
+						text="CADASTRO" 
+						fontWeight="bold" 
+						color="#FFFFFF" 
+						fontFamily="Verdana"/>
+				<mx:Label 
+						x="38" 
+						y="214" 
+						text="WEBMAIL" 
+						fontWeight="bold" 
+						color="#FFFFFF"/>
+				<mx:Label 
+						x="152" 
+						y="214" 
+						text="AGENDA" 
+						fontWeight="bold" 
+						color="#FFFFFF"/>
+				<mx:Button 
+						x="161" 
+						y="268" 
+						width="36" 
+						height="40" 
+						borderColor="#000000" 
+						themeColor="#FF5400" 
+						color="#000000" 
+						labelPlacement="bottom" 
+						cornerRadius="0" 
+						click="showAR_Servico();" 
+						fillColors="[#727272, #727272]"  
+						id="BtServico" 
+						fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+						toolTip="Serviços 3GSAT" 
+						icon="@Embed(source='../IMG/servico.png')"
+						overIcon="@Embed(source='../IMG/servico1.png')" 
+						downIcon="@Embed(source='../IMG/servico.png')"/>
+				<mx:Label 
+						x="146" 
+						y="322" 
+						text="SERVIÇOS" 
+						fontWeight="bold" 
+						color="#FFFFFF"/>
+				<mx:Label 
+						x="28" 
+						y="322" 
+						text="3GSAT ONLINE" 
+						fontWeight="bold" 
+						color="#FFFFFF"/>
+				<mx:Canvas 
+					width="166" 
+					right="10" 
+					hideEffect="{WipeOUT}" 
+					showEffect="{WipeIN}" 
+					id="PopUp_Tempo"
+					borderStyle="solid" 
+					cornerRadius="10" 
+					borderColor="#C4C4C4" 
+					backgroundColor="#2E2E2E" 
+					borderThickness="2" 
+					top="10" 
+					height="180">
+						<mx:SWFLoader 
+							id="tempo" 
+							source="../IMG/tempo.swf" 
+							themeColor="#000000" 
+							alpha="1.0" 
+							verticalAlign="middle" 
+							horizontalAlign="left" 
+							width="150" 
+							horizontalCenter="0" 
+							height="170"
+							verticalCenter="0" 
+							autoLoad="true"/>
+				</mx:Canvas>
+		</mx:Panel>
+		<mx:ApplicationControlBar 
+			bottom="0.019500732" 
+			left="0" right="0" 
+			height="51.280487">
+		</mx:ApplicationControlBar>
+		<mx:MenuBar 
+			top="0" 
+			left="0" 
+			right="0" 
+			height="35.30488" 
+			fillAlphas="[0.62, 1.0, 0.62, 1.0]" 
+			fillColors="[#6E6E6E, #000000]" 
+			borderColor="#7C7C7C">
+			
+		</mx:MenuBar>
+		<mx:Image 
+			right="10" 
+			top="2" 
+			alpha="1.0" 
+ source="../IMG/bt_botoes.png"/>
+		<mx:Image 
+			source="../IMG/3gsatICO.png" 
+			top="6" 
+			left="8"/>
+		<mx:HRule 
+			strokeColor="#C9C7C7" 
+			left="0" 
+			right="0" 
+			top="1" 
+			strokeWidth="1"/>
+		<mx:Button 
+			width="14" 
+			height="14" 
+			cornerRadius="10" 
+			icon="@Embed(source='../IMG/refresh.png')" 
+			right="59" 
+			top="9"/>
+		<mx:Button 
+			width="14" 
+			height="14" 
+			cornerRadius="10" 
+			icon="@Embed(source='../IMG/help.png')" 
+			right="39" 
+			top="9"/>
+		<mx:Button 
+			width="14" 
+			height="14" 
+			cornerRadius="10" 
+			icon="@Embed(source='../IMG/cancel.png')" 
+			right="19" 
+			top="9"/>
+		<mx:Button 
+			label="Configuração" 
+			height="17" width="109" 
+			cornerRadius="8" 
+			borderColor="#000000" 
+			fillAlphas="[1.0, 1.0]" 
+			fillColors="[#000000, #2C2C2C]" 
+			color="#FFFFFF" 
+			fontSize="9" 
+			right="110" 
+			top="8" 
+			textRollOverColor="#1EEE03" 
+			textSelectedColor="#363636" 
+			disabledColor="#000000" 
+			icon="@Embed(source='../IMG/stop.png')" 
+			labelPlacement="right" alpha="1.0" 
+			themeColor="#BE4318" 
+ enabled="true" id="Bt_Config" styleName="botao S3G ERP"/>
+		
+		
+</mx:Application>

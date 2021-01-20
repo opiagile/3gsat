@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" 
+	height="100%" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	horizontalCenter="0"
+	verticalCenter="0"
+	backgroundColor="#FCFAFA" 
+	creationComplete="Iniciar()" 
+	borderColor="#FFFFFF"
+	xmlns:im="classes.*">
+<mx:TitleWindow 
+	id="Tw_Import" 
+	width="517" 
+	height="229"
+	title="S3G - Importar arquivo"
+	showCloseButton="true"
+	close="Fechar()"  
+	borderColor="#2D2E44" 
+	themeColor="#FFFFFF" 
+	cornerRadius="15" 
+	horizontalCenter="0" 
+	verticalCenter="0" 
+	titleIcon="@Embed(source='../img/ICOS3G.png')" 
+	backgroundColor="#E2E2E2" 
+	color="#313E56" 
+	borderStyle="solid" 
+	borderThickness="1" 
+	horizontalAlign="center" 
+	verticalAlign="middle">
+	<mx:Canvas 
+		width="497" 
+		height="95%" 
+		backgroundColor="#FFFFFF" 
+		borderStyle="solid" 
+		borderColor="#2D2E44" 
+		cornerRadius="8">
+		<mx:Label 
+			text="Selecionar arquivo para Envio:" 
+			x="11.25" 
+			y="94"/>
+		<mx:Label 
+			text="Selecionar cliente para Envio:" 
+			x="11.25" 
+			y="44"/>
+		<im:uploadButton 
+				label="Procurar..." 
+				icon="@Embed(source='../img/btPesquisar.png')" 
+				width="116" 
+				height="26" 
+				borderColor="#2D2E44" 
+				id="btUp"
+				x="184.75" 
+				y="90"/>
+		<mx:TextInput 
+			x="182.25" 
+			y="39" 
+			width="225.75" 
+			id="in_fantasia"/>
+		<mx:Button 
+			x="416" 
+			y="40" 
+			label="Localizar" 
+			id="in_loc" 
+			click="consultar()"/>
+	</mx:Canvas>
+</mx:TitleWindow>
+	<mx:Script>
+		<![CDATA[
+		
+		import classes.cliente;
+		
+		import flash.sampler.NewObjectSample;
+		import mx.containers.Grid;
+		import mx.collections.ArrayCollection;
+		import mx.rpc.events.ResultEvent;
+		import mx.controls.Button;
+		import mx.managers.PopUpManager;
+		import mx.containers.Form;
+		import mx.core.Application;
+		import mx.containers.Canvas;
+		import mx.containers.TitleWindow;
+			
+		import util.ObjetoRemoto;
+		import classes.uploadButton;
+		
+		[Bindable]
+		private var cod_cliente: int;
+		
+		[Bindable]
+		public var busca_cliente: cliente = new cliente;
+		
+		private function Iniciar():void 
+		{
+			PopUpManager.centerPopUp(this);
+		}
+		
+		private function Fechar():void 
+		{
+			PopUpManager.removePopUp(this);
+		}
+		
+		private function consultar():void
+		{
+			Application.application._pesquisa = 1;
+			var codcliente: Consultar = Consultar(PopUpManager.createPopUp(this, form.Consultar, true));			
+		}
+
+		public function atualiza(): void
+		{
+			var remoteObj_atual:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso_busca);                            
+			remoteObj_atual.getOperation("localizacliente").send(Application.application._clienteid); 
+		}	
+									
+		private function rstSucesso_busca(evt:ResultEvent):void
+		{
+			if (evt.result != null)
+			{
+				busca_cliente = evt.result.valueOf();
+
+				cod_cliente = busca_cliente.clienteid;									
+				in_fantasia.text = busca_cliente.fantasia;	
+				//btUp.UPLOAD_URL	 = "../upload/" + String(busca_cliente.clienteid) + "/";
+			}
+		}
+		]]>
+	</mx:Script>
+</mx:Canvas>

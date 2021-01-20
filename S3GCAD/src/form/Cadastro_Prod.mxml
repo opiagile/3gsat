@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="750" 
+	height="500" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtCaixa.enabled=true;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G Cadastro - Cadastro de Produtos" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()"
+		titleIcon="@Embed(source='../../IMG/3gsatICO.png')" 
+		width="730" 
+		height="440" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#515C71" 
+ 		backgroundImage="@Embed(source='../../IMG/fnd_plasma.png')" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#FFFFFF" 
+ 		borderThickness="2" 
+ 		horizontalCenter="0" 
+ 		verticalCenter="0" color="#FFFFFF">
+		<mx:Label 
+			text="Código do Fornecedor" 
+			color="#4B5062" 
+			textAlign="left" 
+			y="20" 
+			left="20"/>
+		<mx:TextInput 
+			x="151" 
+			y="10" 
+			width="137" 
+			color="#474747" 
+			borderColor="#CACED0" 
+			borderStyle="solid" 
+			height="33" 
+			text="A123321" 
+			fontSize="20" 
+			textAlign="center" 
+			cornerRadius="5" id="In_CodForn"/>
+		<mx:TextInput 
+			x="536" 
+			y="10" 
+			width="149" 
+			color="#474747" 
+			borderColor="#CACED0" 
+			borderStyle="solid" 
+			height="33" 
+			text="013502" 
+			fontSize="20" 
+			textAlign="center" 
+			cornerRadius="5" 
+			id="In_CodProd" toolTip="Em caso de Rastreadores Informar o IMEI"/>
+		<mx:Accordion 
+			id="Acc_CadProd" 
+			color="#2D1616" 
+			left="20" 
+			right="18" 
+			top="50" bottom="75">
+			<mx:Canvas 
+				label="Dados do Produto" 
+				width="100%" 
+				height="100%">
+				<mx:Label 
+					text="Descrição" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="28"/>
+				<mx:Label 
+					text="Complemento" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="70"/>
+				<mx:TextInput 
+					x="10" 
+					y="43" 
+					width="646" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_DescProd"/>
+				<mx:TextInput 
+					x="10" 
+					y="86" 
+					width="273" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_ComplProd"/>
+				<mx:ComboBox 
+					x="318" 
+					y="84" 
+					width="157" 
+					height="20" 
+					dataProvider="Rastreador" 
+					textAlign="center" 
+					id="Cb_TipoProd" 
+					borderColor="#B7BABC">
+				</mx:ComboBox>
+				<mx:ComboBox 
+					x="516" 
+					y="84" 
+					width="140" 
+					height="20" 
+					dataProvider="Venda ou Serviço" 
+					textAlign="center" 
+					id="Cb_ClassProd" 
+					borderColor="#B7BABC">
+				</mx:ComboBox>
+				<mx:ComboBox 
+					x="10" 
+					y="128" 
+					width="198" 
+					height="20" 
+					dataProvider="SEVA" 
+					textAlign="center" 
+					id="Cb_MarcaProd" 
+					borderColor="#B7BABC">
+				</mx:ComboBox>
+				<mx:ComboBox 
+					x="215" 
+					y="128" 
+					width="84" 
+					height="20" 
+					dataProvider="1 Ano" 
+					textAlign="center" 
+					id="Cb_GarantiaProd" borderColor="#B7BABC">
+				</mx:ComboBox>
+				<mx:TextInput 
+					x="304" 
+					y="130" 
+					width="91" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_CustoProd" textAlign="center"/>
+				<mx:TextInput 
+					x="402" 
+					y="130" 
+					width="94" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_PrecoProd" 
+					text="R$100,00" 
+					textAlign="center"/>
+				<mx:TextInput 
+					x="502" 
+					y="130" 
+					width="73" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_MargProd" 
+					text="100" 
+					textAlign="center"/>
+				<mx:TextInput 
+					x="582" 
+					y="130" 
+					width="73" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_EstProd" 
+					text="1" 
+					textAlign="center"/>
+				<mx:ComboBox 
+					x="10" 
+					y="181" 
+					width="84" 
+					height="20" 
+					dataProvider="14 - FF" 
+					textAlign="center" 
+					id="Cb_IcmsProd" 
+					borderColor="#B7BABC">
+				</mx:ComboBox>
+				<mx:TextInput 
+					x="119" 
+					y="182" 
+					width="73" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_IpiProd" 
+					text="1" 
+					textAlign="center"/>
+				<mx:TextArea 
+					x="215" 
+					y="157" 
+					width="441" 
+					height="43" 
+					text="Observação" 
+					id="Txa_ObsProd" 
+					borderColor="#B7BABC"/>
+				<mx:Label 
+					text="Margem (%)" 
+					color="#4B5062" 
+					width="79" 
+					textAlign="left" 
+					x="502" 
+					y="113"/>
+				<mx:Label 
+					text="Preço de Venda" 
+					color="#4B5062" 
+					width="98" 
+					textAlign="left" 
+					x="402" 
+					y="113"/>
+				<mx:Label 
+					text="Preço de Custo" 
+					color="#4B5062" 
+					width="98" 
+					textAlign="left" 
+					x="304" 
+					y="113"/>
+				
+				<mx:Label 
+					text="Garantia" 
+					color="#4B5062" 
+					width="70" 
+					textAlign="left" 
+					x="215" 
+					y="113"/>
+				
+				<mx:Label 
+					text="ICMS" 
+					color="#4B5062" 
+					width="70" 
+					textAlign="left" 
+					x="11" 
+					y="165"/>
+				
+				
+				
+				
+				
+				<mx:Label 
+					text="Marca do Produto" 
+					color="#4B5062" 
+					width="111" 
+					textAlign="left" 
+					x="10" 
+					y="113"/>
+				<mx:Label 
+					text="Tipo de Produto" 
+					color="#4B5062" 
+					width="97" 
+					textAlign="left" 
+					x="318" 
+					y="69"/>
+				<mx:Label 
+					text="Classe do Produto" 
+					color="#4B5062" 
+					width="115" 
+					textAlign="left" 
+					x="516" 
+					y="69"/>
+				
+				
+				<mx:Label 
+					text="Estoque" 
+					color="#4B5062" 
+					width="74" 
+					textAlign="left" 
+					x="582" 
+					y="113"/>
+				<mx:Label 
+					text="IPI" 
+					color="#4B5062" 
+					width="38" 
+					textAlign="left" 
+					x="120" 
+					y="165"/>
+				
+			</mx:Canvas>
+			<mx:Canvas 
+				label="Consulta" 
+				width="100%" 
+				height="100%">
+				<mx:TabNavigator left="10" right="10" top="10" bottom="10">
+					<mx:Canvas label="Historico de Produtos" width="100%" height="100%">
+						<mx:RadioButton x="23.5" y="9" label="Descrição do Produto" id="Rb_DescProdCons"/>
+						<mx:RadioButton x="23.5" y="30" label="Código do Produto" id="Rb_CodProdCons"/>
+						<mx:RadioButton x="23.5" y="51" label="Código do Fornecedor" id="Rb_CodFornCons"/>
+						<mx:RadioButton x="23.5" y="73" label="Por Data de Cadastro" id="Rb_DtaCadCons"/>
+						<mx:DateField x="178.5" y="73" width="188" textAlign="center" height="20" id="Df_DtaCadCons" enabled="false"/>
+						<mx:TextInput 
+							x="178.5" 
+							y="10" 
+							width="442" 
+							color="#8D8C8C" 
+							borderColor="#B7BABC" 
+							borderStyle="solid" 
+							height="20" 
+							id="In_DescProdCons" text="1" textAlign="left" fontWeight="normal" editable="false"/>
+						<mx:TextInput 
+							x="178.5" 
+							y="31" 
+							width="188" 
+							color="#8D8C8C" 
+							borderColor="#B7BABC" 
+							borderStyle="solid" 
+							height="20" 
+							id="In_CodProdCons" text="1" textAlign="left" fontWeight="normal" editable="false"/>
+						<mx:TextInput 
+							x="178.5" 
+							y="52" 
+							width="188" 
+							color="#8D8C8C" 
+							borderColor="#B7BABC" 
+							borderStyle="solid" 
+							height="20" 
+							id="In_CodFornCons" text="1" textAlign="left" fontWeight="normal" editable="false"/>
+						<mx:Button x="577.5" y="52" label="OK" height="41" id="Bt_ValidaPesquisa"/>
+						<mx:DataGrid x="23" y="113" height="51" width="597.5" editable="false" id="Dg_ConsultaProd">
+							<mx:columns>
+								<mx:DataGridColumn headerText="Column 1" dataField="col1"/>
+								<mx:DataGridColumn headerText="Column 2" dataField="col2"/>
+								<mx:DataGridColumn headerText="Column 3" dataField="col3"/>
+							</mx:columns>
+						</mx:DataGrid>
+					</mx:Canvas>
+					<mx:Canvas label="Diversos" width="100%" height="100%">
+					</mx:Canvas>
+				</mx:TabNavigator>
+			</mx:Canvas>
+		</mx:Accordion>
+		
+		<mx:Label 
+			text="Cód. do Produto" 
+			color="#4B5062" 
+			textAlign="left" 
+			y="20" 
+			left="432"/>
+		<mx:Button 
+			x="20" 
+			y="350" 
+			label="Formulário" 
+			color="#606068" 
+			id="Bt_FormularioProd"/>
+		<mx:Button 
+			x="116" 
+			y="350" 
+			label="Novo" 
+			color="#606068" 
+			id="BT_NovoCadProd"/>
+		<mx:Button 
+			x="180" 
+			y="350" 
+			label="&lt;&lt; Anterior" 
+			color="#606068" 
+			id="BT_RegAntProd"/>
+		<mx:Button 
+			x="284" 
+			y="350" 
+			label="Próximo &gt;&gt;" 
+			color="#606068" 
+			id="BT_RegProxProd"/>
+		<mx:Button 
+			x="388" 
+			y="350" 
+			label="Pesquisar" 
+			color="#606068" 
+			id="Bt_PesquisarProd"/>
+		<mx:Button 
+			x="504" 
+			y="346" 
+			height="28" 
+			width="28" 
+			color="#000000"
+			icon="@Embed(source='../../IMG/bt_cad_edit.png')" 
+			overIcon="@Embed(source='../../IMG/bt_cad_edit_2.png')" 
+			downIcon="@Embed(source='../../IMG/bt_cad_edit_3.png')" 
+			id="Bt_Cad_edit_Prod"
+			toolTip="Editar" 
+			cornerRadius="4" 
+			alpha="1.0" 
+			borderColor="#E0E0E0" 
+			themeColor="#FF6C00" 
+			enabled="true"/>
+		<mx:Button 
+			x="575" 
+			y="346" 
+			height="28" 
+			width="28" 
+			color="#000000"
+			icon="@Embed(source='../../IMG/bt_cad_del.png')" 
+			overIcon="@Embed(source='../../IMG/bt_cad_del_2.png')" 
+			downIcon="@Embed(source='../../IMG/bt_cad_del_3.png')" 
+			id="Bt_Cad_del_Prod"
+			toolTip="Apagar"/>
+		<mx:Button 
+			x="645" 
+			y="346" 
+			height="28" 
+			width="28" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/bt_cad_ok.png')" 
+			overIcon="@Embed(source='../../IMG/bt_cad_ok_2.png')" 
+			downIcon="@Embed(source='../../IMG/bt_cad_ok_3.png')" 
+			id="Bt_Cad_ok_Prod" 
+			toolTip="Salvar"/>
+		
+		
+		
+	</mx:TitleWindow>
+</mx:Canvas>

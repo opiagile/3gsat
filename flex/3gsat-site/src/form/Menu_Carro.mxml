@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="98" 
+	height="150" 
+	alpha="1.0" 
+	backgroundAlpha="0.0">
+	<mx:Image 
+		source="img/Menu_Cam.png" 
+		horizontalCenter="0" 
+		verticalCenter="0"/>
+</mx:Canvas>

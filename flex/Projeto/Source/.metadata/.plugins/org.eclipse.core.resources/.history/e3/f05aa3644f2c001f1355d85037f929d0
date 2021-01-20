@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="189" height="396" backgroundColor="#434242">
+	<mx:Panel layout="absolute" styleName="MenuPanel" left="0" right="0" top="0" bottom="0">
+		
+		<mx:ComboBox horizontalCenter="0" top="10"></mx:ComboBox>
+		<mx:CheckBox y="49" label="Posicionamento" color="#FFFFFF" horizontalCenter="0"/>
+		<mx:CheckBox y="79" label="Posicionamento" color="#FFFFFF" horizontalCenter="0"/>
+		<mx:CheckBox y="109" label="Posicionamento" color="#FFFFFF" horizontalCenter="0"/>
+		<mx:CheckBox y="139" label="Posicionamento" color="#FFFFFF" horizontalCenter="0"/>
+		<mx:RadioButtonGroup id="MeuRastreador"/>
+		<mx:RadioButton y="198" label="Posicionamento" groupName=":: Meu Rastreador ::" color="#FFFFFF" x="50"/>
+		<mx:RadioButton y="224" label="Rastreamento" groupName=":: Meu Rastreador ::" color="#FFFFFF" x="50"/>
+		<mx:RadioButton y="250" label="Area de Risco" groupName=":: Meu Rastreador ::" color="#FFFFFF" x="50"/>
+		<mx:RadioButton y="276" label="Histórico" groupName=":: Meu Rastreador ::" color="#FFFFFF" x="50"/>
+		<mx:RadioButtonGroup id="radiogroup1"/>
+		<mx:ProgressBar labelPlacement="center" minimum="0" maximum="100" indeterminate="true" enabled="true" label="ruim" alpha="1.0" themeColor="#FF0000" color="#000000" fontSize="11" bottom="0" left="0" right="0" top="380"/>
+		<mx:Label x="-1" y="365" text="Qualidade do sinal GPRS" color="#FFFFFF" fontWeight="bold"/>
+	</mx:Panel>
+	
+</mx:Canvas>

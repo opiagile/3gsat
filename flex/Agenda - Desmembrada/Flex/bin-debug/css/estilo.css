@@ -1,0 +1,26 @@
+/*
+******************************************************************************************
+Data..........: 23/01/2009
+Responsável...: Vinícius Sandim
+Objeto........: Folha de estilos da aplicação
+******************************************************************************************
+*/
+
+Application{
+	theme-color: #FFCC00;
+	background-color: #FFFFFF;
+}
+
+Button{
+	font-weight: bold;
+}
+
+Label{
+	font-weight: bold;
+}
+
+Alert{
+	color: #333333;
+	background-color: #FFFFFF;
+	border-color : #FFFFFF;
+}

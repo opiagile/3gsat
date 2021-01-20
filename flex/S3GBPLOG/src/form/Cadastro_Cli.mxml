@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:ns1="com.flexpernambuco.controls.*"
+	width="750" 
+	height="518" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import classes.cliente;
+			
+			import util.ObjetoRemoto;
+			
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import form.*;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable]
+			public var busca_cliente: cliente = new cliente;			
+			
+			public var consulta: Consultar;
+			private var editando: Boolean = false;	
+			private var SalvarNovo: Boolean = true;
+		    private var TipoPessoa:Array = new Array(
+		        										{data:0, label:"Jurídica"},
+		        										{data:1, label:"Física"}
+		        									);									
+		    private var UF:Array = new Array(
+		        								{data:"AC", label:"AC"},
+		        								{data:"AL", label:"AL"},
+		        								{data:"AP", label:"AP"},
+		        								{data:"AM", label:"AM"},
+		        								{data:"BA", label:"BA"},
+		        								{data:"CE", label:"CE"},
+		        								{data:"DF", label:"DF"},
+		        								{data:"ES", label:"ES"},
+		        								{data:"GO", label:"GO"},
+		        								{data:"MA", label:"MA"},
+		        								{data:"MT", label:"MT"},
+		        								{data:"MS", label:"MS"},
+		        								{data:"MG", label:"MG"},
+		        								{data:"PA", label:"PA"},
+		        								{data:"PB", label:"PB"},
+		        								{data:"PR", label:"PR"},
+		        								{data:"PE", label:"PE"},
+		        								{data:"PI", label:"PI"},
+		        								{data:"RJ", label:"RJ"},
+		        								{data:"RN", label:"RN"},
+		        								{data:"RS", label:"RS"},
+		        								{data:"RO", label:"RO"},
+		        								{data:"RR", label:"RR"},
+		        								{data:"SC", label:"SC"},
+		        								{data:"SP", label:"SP"},
+		        								{data:"SE", label:"SE"},
+		        								{data:"TO", label:"TO"}
+		        							);									
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+				In_bairro.text = "";
+				In_cnpj.text = "";
+				In_codcli.text = "";
+				In_email.text = "";
+				In_endereco.text = "";
+				In_complemento.text = "";
+				In_fantasia.text = "";
+				In_inscricaoestadual.text = "";
+				In_nomecli.text = "";
+				In_numero.text = "";
+				In_observacao.text = "";
+				In_tel1.text = "";
+				In_tel2.text = "";
+				Cb_natureza.text = "";
+				Cb_uf.text = "";
+
+				ck_dom.selected = false;
+				ck_seg.selected = false;
+				ck_ter.selected = false;
+				ck_qua.selected = false;
+				ck_qui.selected = false;
+				ck_sex.selected = false;
+				ck_sab.selected = false;
+				lb_diasuteis.enabled = false;
+				ck_manha.enabled = false;
+				ck_tarde.enabled = false;
+				ck_noite.enabled = false;
+				lb_fds.enabled = false;
+				ck_fds_manha.enabled = false;
+				ck_fds_tarde.enabled = false;
+				ck_fds_noite.enabled = false;
+
+				In_codcli.setFocus();
+
+				In_bairro.editable = false;									
+				In_cidade.editable = false;
+				Cb_uf.editable = false;
+				Cb_natureza.editable = false;
+				In_cnpj.editable = false;
+				In_codcli.editable = false;
+				In_email.editable = false;
+				In_endereco.editable = false;
+				In_complemento.editable = false;
+				In_fantasia.editable = false;
+				In_inscricaoestadual.editable = false;
+				In_nomecli.editable = false;
+				In_numero.editable = false;
+				In_observacao.editable = false;
+				In_tel1.editable = false;
+				In_tel2.editable = false;	
+				
+				Bt_cancela.enabled = false;
+				Bt_consultar.enabled = true;
+				Bt_editcli.enabled = false;
+				Bt_excluicli.enabled = false;
+				Bt_novocli.enabled = true;
+				Bt_salvarcli.enabled = false;
+											
+			}
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+				Application.application.BtCaixa.enabled=true;
+			}
+			
+			private function contachar():void
+			{
+				var total:int = (250 - (In_observacao.length));
+				In_ContChar.text = "(Caracteres restantes: " + total + ")";
+			}
+			
+			private function alteratipo():void
+			{
+				if (Cb_natureza.selectedIndex == 0)
+				{
+					lb_tipo.text = "CNPJ";
+					In_cnpj.inputMask = "99.999.999/9999-99";
+					In_inscricaoestadual.enabled = true;
+					lb_inscricaoestadual.enabled = true;
+				}
+				else
+				{
+					lb_tipo.text = "CPF";
+					In_cnpj.inputMask = "999.999.999-99";
+					In_inscricaoestadual.enabled = false;
+					lb_inscricaoestadual.enabled = false;						
+				}
+			}
+			
+			private function habilitadiasemana():void
+			{
+				if ((ck_seg.selected = true) || (ck_ter.selected = true) || (ck_qua.selected = true) 
+				    || (ck_qui.selected = true) || (ck_sex.selected = true))
+				{ 
+					lb_diasuteis.enabled = true;
+					ck_manha.enabled = true;
+					ck_tarde.enabled = true;
+					ck_noite.enabled = true;
+				}
+
+				if ((ck_seg.selected = false) && (ck_ter.selected = false) && (ck_qua.selected = false) 
+				    && (ck_qui.selected = false) && (ck_sex.selected = false))
+				{ 
+					lb_diasuteis.enabled = false;
+					ck_manha.enabled = false;
+					ck_tarde.enabled = false;
+					ck_noite.enabled = false;
+				}				
+
+				if ((ck_dom.selected = true) || (ck_sab.selected = true))
+				{
+					lb_fds.enabled = true;
+					ck_fds_manha.enabled = true;
+					ck_fds_tarde.enabled = true;
+					ck_fds_noite.enabled = true;
+				}
+				
+				if ((ck_dom.selected = false) && (ck_sab.selected = false))
+				{
+					lb_fds.enabled = false;
+					ck_fds_manha.enabled = false;
+					ck_fds_tarde.enabled = false;
+					ck_fds_noite.enabled = false;
+				}
+			}
+			
+			private function cancela():void
+			{
+				Iniciar();
+			}
+			
+			private function novo():void
+			{
+				In_bairro.text = "";
+				In_cnpj.text = "";
+				In_codcli.text = "";
+				In_email.text = "";
+				In_endereco.text = "";
+				In_complemento.text = "";
+				In_fantasia.text = "";
+				In_inscricaoestadual.text = "";
+				In_nomecli.text = "";
+				In_numero.text = "";
+				In_observacao.text = "";
+				In_tel1.text = "";
+				In_tel2.text = "";
+				Cb_natureza.text = "";
+				Cb_uf.text = "";
+				ck_dom.selected = false;
+				ck_seg.selected = false;
+				ck_ter.selected = false;
+				ck_qua.selected = false;
+				ck_qui.selected = false;
+				ck_sex.selected = false;
+				ck_sab.selected = false;
+				lb_diasuteis.enabled = false;
+				ck_manha.enabled = false;
+				ck_tarde.enabled = false;
+				ck_noite.enabled = false;
+				lb_fds.enabled = false;
+				ck_fds_manha.enabled = false;
+				ck_fds_tarde.enabled = false;
+				ck_fds_noite.enabled = false;				
+				
+				Bt_salvarcli.enabled = true;
+				Bt_novocli.enabled = false;
+				Bt_consultar.enabled = false;
+				Bt_editcli.enabled = false;
+				Bt_cancela.enabled = true;
+				Bt_excluicli.enabled = false;
+				
+				In_codcli.setFocus();
+				
+				In_bairro.editable = true;									
+				In_cidade.editable = true;
+				Cb_uf.editable = true;
+				Cb_natureza.editable = true;
+				In_cnpj.editable = true;
+				In_codcli.editable = true;
+				In_email.editable = true;
+				In_endereco.editable = true;
+				In_complemento.editable = true;
+				In_fantasia.editable = true;
+				In_inscricaoestadual.editable = true;
+				In_nomecli.editable = true;
+				In_numero.editable = true;
+				In_observacao.editable = true;
+				In_tel1.editable = true;
+				In_tel2.editable = true;				
+				
+				editando = false;
+			}
+
+			private function alterar():void
+			{
+				editando = true;
+			}
+
+			private function excluir():void
+			{
+				
+			}
+
+			private function showConsul():void 
+			{
+				Application.application._pesquisa = 0;
+				consulta = Consultar(PopUpManager.createPopUp(this, form.Consultar, true));
+			} 
+			
+			public function atualizar():void
+			{
+					var remoteObj_salvar:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso_busca);                            
+					remoteObj_salvar.getOperation("localizacliente").send(consulta.clienteid); 
+			}
+			
+			public function rstSucesso_busca(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+				{
+					busca_cliente = evt.result.valueOf();
+
+					In_bairro.text = busca_cliente.bairro;									
+					In_cidade.text = busca_cliente.cidade;
+					Cb_uf.text = busca_cliente.estado;
+					if (busca_cliente.natureza == 0) 
+					{
+						Cb_natureza.text = 'Jurídica';
+						In_inscricaoestadual.enabled = true;
+					}
+					else
+					{	
+						Cb_natureza.text = 'Fisíca';
+						In_inscricaoestadual.enabled = false;
+					}
+					In_cnpj.text = busca_cliente.cpf_cnpj.toString();
+					In_codcli.text = busca_cliente.codcli.toString();
+					In_complemento.text = busca_cliente.complemento;
+					In_email.text = busca_cliente.email;
+					In_endereco.text = busca_cliente.endereco;
+					In_fantasia.text = busca_cliente.fantasia;	
+					In_inscricaoestadual.text = busca_cliente.inscricaouf.toString();
+					In_nomecli.text = busca_cliente.razaosocial;
+					In_numero.text = busca_cliente.numero.toString();	
+					In_observacao.text = busca_cliente.observacao;
+					In_tel1.text = busca_cliente.telefone1.toString();
+					In_tel2.text = busca_cliente.telefone2.toString();
+					Bt_salvarcli.enabled = false;
+					Bt_novocli.enabled = false;
+					Bt_editcli.enabled = true;
+					Bt_cancela.enabled = true;
+					Bt_excluicli.enabled = true;									
+				}									
+			}
+
+			private function salvar():void
+			{
+				if (Cb_natureza.text == "")
+				{
+					Alert.show("É obrigatório o preenchimento do campo Natureza!", "atenção");
+					Cb_natureza.setFocus();
+					SalvarNovo = false;
+				}
+				else 
+				{
+					if (In_cnpj.text == "")
+					{
+						if (Cb_natureza.selectedIndex == 0)
+							Alert.show("É obrigatório o preenchimento do campo CNPJ!", "atenção");
+						else
+							Alert.show("É obrigatório o preenchimento do campo CPF!", "atenção");
+							
+						In_cnpj.setFocus();
+						SalvarNovo = false;
+					}
+					else 
+					{
+						if (In_nomecli.text == "")
+						{
+							Alert.show("É obrigatório o preenchimento do campo Nome/Razão Social!", "atenção");
+							In_nomecli.setFocus();
+							SalvarNovo = false;
+						}
+						else
+						{			
+							if (In_endereco.text == "")
+							{
+								Alert.show("É obrigatório o preenchimento do campo Endereço!", "atenção");
+								In_endereco.setFocus();
+								SalvarNovo = false;
+							}
+							else
+							{
+								if (In_numero.text == "")
+								{
+									Alert.show("É obrigatório o preenchimento do campo Número!", "atenção");
+									In_numero.setFocus();
+									SalvarNovo = false;
+								}
+								else 
+								{
+									if (In_bairro.text == "")
+									{
+										Alert.show("É obrigatório o preenchimento do campo Bairro!", "atenção");
+										In_bairro.setFocus();
+										SalvarNovo = false;
+									}
+									else
+									{ 
+										if (Cb_uf.text == "")
+										{
+											Alert.show("É obrigatório o preenchimento do campo Estado!", "atenção");
+											Cb_uf.setFocus();
+											SalvarNovo = false;
+										}
+										else
+										{
+											if (In_cidade.text == "")
+											{
+												Alert.show("É obrigatório o preenchimento do campo Cidade!", "atenção");
+												In_cidade.setFocus();
+												SalvarNovo = false;
+											}
+											else
+											  SalvarNovo = true;
+										}
+									}	
+
+								}
+
+							}
+
+						}
+						
+					}
+
+				}
+				
+				if (SalvarNovo) 
+				{
+					var salvarcliente: cliente = new cliente;			 
+					salvarcliente.codcli = int(In_codcli.text);
+					salvarcliente.distribuidorid = Application.application._distribuidorid;
+					salvarcliente.natureza = Cb_natureza.selectedIndex;
+					salvarcliente.cpf_cnpj = int(In_cnpj.text);
+					salvarcliente.inscricaouf = int(In_inscricaoestadual.text);
+					salvarcliente.fantasia = In_fantasia.text;
+					salvarcliente.razaosocial = In_nomecli.text;
+					salvarcliente.endereco = In_endereco.text;
+					salvarcliente.bairro = In_bairro.text;
+					salvarcliente.numero = int(In_numero.text);
+					salvarcliente.complemento = In_complemento.text;
+					salvarcliente.cidade = In_cidade.text;
+					salvarcliente.estado = Cb_uf.text;
+					salvarcliente.telefone1 = int(In_tel1.text);
+					salvarcliente.telefone2 = int(In_tel2.text);
+					salvarcliente.email = In_email.text;
+					salvarcliente.observacao = In_observacao.text;
+					salvarcliente.inativo = 0;
+					
+					if (editando)
+					{
+						Application.application._clienteid;
+					}	
+					else
+					{
+						var remoteObj_salvar:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso);                            
+						remoteObj_salvar.getOperation("cadastrarcliente").send(salvarcliente); 
+						Bt_cancela.enabled = false;
+						Bt_consultar.enabled = true;
+						Bt_editcli.enabled = false;
+						Bt_excluicli.enabled = false;
+						Bt_novocli.enabled = true;
+						Bt_salvarcli.enabled = false;
+					}	
+				}
+			}
+
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				novo();
+				if (evt.result)
+				{
+					if (editando)
+						Alert.show("Cliente alterado com sucesso!", "Confirmação");
+					else	
+						Alert.show("Cliente salvo com sucesso!", "Confirmação");
+				}
+				else
+				{
+					if (editando)
+						Alert.show("Não foi possível alterar o cliente !", "Erro");
+					else
+						Alert.show("Não foi possível salvar o cliente!", "Erro");	
+				}	
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:Style source="form/layout.css"/>
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G.BPLOG - Cadastro de Clientes" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="730" 
+		height="496" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#A1B9D1" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" 
+ 		styleName="tabNavigatorTab" 
+ 		id="In_cadcli">
+ 		<mx:Button 
+			x="14" 
+			y="391" 
+			label="Novo" 
+			color="#606068" 
+			id="Bt_novocli" 
+			borderColor="#000000" 
+			width="79"
+			click="novo()"/>
+		<mx:Button 
+			x="179" 
+			y="391" 
+			label="Editar" 
+			color="#606068" 
+			id="Bt_editcli" 
+			borderColor="#000000" 
+			width="79" enabled="false"/>
+		<mx:Button 
+			x="261" 
+			y="391" 
+			label="Excluir" 
+			color="#606068" 
+			id="Bt_excluicli" 
+			borderColor="#000000" 
+			width="79" 
+			enabled="false"/>
+		<mx:Button 
+			x="343" 
+			y="391" 
+			label="Salvar" 
+			color="#FF0000" 
+			id="Bt_salvarcli" 
+			borderColor="#000000" 
+			width="79" enabled="false"
+			click="salvar()"/>
+		<mx:TabNavigator 
+			left="10" 
+			right="10" 
+			top="4" 
+ 			bottom="84">
+			<mx:Canvas 
+				label="Cliente" 
+				width="100%" 
+				height="100%" 
+				color="#585454"
+				id="Cv_CadCli">
+				<mx:Label 
+					text="Nome / Razão Social" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="9" 
+					y="38"/>
+				<mx:Label 
+					text="Nome Fantasia" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="363" 
+					y="38"/>
+				<mx:Label 
+					text="CNPJ" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="234" 
+					y="3" id="lb_tipo"/>
+				<mx:Label 
+					text="Insc. Estadual" 
+					color="#4B5062" 
+					textAlign="left" 
+					width="91" 
+					x="462" 
+					y="3" id="lb_inscricaoestadual"/>
+				<mx:Label 
+					text="Endereço" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="9" 
+					y="72"/>				
+				<mx:Label 
+					text="Bairro" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="407" 
+					y="72"/>
+				<mx:Label 
+					text="Complemento" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="294" 
+					y="72"/>
+				<mx:Label 
+					text="Número" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="231" 
+					y="72"/>
+				<mx:Label 
+					text="Cidade" 
+					color="#4B5062" 
+					width="57" 
+					textAlign="left" 
+					x="593" 
+					y="71"/>
+				<mx:Label 
+					text="Estado" 
+					color="#4B5062" 
+					width="57" 
+					textAlign="left" 
+					x="513" 
+					y="71"/>			
+				<mx:Label 
+					text="Tel. 1" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="321" 
+					y="106"/>					
+				<mx:Label 
+					text="Tel. 2" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="506" 
+					y="106"/>
+				<mx:Label 
+					x="9" 
+					y="4" 
+					text="Cód PDV"/>
+				<mx:Label 
+					x="146" 
+					y="4" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="63" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="277" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="443" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="553" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="631" 
+					y="72" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="8" 
+					y="321" 
+					text="* Campo de preenchimento obrigatório" color="#FF0000"/>
+				<mx:Label 
+					x="264" 
+					y="3" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="130" 
+					y="38" 
+					text="*" color="#FF0000"/>
+				<mx:Label 
+					x="93" 
+					y="4" 
+					text="Natureza"/>
+				<ns1:MasterTextInput
+					x="10" 
+					y="20" 
+					width="73" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_codcli" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<mx:ComboBox 
+					x="92" 
+					y="20" 
+					width="133" 
+					height="18" 
+					id="Cb_natureza" 
+					color="#3D0303" 
+					dataProvider="{TipoPessoa}" 
+					fontSize="11"
+					change="alteratipo()">
+					</mx:ComboBox>			
+				<ns1:MasterTextInput 
+					x="234" 
+					y="20" 
+					width="219" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_cnpj" 
+					fontSize="11"
+					inputMask="99.999.999/9999-99"
+					blankMaskChar=" "
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="462" 
+					y="20" 
+					width="223" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_inscricaoestadual" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"
+					inputMask="999.999.999.999"
+					blankMaskChar=" "/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="54" 
+					width="345" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_nomecli" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="364" 
+					y="54" 
+					width="321" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_fantasia" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="89" 
+					width="212" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_endereco" 
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="231" 
+					y="89" 
+					width="54" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_numero" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput
+					x="294" 
+					y="90" 
+					width="106" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_complemento"
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput
+					x="408" 
+					y="89" 
+					width="95" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_bairro"
+					fontSize="11"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>																																			
+				<mx:ComboBox 
+					x="513" 
+					y="89" 
+					width="71" 
+					height="18" 
+					id="Cb_uf" 
+					color="#3D0303" 
+					dataProvider="{UF}" 
+					fontSize="11">
+					</mx:ComboBox>
+				<ns1:MasterTextInput 
+					x="592" 
+					y="89" 
+					width="92" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_cidade" 
+					fontSize="11"
+					onlyRestrict="alphabetic"
+					capsType="upercase"
+					nextFocusOnEnter="true"/>					
+				<ns1:MasterTextInput
+					x="10" 
+					y="124" 
+					width="297" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_email" 
+					fontSize="11"
+					capsType="normal"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="321" 
+					y="124" 
+					width="176" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_tel1" 
+					textAlign="center" 
+					fontSize="11"
+					nextFocusOnEnter="true"
+					inputMask="(99)9999-9999"
+					onlyRestrict="number"/>
+				<ns1:MasterTextInput 
+					x="507" 
+					y="124" 
+					width="176" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_tel2" 
+					textAlign="center" 
+					fontSize="11"
+					nextFocusOnEnter="true"
+					inputMask="(99)9999-9999"
+					onlyRestrict="number"/>	
+				<mx:TextArea 
+					x="10" 
+					y="159" 
+					width="673" 
+					height="70" 
+					id="In_observacao" 
+					maxChars="250"
+					change="contachar()" 
+					cornerRadius="6" 
+					fontSize="11"/>														
+				<mx:Canvas 
+					x="10" 
+					y="245" 
+					width="673" 
+					height="76" 
+					borderStyle="solid" 
+					borderColor="#CACED0" 
+					cornerRadius="6" 
+					label="Horario de Entrega" 
+					color="#000000">
+					<mx:Label 
+						text="Dias Úteis" 
+						color="#000000" 
+						textAlign="left" 
+						width="63" 
+						verticalCenter="1" 
+						horizontalCenter="-234" 
+						enabled="false" 
+						id="lb_diasuteis"/>
+					<mx:Label 
+						text="Final de Semana" 
+						color="#000000" 
+						textAlign="left" 
+						width="101" 
+					verticalCenter="18" 
+					horizontalCenter="-252" enabled="false" id="lb_fds"/>
+				<mx:CheckBox 
+						label="Seg" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="-154" id="ck_seg" change="habilitadiasemana()"/>					
+				<mx:CheckBox 
+						label="Ter" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="-109" id="ck_ter" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Qua" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="-62" id="ck_qua" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Qui" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="-15" id="ck_qui" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Sex" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="31" id="ck_sex" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Sáb" 
+						color="#FF0000" 
+						toolTip="Final de Semana" verticalCenter="-18" horizontalCenter="78" id="ck_sab" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Dom" 
+						color="#FF0000" 
+						toolTip="Final de Semana" verticalCenter="-18" horizontalCenter="128" id="ck_dom" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Manhã" 
+						toolTip="Dias Úteis" verticalCenter="1" horizontalCenter="-146" enabled="false" id="ck_manha" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Tarde" 
+						toolTip="Dias Úteis" verticalCenter="1" horizontalCenter="-85" enabled="false" id="ck_tarde" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Noite" 
+						toolTip="Dias Úteis" verticalCenter="1" horizontalCenter="-28" enabled="false" id="ck_noite" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Manhã" 
+						toolTip="Dias Úteis" verticalCenter="20" horizontalCenter="-146" enabled="false" id="ck_fds_manha" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Tarde" 
+						toolTip="Dias Úteis" verticalCenter="20" horizontalCenter="-85" enabled="false" id="ck_fds_tarde" change="habilitadiasemana()"/>
+				<mx:CheckBox 
+						label="Noite" 
+						toolTip="Dias Úteis" verticalCenter="20" horizontalCenter="-28" enabled="false" id="ck_fds_noite" change="habilitadiasemana()"/>			
+				<mx:Label 
+						text="Período para Entrega" horizontalCenter="-267" verticalCenter="-18"/>
+				<mx:Label 
+						text="Horário" horizontalCenter="243" verticalCenter="-18"/>
+				<ns1:MasterTextInput 
+					x="559" 
+					y="27" 
+					width="69" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_numero0" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true" text="00:00"/>
+				<ns1:MasterTextInput 
+					x="559" 
+					y="50" 
+					width="69" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_numero1" 
+					fontSize="11"
+					onlyRestrict="number"
+					nextFocusOnEnter="true" text="00:00"/>
+				</mx:Canvas>
+				<mx:Label 
+					text="E-mail" 
+					color="#4B5062" 
+					textAlign="center" 
+					x="9" 
+					y="106"/>
+				<mx:Label 
+					text="Observação" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="143"/>
+				<mx:Label 
+					text="Restrições" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="230"/>
+				<mx:Label 
+					text="(Caracteres restantes: 250)" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="83" 
+					y="143" 
+					id="In_ContChar"/>
+			</mx:Canvas>
+		</mx:TabNavigator>		
+		<mx:Button 
+			x="425" 
+			y="391" 
+			label="Cancelar" 
+			color="#606068" 
+			id="Bt_cancela" 
+			borderColor="#000000" 
+			width="79" enabled="false"
+			click="cancela()"/>
+		<mx:Button 
+			x="97" 
+			y="391" 
+			label="Consultar" 
+			color="#606068" 
+			id="Bt_consultar" 
+			borderColor="#000000" 
+			width="79" 
+			enabled="true"
+			click="showConsul()"/>
+	</mx:TitleWindow>
+</mx:Canvas>

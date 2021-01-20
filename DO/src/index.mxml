@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute"
+	backgroundGradientAlphas="[1.0, 1.0]" alpha="1.0" 
+	borderColor="#000000" 
+	backgroundColor="#000000"
+	backgroundGradientColors="[#6B6B6B, #000000]"
+	backgroundImage="@Embed(source='img/d.o.trak.jpg')" 
+	horizontalAlign="center" 
+	verticalAlign="middle" 
+	themeColor="#63622F">
+	
+	<mx:Script>
+		<![CDATA[
+		
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+						
+			//botoes	
+			private function show_alianca():void {
+			Bt_Alianca.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, alianca, true));
+			}	
+			private function show_member():void {
+			Bt_Members.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, member, true));
+			}	
+			private function show_imagens():void {
+			Bt_Xat.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, imagens, true));
+			}
+			private function show_xat():void {
+			navigateToURL(new URLRequest('http://xat.com/TRAK_DO'),'_blank');
+			} 			
+				
+			private function show_recruta(): void {
+			navigateToURL(new URLRequest('http://br.desert-operations.com/?recruiter=16770'),'_blank');
+			} 
+			
+		]]>
+	</mx:Script>
+	<mx:Style source="css/docss.css"/>
+		<mx:Button 
+			label="Membros" 
+			fontSize="9" 
+			width="96" 
+			bottom="10" 
+			horizontalCenter="-45" 
+			themeColor="#4C584D" 
+			id="Bt_Members"
+			click="show_member();" 
+			color="#000000"/>
+		<mx:Button 
+			label="Aliança" 
+			width="96" 
+			fontSize="9" 
+			bottom="10" 
+			horizontalCenter="-140" 
+			themeColor="#4C584D" 
+			id="Bt_Alianca"
+			click="show_alianca();" 
+			color="#000000"/>
+		<mx:Button 
+			label="Imagens" 
+			width="96" 
+			fontSize="9" 
+			bottom="10" 
+			horizontalCenter="50" 
+			themeColor="#4C584D" 
+			id="Bt_Imagens"
+			click="show_imagens();" 
+			color="#000000" enabled="false"/>
+		<mx:Button 
+			label="Recrutamento" 
+			width="96" 
+			fontSize="9" 
+			bottom="10" 
+			horizontalCenter="145" 
+			themeColor="#4C584D" 
+			height="22"
+			click="show_recruta();" 
+			id="Bt_Recruta" color="#000000"/>	
+		<mx:Button 
+			label="Chat - XAT" 
+			width="96" 
+			fontSize="9" 
+			bottom="10" 
+			horizontalCenter="240" 
+			themeColor="#4C584D" 
+			height="22"
+			click="show_xat();" 
+			id="Bt_Xat" color="#000000"/>
+		<mx:Label text="© 2010 |  3GDevelop" top="10" right="10" 
+			click="navigateToURL(new URLRequest('http://www.3gsat.com.br'),'_blank');"/>
+</mx:Application>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- behaviors\Sound.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+
+    <mx:Script>
+        <![CDATA[
+
+            // Embed MP3 file.
+            [Bindable]
+            [Embed(source="../assets/sound1.mp3")]
+            public var soundClass:Class;            
+        ]]>
+    </mx:Script>
+        
+    <mx:SoundEffect id="soundEmbed" 
+        useDuration="false" 
+        loops="0"
+        source="{soundClass}"/>
+
+    <mx:Button id="myButton2" 
+        label="Sound Embed" 
+        mouseDownEffect="{soundEmbed}"/>
+</mx:Application>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// ADOBE SYSTEMS INCORPORATED
+// Copyright 2007 Adobe Systems Incorporated
+// All Rights Reserved.
+//
+// NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the 
+// terms of the Adobe license agreement accompanying it.  If you have received this file from a 
+// source other than Adobe, then your use, modification, or distribution of it requires the prior 
+// written permission of Adobe.
+////////////////////////////////////////////////////////////////////////////////
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute"
+	backgroundColor="#FFFFFF"
+	backgroundAlpha="0">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			
+	        public function handleXml(event:ResultEvent):void
+            {
+				shippingOptionsGrid.dataProvider = event.result.option;
+            }
+
+	        public function handleFault(event:FaultEvent):void
+	        {
+	           Alert.show(event.fault.faultString, "Error");               
+	        } 
+		]]>
+	</mx:Script> 
+	
+	<!-- PHP URL:
+        http://examples.adobe.com/flex3/exchangingdata/xml/xmlHttpService.php  
+   -->
+   <!-- JSP URL:
+        http://examples.adobe.com/flex3app/flex3samples/exchangingdata/xml/xmlHttpService.jsp
+   -->
+   <!-- ASP.NET URL - Updated 9/23/2008
+        http://aspexamples.adobe.com/flex3/exchangingdata/xmlHttpService.aspx
+   -->
+   <!-- ColdFusion URL:
+        http://www.coldfusionportal.org/flex3cf/xmlHttpService.cfm
+   -->   
+
+    <mx:HTTPService id="xmlRpc" 
+    	url="http://aspexamples.adobe.com/flex3/exchangingdata/xmlHttpService.aspx"
+    	result="handleXml(event)" 
+    	fault="handleFault(event)" 
+    	resultFormat="e4x"> 
+	    <mx:request>
+	        <zipcode>{zipcode.text}</zipcode>
+	        <pounds>{weight_lb.text}</pounds>
+	    </mx:request>
+	</mx:HTTPService>
+
+	<mx:Label x="56" y="32" 
+		text="Zip Code" 
+		width="55" height="18" 
+		textAlign="right" 
+		fontWeight="bold" />
+	<mx:Label x="56" y="58" 
+		text="Weight" 
+		width="55" height="18" 
+		textAlign="right" 
+		fontWeight="bold" />
+	<mx:TextInput id="zipcode" 
+		x="130" y="32" 
+		width="160" height="22" />
+	<mx:TextInput id="weight_lb" 
+		x="130" y="58" 
+		width="160" height="22" />
+	<mx:Button x="130" y="95" 
+		label="Get Shipping Options" 
+		click="xmlRpc.send()" 
+		width="160" height="22" />
+	<mx:DataGrid id="shippingOptionsGrid"
+		x="80" y="141" 
+		width="262" height="92" 
+		editable="false" 
+		enabled="true">
+	    <mx:columns>
+	        <mx:DataGridColumn headerText="Service" dataField="service" />
+	        <mx:DataGridColumn headerText="Price" dataField="price" />
+	    </mx:columns>
+	</mx:DataGrid>
+</mx:Application>

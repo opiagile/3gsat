@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#2D2D2D, #2D2D2D]" borderStyle="none" xmlns:ns1="form.*">
+	<mx:HBox left="7" right="0" top="51" bottom="41">
+		<ns1:menu height="100%" width="25%">
+		</ns1:menu>
+		<ns1:mapa width="75%" height="100%">
+			<ns1:mapa left="0" right="0" top="0" bottom="0">
+			</ns1:mapa>
+		</ns1:mapa>
+	</mx:HBox>
+	<ns1:Top_menu left="0" right="0" top="0" backgroundColor="#0F0F0F">
+	</ns1:Top_menu>
+	<ns1:barra_menu bottom="1" left="0" right="0">
+	</ns1:barra_menu>
+	<mx:Style source="Css_cliente.css"/>
+	
+</mx:Application>

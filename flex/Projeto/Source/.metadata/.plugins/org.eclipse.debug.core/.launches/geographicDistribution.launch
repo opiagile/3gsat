@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="com.adobe.flexbuilder.debug.launchConfigurationType.flash">
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_APPLICATION" value="src/geographicDistribution.mxml"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_DEBUG_URL" value="file:/C:/Documents%20and%20Settings/francisco/Desktop/Geographic%20Temperature%20Visualization/bin-debug/dataTransform.html"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_PROFILE_URL" value="file:/C:/Documents%20and%20Settings/francisco/Desktop/Geographic%20Temperature%20Visualization/bin-debug/dataTransform.html"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_PROJECT" value="Geographic Temperature Visualization"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_RUN_URL" value="file:/C:/Documents%20and%20Settings/francisco/Desktop/Geographic%20Temperature%20Visualization/bin-debug/dataTransform.html"/>
+<booleanAttribute key="com.adobe.flexbuilder.debug.ATTR_USE_DEFAULT_URLS" value="true"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/Geographic Temperature Visualization"/>
+<listEntry value="/Geographic Temperature Visualization/src/geographicDistribution.mxml"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+<listEntry value="1"/>
+</listAttribute>
+</launchConfiguration>

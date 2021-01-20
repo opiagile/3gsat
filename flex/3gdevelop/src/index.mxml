@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	backgroundGradientAlphas="[1.0, 0.68]" 
+	backgroundGradientColors="[#000033, #000033]">
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+			import mx.effects.Glow;
+	        import mx.effects.Effect;
+	        import mx.controls.Label;
+
+          	private function get rollOverEffect():Effect {
+           		var effect:Glow = new Glow();
+            	effect.blurXTo = effect.blurYTo = 10;
+            	effect.alphaFrom = 0;
+            	effect.alphaTo = 0.6;
+            	effect.color = 0xFFFFFF;
+            	return effect;
+         		}
+
+        	private function get rollOutEffect():Effect {
+	            var effect:Glow = new Glow();
+	            effect.blurXTo = effect.blurYTo = 0;
+	            effect.alphaFrom = 0.6;
+	            effect.alphaTo = 0;
+	            effect.color = 0xFFFFFF;
+            	return effect;
+        		}
+
+			
+			// Iniciar Tela
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			// Fechar Tela
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			
+			
+			
+		]]>
+	</mx:Script>
+	<mx:ApplicationControlBar 
+		fillAlphas="[1.0, 0.71]" 
+		fillColors="[#000033, #000033]" 
+		alpha="1.0" 
+		cornerRadius="0" dock="true" horizontalAlign="center" height="44" x="-1" y="-1">
+		<mx:VRule width="2" height="20" strokeColor="#C4CCCC"/>
+		<mx:Label 
+			text="EMPRESA" 
+			color="#FFFFFF"
+			rollOverEffect="{rollOverEffect}" 
+	    	rollOutEffect="{rollOutEffect}"
+			 fontWeight="bold" fontSize="12" width="73.6" height="20" textAlign="center"/>
+		<mx:VRule width="2" height="20"/>
+		<mx:Label 
+			text="CONSULTORIA" 
+			color="#FFFFFF"
+			rollOverEffect="{rollOverEffect}" 
+		   	rollOutEffect="{rollOutEffect}"
+			 fontWeight="bold" fontSize="12" textAlign="center"/>
+		<mx:VRule width="2" height="20"/>
+		<mx:Label 
+			text="CLIENTES" 
+			color="#FFFFFF"
+			rollOverEffect="{rollOverEffect}" 
+		   	rollOutEffect="{rollOutEffect}"
+			 fontWeight="bold" fontSize="12" textAlign="center"/>
+		<mx:VRule width="2" height="20"/>
+		<mx:Label 
+			text="RASTREADOR" 
+			color="#FFFFFF"
+			rollOverEffect="{rollOverEffect}" 
+		   	rollOutEffect="{rollOutEffect}"
+			 fontWeight="bold" fontSize="12" width="98" height="20" textAlign="center"/>
+		<mx:VRule width="2" height="20"/>
+		<mx:Label 
+			text="CONTATO" 
+			color="#FFFFFF"
+			rollOverEffect="{rollOverEffect}" 
+		   	rollOutEffect="{rollOutEffect}"
+			 fontWeight="bold" fontSize="12" textAlign="center"/>
+		<mx:VRule width="2" height="20"/>
+			
+	</mx:ApplicationControlBar>
+	<mx:Style source="form/css3g.css"/>
+	<mx:Image source="img/logo2.png" horizontalCenter="0" verticalCenter="0"/>
+	    
+    
+</mx:Application>

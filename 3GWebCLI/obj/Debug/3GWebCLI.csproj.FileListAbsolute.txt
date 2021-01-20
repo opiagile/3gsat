@@ -1,0 +1,5 @@
+R:\site\3GWebCLI\bin\3GWebCLI.dll
+R:\site\3GWebCLI\bin\3GWebCLI.pdb
+R:\site\3GWebCLI\obj\Debug\ResolveAssemblyReference.cache
+R:\site\3GWebCLI\obj\Debug\3GWebCLI.dll
+R:\site\3GWebCLI\obj\Debug\3GWebCLI.pdb

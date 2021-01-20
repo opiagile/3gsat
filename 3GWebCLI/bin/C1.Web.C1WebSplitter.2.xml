@@ -1,0 +1,649 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>C1.Web.C1WebSplitter.2</name>
+    </assembly>
+    <members>
+        <member name="T:C1.Web.C1WebSplitter.ResizeMode">
+            <summary>
+            Determines the resize mode while dragging the splitter bar.
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.ResizeMode.Default">
+            <summary>
+            Resizes the panels size only when release the mouse button of dragging action.
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.ResizeMode.Continuous">
+            <summary>
+            Resizes the panels size instantly while dragging the splitter bar.
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.ResizeMode.Incremental">
+            <summary>
+            Resizes the panels size in particular span.
+            </summary>
+        </member>
+        <member name="T:C1.Web.C1WebSplitter.SkinName">
+            <summary>
+            The skin name for splitter.
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.SkinName.None">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.SkinName.Default">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.SkinName.Thick">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.SkinName.BlueArrow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.SkinName.GrayArrow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:C1.Web.C1WebSplitter.SkinName.Vista">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:C1.Web.C1WebSplitter.C1WebSplitter">
+            <summary>
+            C1WebSlitter is a container control that consists a movable bar that divides a container's display area into two resizable panels.
+            </summary>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.#ctor">
+            <summary>
+            Creates a new instance of the <see cref="T:C1.Web.C1WebSplitter.C1WebSplitter"/> class.
+            </summary>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.OnLoad(System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="oArgs"></param>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.OnPreRender(System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.Render(System.Web.UI.HtmlTextWriter)">
+            <summary>
+            
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.LoadViewState(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.SaveViewState">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.C1WebSplitter.TrackViewState">
+            <summary>
+            This member overrides Control.TrackViewState.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.BackColor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.CssClass">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Enabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Font">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.ForeColor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Bar">
+            <summary>
+            Gets a SplitterBar object that defines the information for splitter bar.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Panel1">
+            <summary>
+            Gets the SplitterPanel object that defines the information for top or left panel of splitter.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Panel2">
+            <summary>
+            Gets the SplitterPanel object that defines the information for bottom or right panel of splitter.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.AutoResize">
+            <summary>
+            Gets or sets a value that determines whether to resize the panels automatically while the container's size change.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.ResizeMode">
+            <summary>
+            Gets or sets the resize mode while dragging the splitter bar. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Increment">
+            <summary>
+            Gets or sets the movement span of incremental resizing. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.SplitterDistance">
+            <summary>
+            Gets or sets the location of the splitter, in pixels, from the left or top edge of the C1WebSplitter. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Orientation">
+            <summary>
+            Gets or sets a value indicating the horizontal or vertical orientation of the C1WebSplitter panels. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.SkinName">
+            <summary>
+            Gets or sets the skin name.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientSize">
+            <summary>
+            Gets or sets the javascript function name that would be called at client side when start dragging the splitter.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientSized">
+            <summary>
+            Gets or sets the javascript function name that would be called at client side when finish dragging the splitter.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientSizing">
+            <summary>
+            Gets or sets the javascript function name that would be called at client side when dragging the splitter.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientCollapse">
+            <summary>
+            Gets or sets the javascript function name that would be called before panel1 is collapsed.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientCollapsed">
+            <summary>
+            Gets or sets the javascript function name that would be called when panel1 is collapsed by clicking the collapse/expand image.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientExpand">
+            <summary>
+            Gets or sets the javascript function name that would be called before panel1 is expanded out.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.OnClientExpanded">
+            <summary>
+            Gets or sets the javascript function name that would be called when panel1 is expanded out by clicking the collapse/expand image.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.C1WebSplitter.Controls">
+            <summary>
+            Gets a System.Web.UI.ControlCollection that contains a collection of child controls in a data listing control.
+            </summary>
+        </member>
+        <member name="T:C1.Web.C1WebSplitter.C1WebPanel">
+            <summary>
+            Represents a panel hosted in splitter.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Localization.StringTables">
+            <summary>
+            StringTables
+            this class contains a single static method InitTables that populates the
+            tables used by the Localizer class.
+            </summary>
+        </member>
+        <member name="F:C1.Util.Licensing.AboutForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:C1.Util.Licensing.AboutForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:C1.Util.Licensing.AboutForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Licensing.ProviderInfo">
+            <summary>
+            <para>Provides static <see cref="M:C1.Util.Licensing.ProviderInfo.Validate(System.Type,System.Object)"/> methods that 
+            should be called from the constructors of licensed classes.</para>
+            <para>Also provides a static <see cref="M:C1.Util.Licensing.ProviderInfo.ShowAboutBox(System.Object)"/> method that can 
+            be called to show the about box with product and licensing information.</para>
+            </summary>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.Validate(System.Type,System.Object)">
+            <summary>
+            Perform license validation. Call this method from the licensed object's 
+            constructor to save a license key at design time, validate it at runtime, 
+            and display a nag dialog if a valid license is not found.
+            </summary>
+            <param name="type">Type of licensed object (use typeof() and not GetType()).</param>
+            <param name="instance">Reference to the licensed object (not currently used).</param>
+            <returns>A <see cref="T:C1.Util.Licensing.LicenseInfo"/> object that contains information about the license.</returns>
+            <remarks>
+            <para>Check the <b>ShouldNag</b> property of the returned <see cref="T:C1.Util.Licensing.LicenseInfo"/> 
+            to determine whether the licensed class should nag the user. This value is set
+            to true in situations where a valid license was not found but a nag dialog
+            could not be displayed. In these cases, the licensed class is supposed to nag
+            in some other way (with a watermark for example).</para>
+            </remarks>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.Validate(System.Type,System.Object,System.Boolean)">
+            <summary>
+            Perform license validation. Call this method from the licensed object's 
+            constructor to save a license key at design time, validate it at runtime, 
+            and display a nag dialog if a valid license is not found.
+            </summary>
+            <param name="type">Type of licensed object (use typeof() and not GetType()).</param>
+            <param name="instance">Reference to the licensed object (not currently used).</param>
+            <param name="showNagDialog">Whether the nag dialog should be displayed when a valid license is not found.</param>
+            <returns>A <see cref="T:C1.Util.Licensing.LicenseInfo"/> object that contains information about the license.</returns>
+            <remarks>
+            <para>This overload was created for use in WPF. It should be called in the control's constructor
+            in order to support license persistence correctly. But it should not show the nag dialog until the
+            control is fully loaded, or the VS designer may remain blank.</para>
+            <para>So the solution is this:</para>
+            <code>
+            LicenseInfo _licInfo;
+            public LicensedControl()
+            {
+              // check license but don't nag yet
+              _licInfo = ProviderInfo.Validate(typeof(LicensedControl), this, false);
+              
+              // perform licensing after control is fully loaded
+              Loaded += LicensedControl_Loaded;
+            }
+            void LicensedControl_Loaded(object sender, RoutedEventArgs e)
+            {
+              // nag after loading
+              if (_licInfo.ShouldNag)
+              {
+                ProviderInfo.ShowAboutBox(this);
+              }
+            }
+            </code>
+            </remarks>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.Nag(System.Type,C1.Util.Licensing.LicenseInfo,System.Boolean)">
+            <summary>
+            Nag user by showing AboutBox with license information.
+            Show it only once per day per control. (REVIEW: do it per assembly instead?)
+            </summary>
+            <param name="type">Type of licensed object (use typeof() and not GetType()).</param>
+            <param name="li"><see cref="T:C1.Util.Licensing.LicenseInfo"/> object that contains information about the license.</param>
+            <param name="designTime">Whether we're running at design or run time.</param>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.Validate(System.Type,System.Object,System.Reflection.Assembly,System.String)">
+            <summary>
+            Version of Validate used by constructors that take runtime keys.
+            </summary>
+            <param name="type">Type of licensed object (use typeof() and not GetType()).</param>
+            <param name="instance">Reference to the licensed object.</param>
+            <param name="callingAsm">Assembly that contains the owner licensed control.</param>
+            <param name="runtimeKey">Any valid C1 runtime key.</param>
+            <returns>A <see cref="T:C1.Util.Licensing.LicenseInfo"/> with information about the runtime key.</returns>
+            <remarks>
+            <para>This allows a licensed C1 class to create other C1 objects bypassing 
+            license verification for the child objects.</para>
+            <para>For extra safety, we check that the owner object is defined in an assembly
+            the contains a 'C1ProductInfo' attribute.</para>
+            </remarks>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.ValidateDesigntime(System.Type,System.ComponentModel.LicenseContext)">
+            <summary>
+            Design time validation. Looks for a license in the registry and saves it in the
+            provided <see cref="T:System.ComponentModel.LicenseContext"/>.
+            </summary>
+            <param name="type">Type of licensed object (use typeof() and not GetType()).</param>
+            <param name="context"><see cref="T:System.ComponentModel.LicenseContext"/> where the runtime key will be stored.</param>
+            <returns>A <see cref="T:C1.Util.Licensing.LicenseInfo"/> with information about the license.</returns>
+            <remarks>
+            Call this method from application-type products (that always require a license to be
+            installed in the registry). In this case, the <paramref name="context"/> parameter 
+            should be set to null.
+            </remarks>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.ValidateRuntime(System.Type,System.ComponentModel.LicenseContext)">
+            <summary>
+            Runtime validation.
+            Looks for a runtime key stored in the current application's resources.
+            </summary>
+            <param name="type">Type of licensed object (use typeof() and not GetType()).</param>
+            <param name="context"><see cref="T:System.ComponentModel.LicenseContext"/> where the runtime key will be stored.</param>
+            <returns>A <see cref="T:C1.Util.Licensing.LicenseInfo"/> with information about the license.</returns>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.ShowAboutBox(System.Object)">
+            <summary>
+            Shows the About Box for an instance of a C1 product.
+            </summary>
+        </member>
+        <member name="M:C1.Util.Licensing.ProviderInfo.GetC1Type(System.Object)">
+            <summary>
+            Get the type whose assembly contains a 'C1ProductInfoAttribute'.
+            </summary>
+            <param name="instance">Instance of an object whose type is to be checked.</param>
+            <returns>The type whose assembly contains a 'C1ProductInfoAttribute'</returns>
+        </member>
+        <member name="T:C1.Util.Licensing.LicenseInfo">
+            <summary>
+            Contains information about a license stored in an application.
+            </summary>
+        </member>
+        <member name="M:C1.Util.Licensing.LicenseInfo.#ctor(System.Type,C1.Util.Licensing.LicenseStatus,C1.Util.Licensing.ProductLicense)">
+            <summary>
+            Initializes a new instance of a <see cref="T:C1.Util.Licensing.LicenseInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:C1.Util.Licensing.LicenseInfo.#ctor(System.Type,C1.Util.Licensing.LicenseStatus)">
+            <summary>
+            Initializes a new instance of a <see cref="T:C1.Util.Licensing.LicenseInfo"/> class.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.LicenseStatus">
+            <summary>
+            Gets or sets the status of this license (valid, expired, unlicensed).
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.License">
+            <summary>
+            Gets or sets the <see cref="T:C1.Util.Licensing.ProductLicense"/> associated with this license.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.Type">
+            <summary>
+            Gets or sets the <see cref="P:C1.Util.Licensing.LicenseInfo.Type"/> associated with this license.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.EvaluationDaysElapsed">
+            <summary>
+            Gets the number of evaluation days elapsed.
+            Returns -1 for valid licenses.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.ShouldNag">
+            <summary>
+            Gets or sets a value that determines whether the caller should
+            nag the user. This is the case when the component/control is 
+            not licensed, but is not running in interactive mode. So we can't
+            show a dialog and the caller is supposed to nag some other way
+            (typically by adding watermarks to the UI or output).
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.IsValid">
+            <summary>
+            Gets a value that determines whether the license found is valid.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.IsExpired">
+            <summary>
+            Gets a value that determines whether the license found is expired.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.IsLocalHost">
+            <summary>
+            Gets a value that determines whether the component is running under
+            localhost and therefore should not nag the user with alert dialogs.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.Full">
+            <summary>
+            Gets a value that determines whether the license found is valid.
+            </summary>
+        </member>
+        <member name="P:C1.Util.Licensing.LicenseInfo.Expired">
+            <summary>
+            Gets a value that determines whether the license found is expired.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Licensing.SafeLicenseContext">
+            <summary>
+            
+            Provides a version of GetSavedLicenseKey that doesn't require
+            special permissions.
+            
+            The code was mostly copied from the .NET framework, but then changed 
+            in a few places to require fewer permissions (assembly name, file io, 
+            etc). 
+            
+            The main change is the use of a custom deserializer to read Hashtable 
+            objects instead of the original BinaryFormatter, which requires
+            permissions.
+            
+            </summary>
+        </member>
+        <member name="T:C1.Util.Licensing.C1AboutNameAttribute">
+            <summary>
+            Attribute used to specify the product name shown on the About Box.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Licensing.C1ProductInfoAttribute">
+            <summary>
+            Attribute used to attach licensing/product information to assemblies.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Licensing.C1ProductSupportAttribute">
+            <summary>
+            Attribute used to attach support information to assemblies.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Localization.C1DescriptionAttribute">
+            <summary>
+            C1DescriptionAttribute replaces the DescriptionAttribute
+            and uses the C1Localizer class to return the localized Attribute string
+            </summary>
+        </member>
+        <member name="T:C1.Util.Localization.C1CategoryAttribute">
+            <summary>
+            C1CategoryAttribute replaces the CategoryAttribute
+            and uses the C1Localizer class to return the localized Attribute string
+            </summary>
+        </member>
+        <member name="T:C1.Util.Localization.C1Localizer">
+            <summary>
+            Localization tables and methods for looking up localized strings.
+            </summary>
+        </member>
+        <member name="T:C1.Util.Licensing.ProductLicense">
+            <summary>
+            Represents a license for a product (e.g. C1BarCode, C1Studio Enterprise).
+            
+            Provides methods for:
+            - generating new license keys (administrative task)
+            - checking license key validity (used by installer and products)
+            - generating and checking runtime keys (used by products)
+            - installing/uninstalling licenses (used by installer)
+            
+            The install/uninstall code requires elevated permissions, and is
+            used only by setups and utilities (not by controls). The code is 
+            implemented in the ProductLicense.Installer.cs, which controls should
+            not include since it won't be useful to them.
+            
+            When a product is sold, we send the user a license KEY. The user installs
+            a license on his machine by providing his name, his company name, and the 
+            key.
+            
+            The <see cref="P:C1.Util.Licensing.ProductLicense.Key"/> is a string in the following format:
+            
+                AAQYYCC-XX-NNNNNN-DD-DZZZZZZ
+                
+            Where:
+            
+                AA:     Product code (should match one of the products in the 
+                        product catalog (see ProductInformation.GetProductCatalog()).
+                Q:      Quarter when the license key was issued (1, 2, or 3)
+                YY:     Year when the license key was issued (e.g., 10 for 2010)
+                CC:     Order code, two chars that indicate whether this is a 
+                        new sale, upgrade, renewal, special offer, etc.
+                XX:     Hash code to ensure key validity.
+                NNNNNN: Unique serial number.
+                DDD:    Vendor code, three chars
+                ZZZZZZ: Combination of random numbers for uniqueness and extra hash.
+                
+            </summary>
+        </member>
+        <member name="T:C1.Web.C1WebSplitter.SplitterBar">
+            <summary>
+            Class that represents the appearance and behaviors information of splitter bar.
+            </summary>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.SplitterBar.LoadViewState(System.Object)">
+            <summary>
+            Loads view state in the splitter panel object.
+            </summary>
+            <param name="state">View state to load.</param>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.SplitterBar.SaveViewState">
+            <summary>
+            Saves the view state and returns it as an object.
+            </summary>
+            <returns>Saved view state.</returns>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.SplitterBar.TrackViewState">
+            <summary>
+            Tracks the view state.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.Width">
+            <summary>
+            Gets or sets the width of the splitter bar in pixels. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.CssClass">
+            <summary>
+            Gets or sets the css class name for rendering the splitter bar.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.HoverCssClass">
+            <summary>
+            Gets or sets the css class name for rendering the splitter bar while mouse is over it.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.CollapsedCssClass">
+            <summary>
+            Gets or sets the css class name for rendering the splitter bar while it is collapsed.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.DragCssClass">
+            <summary>
+            Gets or sets the css class name for rendering the splitter bar while it is beeing dragged.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.CollapseImageUrl">
+            <summary>
+            Gets or sets the url of image that to collapse the splitter bar.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.ExpandImageUrl">
+            <summary>
+            Gets or sets the url of image that to expand the splitter bar.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.CollapseHoverImageUrl">
+            <summary>
+            Gets or sets the url of image that to collapse the splitter bar when mouse is over it.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.ExpandHoverImageUrl">
+            <summary>
+            Gets or sets the url of image that to expand the splitter bar when mouse is over it.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterBar.ToolTip">
+            <summary>
+            Gets or sets the tooltip when mouse is over the splitter bar.
+            </summary>
+        </member>
+        <member name="T:C1.Web.C1WebSplitter.SplitterPanel">
+            <summary>
+            Class that represents the appearance and behaviors information of splitter panel.
+            </summary>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.SplitterPanel.LoadViewState(System.Object)">
+            <summary>
+            Loads view state in the splitter panel object.
+            </summary>
+            <param name="state">View state to load.</param>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.SplitterPanel.SaveViewState">
+            <summary>
+            Saves the view state and returns it as an object.
+            </summary>
+            <returns>Saved view state.</returns>
+        </member>
+        <member name="M:C1.Web.C1WebSplitter.SplitterPanel.TrackViewState">
+            <summary>
+            Tracks the view state.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterPanel.MinSize">
+            <summary>
+            Gets or sets the minimum distance in pixels when resizing the splitter. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterPanel.ScrollBars">
+            <summary>
+            Gets or sets the type of scroll bars to display for splitter panel.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterPanel.BackColor">
+            <summary>
+            Gets or sets the background color for splitter panel.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterPanel.BackImageUrl">
+            <summary>
+            Gets or sets the background image url for splitter panel.
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterPanel.Collapsed">
+            <summary>
+            Gets or sets a value determining whether splitter panel is collapsed or expanded. 
+            </summary>
+        </member>
+        <member name="P:C1.Web.C1WebSplitter.SplitterPanel.CssClass">
+            <summary>
+            Gets or sets the css class name for splitter panel.
+            </summary>
+        </member>
+    </members>
+</doc>

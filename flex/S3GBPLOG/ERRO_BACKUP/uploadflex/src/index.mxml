@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" 
+	horizontalAlign="center" verticalAlign="middle" 
+	borderColor="#FFFFFF" themeColor="#0A0A0A" 
+	backgroundGradientAlphas="[1.0, 1.0]" 
+	backgroundGradientColors="[#BCBCBC, #4F4F4F]" viewSourceURL="srcview/index.html">
+
+<mx:TitleWindow id="titleWindow" 
+	width="473" height="283"
+	title="Upload de Arquivos com Flex"
+	creationComplete="init()"
+	showCloseButton="true"
+	close="fechar()"  borderColor="#FFFFFF" themeColor="#FFFFFF" cornerRadius="15">
+	
+	<mx:TabNavigator id="tab" width="100%" height="100%" horizontalAlign="center">
+		
+		<mx:VBox label="Edicao" width="100%" height="100%">
+			<mx:Form id="form" width="100%" height="100%">
+		 		
+				<mx:FormItem label="Nome da Imagem:" width="100%" required="true">
+					<mx:TextInput id="txtNomeImagem" backgroundColor="#F0F0F0" width="100%"/>
+				</mx:FormItem>
+				
+				<mx:FormItem label="Imagem:" width="100%" id="formitem8" horizontalAlign="center" required="true">
+					<mx:HBox width="100%" verticalAlign="middle">
+						<mx:TextInput width="100%"
+							 backgroundColor="#F0F0F0" id="txtImagem"
+							 editable="false" enabled="false"/>
+						<mx:Button label="Procurar..." 
+							icon="@Embed(source='assets/btPesquisar.png')" click="procuraImg()"/>
+					</mx:HBox>
+				</mx:FormItem>
+			</mx:Form>
+		</mx:VBox>
+	</mx:TabNavigator>
+	
+	<mx:ControlBar verticalGap="0">
+		<mx:HBox width="100%" verticalAlign="middle" horizontalAlign="center">
+			<mx:Label text="Por: Rodrigo Fraga" fontWeight="bold"/>
+			<mx:Spacer width="100%" height="100%"/>
+			<mx:Button id="btSalvar" label="Salvar" icon="@Embed(source='assets/btSalvar.png')" 
+				enabled="true" click="fazerUpload()" toolTip="Salva o Formulario de Cadastro." width="100" height="30"/>
+				
+			<mx:Button id="btLimpar" label="Limpar" toolTip="Limpa o Formulario." 
+				icon="@Embed(source='assets/btLimpar.png')" width="100" click="setDefault()" height="30"/>
+			<mx:Button label="Fotos..." width="100" icon="@Embed(source='assets/btPesquisar.png')" height="30"
+				click="navigateToURL(new URLRequest('http://www.digows.com/downloads/postagens/flexupload/img/'),'_blank')"/>
+		</mx:HBox>
+	</mx:ControlBar>
+
+	</mx:TitleWindow>
+	
+	<mx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			import mx.controls.Alert;
+			
+			private var fileImagem:FileReference;
+			
+			private function fechar():void
+			{
+				navigateToURL(new URLRequest("javascript:window.close()"), "_self");
+			}
+			
+			public function setDefault():void
+			{
+				txtNomeImagem.text = "";
+				txtImagem.text     = "";
+				txtNomeImagem.setFocus();
+			}
+			
+			/**
+			* Fun��es para Upload
+			*/
+			public function procuraImg():void 
+			{
+				fileImagem = new FileReference();
+				
+				//Ao Selecionar....
+				fileImagem.addEventListener(Event.SELECT,
+					function(event:Event):void 
+					{
+						txtImagem.text = fileImagem.name;
+					} 
+				);
+				
+				//Enquanto estiver fazendo o Upload..
+				fileImagem.addEventListener(ProgressEvent.PROGRESS,
+					function(event:ProgressEvent):void 
+					{
+						var numPerc:Number = Math.round((Number(event.bytesLoaded) / Number(event.bytesTotal)) * 100);
+						titleWindow.status = "Carregando Imagem..."+numPerc+"%";
+					} 
+				);
+				
+				//Ao ocorrer um erro.....
+				fileImagem.addEventListener(IOErrorEvent.IO_ERROR, 
+					function(event:IOErrorEvent):void 
+					{
+						currentState = "";
+						Alert.show("Ocurreu um erro ao Realizar o Upload \nDetalhes: "+event.text);
+					}
+				);
+				
+				//Ao Terminar o Upload.....
+				fileImagem.addEventListener(Event.COMPLETE, 
+					function(event:Event):void 
+					{
+						fileImagem = null;
+						titleWindow.status = "Upload efetuado com sucesso!"
+						setDefault();
+					}
+				);
+				
+				//utilizando filtro para upload somente de imagem 
+				var tipos:FileFilter = new FileFilter("Arquivos de Imagem *.jpg; *.jpeg; *.gif; *.png"
+													 ,"*.jpg; *.jpeg; *.gif; *.png");
+				var tiposArray:Array = new Array(tipos);
+				fileImagem.browse(tiposArray);
+			}
+			
+			public function fazerUpload():void 
+			{
+				if (txtImagem.text != "" || fileImagem != null)
+				{
+					//aproximadamente 1MB.
+					if (fileImagem.size <= 1048576)
+					{
+						//Endereco onde esta o aquivo php, ou java.
+						var request:URLRequest = new URLRequest("FileUpload.php");
+						var vars:URLVariables  = new URLVariables();
+					
+						vars.nomeImagem = txtNomeImagem.text+fileImagem.type;
+						request.data = vars;
+						request.method = URLRequestMethod.GET;
+						fileImagem.upload(request);	
+					}
+					else
+					{
+						titleWindow.status = "Selecione uma Imagem com no maximo 1Mb";
+					}
+				}
+				else
+				{
+					titleWindow.status = "Selecione uma Imagem"; 	
+				}
+			}
+		]]>
+	</mx:Script>
+
+</mx:Application>

@@ -1,0 +1,593 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>C1.Web.C1PayPal.2</name>
+  </assembly>
+  <members>
+    <member name="T:C1.Web.C1PayPal.C1AddToCart">
+      <summary>
+        <p>Represents an item that can be added to a shopping cart.</p>
+        <p>The <see cref="T:C1.Web.C1PayPal.C1AddToCart" /> button contains information about your 
+            business and a specific item that you want to sell. When the button is clicked, 
+            it shows a shopping cart table in a new window. The user can click other 
+            <see cref="T:C1.Web.C1PayPal.C1AddToCart" /> buttons to add more items to the shopping cart, 
+            and he can use the shopping cart window to remove items from the cart, 
+            change quantities, or check out to finish the transaction.</p>
+        <p>After the transaction is confirmed, you receive a notification via e-mail 
+            and your PayPal account receives the credit for the purchases.</p>
+      </summary>
+    </member>
+    <member name="M:C1.Web.C1PayPal.C1AddToCart.#ctor">
+      <summary>
+            Creates a new instance of a <see cref="T:C1.Web.C1PayPal.C1AddToCart" /> control.
+            </summary>
+    </member>
+    <member name="M:C1.Web.C1PayPal.C1AddToCart.Render(System.Web.UI.HtmlTextWriter)">
+      <summary>
+            Render the control into an HtmlTextWriter.
+            </summary>
+      <param name="writer">Writer where the control is to be rendered.</param>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.Business">
+      <summary>
+            Gets or sets the email address that identifies your business with PayPal.
+            </summary>
+      <remarks>
+            This is the address you enter when you set up your PayPal merchant account, 
+            and is used by PayPal to notify you after transactions occur.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.BusinessLogo">
+      <summary>
+            Gets or sets the Url of your business logo, to be displayed on your customers' payment pages.
+            </summary>
+      <remarks>
+            The logo is optional. If you do provide a logo, it should be an image 150 by 50 pixels and 
+            it should be hosted on a secure (Https) server. If you provide a logo hosted on a regular 
+            (http) server, the browser will show warnings when the secure PayPal site loads the logo 
+            from the http site.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.ButtonType">
+      <summary>
+            Gets or sets the image displayed in the button.
+            </summary>
+      <remarks>
+            You can select a predefined value or use a custom image. Setting this property changes 
+            the value of the <see cref="P:C1.Web.C1PayPal.C1AddToCart.ImageUrl" /> property.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.ImageUrl">
+      <summary>
+            Gets or sets the location of an image to display in the control.
+            </summary>
+      <remarks>
+            Use the ImageUrl property to specify the URL of an image to display in the Image control. 
+            You can use a relative or an absolute URL. A relative URL relates the location of the image 
+            to the location of the Web page without specifying a complete path on the server. The path 
+            is relative to the location of the Web page. This makes it easier to move the entire site 
+            to another directory on the server without updating the code. An absolute URL provides the 
+            complete path, so moving the site to another directory requires that you update the code.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.PageOK">
+      <summary>
+            Gets or sets the Url of the page where the customer should be taken after concluding a 
+            successful transaction.
+            </summary>
+      <remarks>
+            This item is optional. If you don't provide a Url, the customer will be returned to 
+            the original page after concluding the transaction.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.PageCancel">
+      <summary>
+            Gets or sets the Url of the page where the customer should be taken after 
+            canceling a transaction.
+            </summary>
+      <remarks>
+            This item is optional. If you don't provide a Url, the customer will be returned to 
+            the original page after concluding the transaction.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.NotifyURL">
+      <summary>
+            Gets or sets the Url that will receive Instant Payment Notifications through 
+            PayPal's IPN mechanism.
+            </summary>
+      <remarks>
+            For details about IPN, please refer to the PayPal IPN documentation (www.PayPal.com/IPN).
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.ItemName">
+      <summary>
+            Gets or sets the name of the item being purchased (e.g. "Deluxe Oil Change").
+            </summary>
+      <remarks>
+            The item name is displayed on the PayPal payment page and is included in the 
+            notifications sent to you after each successful transaction 
+            (see the <see cref="P:C1.Web.C1PayPal.C1AddToCart.Business" /> property).
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.ItemNumber">
+      <summary>
+            Gets or sets a code that identifies the item being purchased (e.g. "LOC123").
+            </summary>
+      <remarks>
+            The item number is displayed on the PayPal payment page and is included in the 
+            notifications sent to you after each successful transaction 
+            (see the <see cref="P:C1.Web.C1PayPal.C1AddToCart.Business" /> property).
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.ItemPrice">
+      <summary>
+            Gets or sets the unit price for the item being sold.
+            </summary>
+      <remarks>
+        <p>The amount is specified in US dollars by default, but you can specify other currencies
+            using the <see cref="T:System.Currency" /> property.</p>
+        <p>Because this property is of type double, you need to edit data binding expressions that set its value. 
+            By default, when you bind this property to a database field, Visual Studio generates a line that looks 
+            like this:</p>
+        <code>
+            // doesn't work
+            c1Button.ItemPrice = &lt;% DataBinder.Eval(Container, “DataItem.UnitPrice”) %&gt;
+            </code>
+        <p>This doesn't work because the value returned is a string and the assignment will fail at 
+            runtime. To fix it, you need to replace the above code with the following:</p>
+        <code>
+            // works fine
+            c1Button.ItemPrice = &lt;% double.Parse(DataBinder.Eval(Container, “DataItem.UnitPrice”).ToString()) %&gt;
+            </code>
+      </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1AddToCart.CurrencyCode">
+      <summary>
+            Gets or sets the currency to use for the transaction.
+            </summary>
+      <remarks>
+            The price of the item is determined by two properties, <see cref="P:C1.Web.C1PayPal.C1AddToCart.ItemPrice" /> and <see cref="P:C1.Web.C1PayPal.C1AddToCart.CurrencyCode" />.
+            </remarks>
+    </member>
+    <member name="T:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum">
+      <summary>
+            Specifies the appearance of a <see cref="T:C1.Web.C1PayPal.C1AddToCart" /> control.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum.Small">
+      <summary>
+            A small button with the PayPal logo and an "Add To Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum.Large">
+      <summary>
+            A large button with the PayPal logo, an icon, and an "Add Item To Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum.Medium">
+      <summary>
+            A medium-sized button with the an icon and an "Add To Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum.Win32">
+      <summary>
+            A plain Win32-style button with an "Add to Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum.WinXP">
+      <summary>
+            An XP-style button with an "Add to Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1AddToCart.ButtonTypeEnum.Custom">
+      <summary>
+            Use the image specified by the <see cref="P:C1.Web.C1PayPal.C1AddToCart.ImageUrl" /> property.
+            </summary>
+    </member>
+    <member name="T:C1.Web.C1PayPal.C1CartCheckout">
+      <summary>
+            Shows a window used for editing the shopping cart and concluding the transaction.
+            </summary>
+      <remarks>
+        <p>The <see cref="T:C1.Web.C1PayPal.C1CartCheckout" /> control is used with the <see cref="T:C1.Web.C1PayPal.C1AddToCart" /> control.</p>
+        <p>It also displays the shopping cart table in a new window, but does not add any items to the cart. 
+            The user can review the items in the cart, edit the table, and check out.</p>
+        <p>After the transaction is confirmed, you receive a notification via e-mail 
+            and your PayPal account receives the credit for the purchases.</p>
+      </remarks>
+    </member>
+    <member name="M:C1.Web.C1PayPal.C1CartCheckout.#ctor">
+      <summary>
+            Creates a new instance of a <see cref="T:C1.Web.C1PayPal.C1CartCheckout" /> control.
+            </summary>
+    </member>
+    <member name="M:C1.Web.C1PayPal.C1CartCheckout.Render(System.Web.UI.HtmlTextWriter)">
+      <summary>
+            Render the control into an HtmlTextWriter.
+            </summary>
+      <param name="writer">Writer where the control is to be rendered.</param>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1CartCheckout.Business">
+      <summary>
+            Gets or sets the email address that identifies your business with PayPal.
+            </summary>
+      <remarks>
+            This is the address you enter when you set up your PayPal merchant account, 
+            and is used by PayPal to notify you after transactions occur.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1CartCheckout.BusinessLogo">
+      <summary>
+            Gets or sets the Url of your business logo, to be displayed on your customers' payment pages.
+            </summary>
+      <remarks>
+            The logo is optional. If you do provide a logo, it should be an image 150 by 50 pixels and 
+            it should be hosted on a secure (Https) server. If you provide a logo hosted on a regular 
+            (http) server, the browser will show warnings when the secure PayPal site loads the logo 
+            from the http site.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1CartCheckout.ButtonType">
+      <summary>
+            Gets or sets the image displayed in the button.
+            </summary>
+      <remarks>
+            You can select a predefined value or use a custom image. Setting this property changes 
+            the value of the <see cref="P:C1.Web.C1PayPal.C1CartCheckout.ImageUrl" /> property.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1CartCheckout.ImageUrl">
+      <summary>
+            Gets or sets the location of an image to display in the control.
+            </summary>
+      <remarks>
+            Use the ImageUrl property to specify the URL of an image to display in the Image control. 
+            You can use a relative or an absolute URL. A relative URL relates the location of the image 
+            to the location of the Web page without specifying a complete path on the server. The path 
+            is relative to the location of the Web page. This makes it easier to move the entire site 
+            to another directory on the server without updating the code. An absolute URL provides the 
+            complete path, so moving the site to another directory requires that you update the code.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1CartCheckout.PageOK">
+      <summary>
+            Gets or sets the Url of the page where the customer should be taken after concluding a 
+            successful transaction.
+            </summary>
+      <remarks>
+            This item is optional. If you don't provide a Url, the customer will be returned to 
+            the original page after concluding the transaction.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1CartCheckout.PageCancel">
+      <summary>
+            Gets or sets the Url of the page where the customer should be taken after 
+            canceling a transaction.
+            </summary>
+      <remarks>
+            This item is optional. If you don't provide a Url, the customer will be returned to 
+            the original page after concluding the transaction.
+            </remarks>
+    </member>
+    <member name="T:C1.Web.C1PayPal.C1CartCheckout.ButtonTypeEnum">
+      <summary>
+            Specifies the appearance of a <see cref="T:C1.Web.C1PayPal.C1CartCheckout" /> control.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1CartCheckout.ButtonTypeEnum.Large">
+      <summary>
+            A large XP-style button with an icon and a "View Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1CartCheckout.ButtonTypeEnum.Win32">
+      <summary>
+            A plain Win32-style button with a "View Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1CartCheckout.ButtonTypeEnum.WinXP">
+      <summary>
+            A small XP-style button with a "View Cart" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1CartCheckout.ButtonTypeEnum.CheckOut">
+      <summary>
+            A small button with the PayPal logo and a "Check Out" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1CartCheckout.ButtonTypeEnum.Custom">
+      <summary>
+            Use the image specified by the <see cref="P:C1.Web.C1PayPal.C1CartCheckout.ImageUrl" /> property.
+            </summary>
+    </member>
+    <member name="T:C1.Web.C1PayPal.CurrencyEnum">
+      <summary>
+            Specifies the currency to be used in the PayPal transaction.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.CurrencyEnum.USDollars">
+      <summary>
+            ItemPrice is specified in US Dollars (USD).
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.CurrencyEnum.CanadianDollars">
+      <summary>
+            ItemPrice is specified in Canadian Dollars (CAD).
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.CurrencyEnum.Euros">
+      <summary>
+            ItemPrice is specified in Euros (EUR).
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.CurrencyEnum.PoundsSterling">
+      <summary>
+            ItemPrice is specified in British Pounds (GBP).
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.CurrencyEnum.Yen">
+      <summary>
+            ItemPrice is specified in Yens (JPY).
+            </summary>
+    </member>
+    <member name="T:C1.Web.C1PayPal.C1PurchaseItem">
+      <summary>
+            Represents an item that can be purchased from your site using a PayPal account.
+            </summary>
+      <remarks>
+        <p>When the button is clicked, the user is taken to a secure page where he can 
+            enter his information (name, address, credit card number, or simply his PayPal account) 
+            and confirm the purchase.</p>
+        <p>After the purchase is confirmed, you receive a notification via e-mail and your 
+            PayPal account receives the credit for the purchase.</p>
+      </remarks>
+    </member>
+    <member name="M:C1.Web.C1PayPal.C1PurchaseItem.#ctor">
+      <summary>
+            Creates a new instance of a <see cref="T:C1.Web.C1PayPal.C1PurchaseItem" /> control.
+            </summary>
+    </member>
+    <member name="M:C1.Web.C1PayPal.C1PurchaseItem.Render(System.Web.UI.HtmlTextWriter)">
+      <summary>
+            Render the control into an HtmlTextWriter.
+            </summary>
+      <param name="writer">Writer where the control is to be rendered.</param>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.Business">
+      <summary>
+            Gets or sets the email address that identifies your business with PayPal.
+            </summary>
+      <remarks>
+            This is the address you enter when you set up your PayPal merchant account, 
+            and is used by PayPal to notify you after transactions occur.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.BusinessLogo">
+      <summary>
+            Gets or sets the Url of your business logo, to be displayed on your customers' payment pages.
+            </summary>
+      <remarks>
+            The logo is optional. If you do provide a logo, it should be an image 150 by 50 pixels and 
+            it should be hosted on a secure (Https) server. If you provide a logo hosted on a regular 
+            (http) server, the browser will show warnings when the secure PayPal site loads the logo 
+            from the http site.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.ButtonType">
+      <summary>
+            Gets or sets the image displayed in the button.
+            </summary>
+      <remarks>
+            You can select a predefined value or use a custom image. Setting this property changes 
+            the value of the <see cref="P:C1.Web.C1PayPal.C1PurchaseItem.ImageUrl" /> property.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.ImageUrl">
+      <summary>
+            Gets or sets the location of an image to display in the control.
+            </summary>
+      <remarks>
+            Use the ImageUrl property to specify the URL of an image to display in the Image control. 
+            You can use a relative or an absolute URL. A relative URL relates the location of the image 
+            to the location of the Web page without specifying a complete path on the server. The path 
+            is relative to the location of the Web page. This makes it easier to move the entire site 
+            to another directory on the server without updating the code. An absolute URL provides the 
+            complete path, so moving the site to another directory requires that you update the code.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.PageOK">
+      <summary>
+            Gets or sets the Url of the page where the customer should be taken after concluding a 
+            successful transaction.
+            </summary>
+      <remarks>
+            This item is optional. If you don't provide a Url, the customer will be returned to 
+            the original page after concluding the transaction.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.PageCancel">
+      <summary>
+            Gets or sets the Url of the page where the customer should be taken after 
+            canceling a transaction.
+            </summary>
+      <remarks>
+            This item is optional. If you don't provide a Url, the customer will be returned to 
+            the original page after concluding the transaction.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.NotifyURL">
+      <summary>
+            Gets or sets the Url that will receive Instant Payment Notifications through 
+            PayPal's IPN mechanism.
+            </summary>
+      <remarks>
+            For details about IPN, please refer to the PayPal IPN documentation (www.PayPal.com/IPN).
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.ItemName">
+      <summary>
+            Gets or sets the name of the item being purchased (e.g. "Deluxe Oil Change").
+            </summary>
+      <remarks>
+            The item name is displayed on the PayPal payment page and is included in the 
+            notifications sent to you after each successful transaction 
+            (see the <see cref="P:C1.Web.C1PayPal.C1PurchaseItem.Business" /> property).
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.ItemNumber">
+      <summary>
+            Gets or sets a code that identifies the item being purchased (e.g. "LOC123").
+            </summary>
+      <remarks>
+            The item number is displayed on the PayPal payment page and is included in the 
+            notifications sent to you after each successful transaction 
+            (see the <see cref="P:C1.Web.C1PayPal.C1PurchaseItem.Business" /> property).
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.ItemPrice">
+      <summary>
+            Gets or sets the unit price for the item being sold.
+            </summary>
+      <remarks>
+        <p>The amount is specified in US dollars by default, but you can specify other currencies
+            using the <see cref="T:System.Currency" /> property.</p>
+        <p>Because this property is of type double, you need to edit data binding expressions that set its value. 
+            By default, when you bind this property to a database field, Visual Studio generates a line that looks 
+            like this:</p>
+        <code>
+            // doesn't work
+            c1Button.ItemPrice = &lt;% DataBinder.Eval(Container, “DataItem.UnitPrice”) %&gt;
+            </code>
+        <p>This doesn't work because the value returned is a string and the assignment will fail at 
+            runtime. To fix it, you need to replace the above code with the following:</p>
+        <code>
+            // works fine
+            c1Button.ItemPrice = &lt;% double.Parse(DataBinder.Eval(Container, “DataItem.UnitPrice”).ToString()) %&gt;
+            </code>
+      </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.CurrencyCode">
+      <summary>
+            Gets or sets the currency to use for the transaction.
+            </summary>
+      <remarks>
+            The price of the item is determined by two properties, <see cref="P:C1.Web.C1PayPal.C1PurchaseItem.ItemPrice" /> and <see cref="P:C1.Web.C1PayPal.C1PurchaseItem.CurrencyCode" />.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.Shipping">
+      <summary>
+            Gets or sets the shipping charge for the first item on a shipment.
+            </summary>
+      <remarks>
+            By default, this property is set to –1, which causes the control to use 
+            the default shipping charges set up in your PayPal merchant account.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.ShippingAdditional">
+      <summary>
+            Gets or sets the shipping charge for additional items on a shipment (each item 
+            except the first one).
+            </summary>
+      <remarks>
+            By default, this property is set to –1, which causes the control to use 
+            the default shipping charges set up in your PayPal merchant account.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.Handling">
+      <summary>
+            Gets or sets the handling charge for this item.
+            </summary>
+      <remarks>
+            By default, this property is set to –1, which causes the control to use 
+            the default handling charge set up in your PayPal merchant account.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.PromptQuantity">
+      <summary>
+            Gets or sets whether the PayPal payment page should have a field to allow 
+            customers to buy multiple units of the item in a single transaction.
+            </summary>
+      <remarks>
+            The default value for this property is true.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.PromptNote">
+      <summary>
+            Gets or sets whether the PayPal payment page should allow customers to include a 
+            note with their payment.
+            </summary>
+      <remarks>
+            The default value for this property is false.
+            </remarks>
+    </member>
+    <member name="P:C1.Web.C1PayPal.C1PurchaseItem.PromptAddress">
+      <summary>
+            Gets or sets whether the PayPal payment page should allow customers to 
+            provide a shipping address.
+            </summary>
+      <remarks>
+            The default value for this property is true.
+            </remarks>
+    </member>
+    <member name="T:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum">
+      <summary>
+            Specifies the appearance of a <see cref="T:C1.Web.C1PayPal.C1PurchaseItem" /> control.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.BuyNow">
+      <summary>
+            A small button with a PayPal logo and a "Buy Now" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.Payments">
+      <summary>
+            A small button with a PayPal logo and a "Payments" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.CheckOut">
+      <summary>
+            A small button with a PayPal logo and a "Check Out" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.Visa">
+      <summary>
+            A small button with Visa/MasterCard logos and a "Buy Now" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.Win32">
+      <summary>
+            A plain Win32-style button with a "Buy Now" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.WinXP">
+      <summary>
+            A WinXP-style button with a "Buy Now" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.BigBuyNow">
+      <summary>
+            A large button with a PayPal logo, an icon, and a "Click Here To Buy" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.BigPayNow">
+      <summary>
+            A large button with a PayPal logo, an icon, and a "Click Here To Pay" caption.
+            </summary>
+    </member>
+    <member name="F:C1.Web.C1PayPal.C1PurchaseItem.ButtonTypeEnum.Custom">
+      <summary>
+            Use the image specified by the <see cref="P:C1.Web.C1PayPal.C1PurchaseItem.ImageUrl" /> property.
+            </summary>
+    </member>
+    <member name="T:C1.Web.C1PayPal.Design.PayPalDesigner">
+      <summary>
+            Summary description for PayPalDesigner.
+            </summary>
+    </member>
+    <member name="M:C1.Web.C1PayPal.Design.PayPalDesigner.Initialize(System.ComponentModel.IComponent)">
+      <summary>
+            Initializes the designer and loads the specified component.
+            </summary>
+      <param name="component">Component being initialized.</param>
+    </member>
+  </members>
+</doc>

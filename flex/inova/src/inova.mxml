@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="588" 
+	height="384" 
+ 	color="#000000" 
+ 	backgroundAlpha="0.0">
+	<mx:Style source="css/inova.css"/>
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			
+			
+			//Click Iniciar Fechar
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtContato.enabled=true;
+			}
+			
+			
+				
+		]]>
+	</mx:Script>
+	<mx:Image 
+			x="123.75" 
+			y="13" 
+			source="img/predio.png" 
+			width="466.25" 
+			height="367.8"/>
+	<mx:TitleWindow 
+		height="364.8" 
+		layout="absolute" 
+		width="580" 
+		horizontalCenter="0" 
+		verticalCenter="0" 
+		title="Inova - Quem somos" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar();" 
+		titleIcon="@Embed(source='img/ico.png')" 
+		borderColor="#414519" 
+		themeColor="#000000" 
+		alpha="1.0" 
+		backgroundAlpha="0.79" 
+		cornerRadius="6">
+		<mx:Button 
+			x="342.5" 
+			y="292.8" 
+			label="Limpar" 
+			styleName="Button2" 
+			themeColor="#111607"/>
+		<mx:Button 
+			x="415.5" 
+			y="292.8" 
+			label="Enviar" 
+			styleName="Button2" 
+			themeColor="#111607"/>
+		<mx:VRule 
+			height="73.75" 
+			strokeWidth="1" 
+			width="11.266666" 
+			horizontalCenter="199" 
+			verticalCenter="106"/>
+		<mx:Button 
+			x="484.5" 
+			y="292.8" 
+			label="MAPA" 
+			id="Bt_map" 
+			width="56" 
+			height="21" 
+			textAlign="left" 
+			fontSize="9"
+			toolTip="Zoom Mapa" 
+			styleName="Button2" 
+			themeColor="#111607"/>
+		<mx:Text 
+			x="10" 
+			y="117" 
+			text="A, Inova Contabilidade  nasceu em 2005, com mais de 10 anos de experiência de seus fundadores. &#xa;Ela é fruto de um sonho de seus idealizadores, de disponibilizar a sociedade, serviços contábeis &#xa;diferenciados com qualidade, competência, seriedade e honestidade. Dentro destes princípios, hoje &#xa;temos o orgulho de dizer que contamos com um quadro de profissionais altamente qualificados e com &#xa;vastos anos de experiência para atender nossos clientes, de diversos ramos de atividades &#xa;como indústria, comércio, prestadoras de serviços de diversas áreas de atuação e de diversas formas &#xa;de tributação, dos quais podemos afirmar  que mais de 80% de nossos clientes formam uma cadeia de &#xa;indicações, comprovando e atestando assim a qualidade dos serviços por nós oferecidos&#xa;" 
+			width="540" 
+			height="116" 
+			enabled="true"/>
+	</mx:TitleWindow>
+
+</mx:Canvas>

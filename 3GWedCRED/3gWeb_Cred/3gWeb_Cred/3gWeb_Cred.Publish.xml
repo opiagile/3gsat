@@ -1,0 +1,14 @@
+<publishData>
+  <publishTarget publishUrl="W:\cred\">
+    <file relUrl="credenciador.aspx" publishTime="01/11/2010 21:36:07" />
+    <file relUrl="bin/3gWeb_Cred.dll" publishTime="01/11/2010 21:36:15" />
+    <file relUrl="Web.config" publishTime="01/11/2010 21:13:09" />
+    <file relUrl="bin/C1.Web.C1Command.Classic.2.dll" publishTime="01/31/2007 16:12:06" />
+    <file relUrl="Default.aspx" publishTime="01/11/2010 20:00:37" />
+    <file relUrl="bin/C1.Web.C1WebGrid.2.dll" publishTime="01/30/2007 15:23:46" />
+    <file relUrl="bin/C1.Web.C1WebSplitter.2.xml" publishTime="02/01/2007 20:19:20" />
+    <file relUrl="bin/3gWeb_Cred.pdb" publishTime="01/11/2010 21:13:25" />
+    <file relUrl="bin/C1.Web.C1WebSplitter.2.dll" publishTime="02/01/2007 20:19:52" />
+    <file relUrl="login.jpg" publishTime="01/08/2010 19:47:48" />
+  </publishTarget>
+</publishData>

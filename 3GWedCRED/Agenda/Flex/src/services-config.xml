@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+******************************************************************************************
+Data..........: 23/01/2009
+Responsável...: Vinícius Sandim
+Objeto........: Arquivo de configuração para acesso ao FluorineFx
+******************************************************************************************
+-->
+
+<services-config>
+
+	<services> 
+
+		<service id="remoting-service" class="flex.messaging.services.RemotingService" messageTypes="flex.messaging.messages.RemotingMessage">
+
+			<destination id="fluorine">
+			
+				<channels> 
+	                <channel ref="my-amf"/>
+	            </channels> 
+	            
+	            <properties> 
+	                <source>*</source> 
+	            </properties> 
+	            
+	        </destination> 
+	        
+        </service> 
+        
+    </services> 
+
+	<channels> 
+	
+        <channel-definition id="my-amf" class="mx.messaging.channels.AMFChannel">
+            <endpoint uri="http://3gsat:83/Agenda/Net/Gateway.aspx" class="flex.messaging.endpoints.AMFEndpoint"/>
+        </channel-definition>
+        
+    </channels> 
+    
+</services-config>

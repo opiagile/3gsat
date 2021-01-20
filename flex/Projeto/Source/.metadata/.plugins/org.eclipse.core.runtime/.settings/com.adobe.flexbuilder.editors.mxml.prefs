@@ -1,0 +1,11 @@
+#Tue Mar 16 13:43:20 BRT 2010
+expandState=navigators\:
+appViewSizes=1024 x 768;800 x 600;366 x 600
+SizedContainerInserter.HDividedBox.width=100%
+SizedContainerInserter.HDividedBox=true
+lastEditorView=Source
+SizedContainerInserter.HDividedBox.height=100%
+compViewSize=400 x 300;300 x 200
+SizedContainerInserter.VBox.height=100%
+SizedContainerInserter.VBox=true
+eclipse.preferences.version=1

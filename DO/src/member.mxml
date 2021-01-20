@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	creationComplete="Iniciar()"
+	horizontalAlign="center"
+	verticalAlign="middle"
+	layout="absolute"
+	cornerRadius="8" 
+	borderStyle="solid" 
+	backgroundAlpha="1.0"
+	backgroundColor="#423F1A"
+	backgroundImage="@Embed(source='img/camuflagem.jpg')"
+	alpha="1.0" 
+	color="#FFFFFF" 
+	titleIcon="@Embed(source='img/trakPQ.png')" 
+	showCloseButton="true" 
+	close="Fechar();"
+	title="D.O. TRAK  - Membros" 
+	fontWeight="bold" 
+	themeColor="#727646" width="517" height="330"
+	horizontalCenter="0" 
+ 	verticalCenter="0"  borderThickness="1">
+	
+	<mx:Script>
+		<![CDATA[
+		
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.containers.TabNavigator;
+			import mx.containers.TitleWindow;
+			import mx.core.UIComponent;
+				
+			//botões Abrir/fechar
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.Bt_Members.enabled=true;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Label 
+		text="Membro" 
+		color="#FFFFFF" 
+		fontWeight="bold" 
+		fontSize="11" 
+		y="11" 
+		x="7" 
+		fontFamily="Verdana"/>
+	<mx:TextInput 
+		width="175" 
+		borderStyle="solid" 
+		cornerRadius="4" 
+		alpha="0.77" 
+		borderThickness="1" 
+		themeColor="#000000" 
+		borderColor="#122618" 
+		x="68" 
+		y="10" color="#4B4F32" enabled="false"/>
+	<mx:ComboBox 
+		editable="false" 
+		enabled="false" 
+		dataProvider="Buscar" 
+		width="156" 
+		color="#202321" 
+		fontSize="10" 
+		borderColor="#0C0C0C" 
+		x="254" 
+		y="9" themeColor="#525925">
+	</mx:ComboBox>
+	
+	<mx:TabNavigator 
+		height="256" 
+		styleName="tabNavigatorTab" 
+		backgroundColor="#423F1A" bottom="0" right="0" left="0">
+		<mx:Canvas 
+			label="Lideres TRAK" 
+			width="100%" 
+			height="100%">
+			<mx:Label x="85" y="30" text="Administradores:"/>
+			<mx:Label x="115" y="63" text="Diplomatas:"/>
+			
+			<mx:Label x="68" y="99" text="Ministros da Defesa:"/>
+			<mx:Label x="54" y="136" text="Ministros das Finanças:"/>
+			<mx:Label x="53" y="178" text="Ministros das Finanças:"/>
+			<mx:Label x="221" y="30" text="lexxtrak |" fontWeight="normal" color="#01FD0D" />
+			<mx:Label x="281" y="30" text="scorpionkingrdc " fontWeight="normal" color="#01FD0D" />
+			<mx:Label x="220" y="63" text="Lady_Eve | " fontWeight="normal" color="#03CCFE"/>
+			<mx:Label x="285" y="63" text="Daseira" fontWeight="normal" color="#03CCFE"/>
+			<mx:Label x="218" y="99" text="JOTA-KUN |" fontWeight="normal" color="#F58686"/>
+			<mx:Label x="287" y="99" text="|RafaAlveSl" fontWeight="normal" color="#F58686"/>
+			<mx:Label x="219" y="136" text="ganonluke |" fontWeight="normal" color="#FBFE02"/>
+			<mx:Label x="293" y="136" text="Hime_chan" fontWeight="normal" color="#FBFE02"/>
+			<mx:Label x="219" y="178" text="mkonalves |" fontWeight="normal" color="#C4B5FA"/>
+			<mx:Label x="289" y="178" text=" Xavante " fontWeight="normal" color="#C4B5FA"/>
+		</mx:Canvas>
+		<mx:Canvas 
+			label="Membros Ativos" 
+			width="100%" 
+			height="100%">
+			<mx:Canvas right="0" top="0" bottom="0" left="0">
+				<mx:Image width="495" height="497" top="2" left="0" source="img/Membros.png"/>
+			</mx:Canvas>
+		</mx:Canvas>
+		<mx:Canvas label="Regras" width="100%" height="100%">
+			<mx:TextArea backgroundAlpha="0.0" text="TRAK® é uma marca registrada do CLAN TRAK BRASIL. &#xa;&#xa;no D.O. a marca ganhará a seguinte insignia; &#xa;(TRAK® - Team Revolutionists of Army /alpha killers)&#xa;De vitoria em vitoria... Rumo a Glória!&#xa;&#xa;REGRAS&#xa;&#xa;1 - Respeitar as regras do D.O. e as regras da Aliança.&#xa;&#xa;2 - Respeitar a liderança e membros da Aliança TRAK.&#xa;&#xa;3 - Respeitar nossos Aliados. Não é permitido atacar membros de outras alianças, mesmo sendo de alianças mais fracas que a nossa. &#xa;&#xa;4 - Ser ativo no Jogo. Não permanecer por mais de quinze dias sem logar no Desert-Operations, caso isso ocorra sem informativo prévio, será considerado um jogador inativo e assim retirado da aliança.&#xa;&#xa;5 - Ataques só serão permitidos a membros sem aliança e aqueles a quem estivermos em guerra direta.&#xa;&#xa;6 - Não atacar nenhum jogador que esteja com aliança sem autorização da administração.&#xa;&#xa;7 - Ajudar novos membros ativamente e responder às necessidades da aliança quando entrarmos em guerra.&#xa;&#xa;8 - Obrigatório disponibilizar os relatórios de espionagem e combate para a aliança. Selecione a opção no perfil do jogador.&#xa;&#xa;9 - Inatividade será retalhada com BAN, em 20 dias. &#xa;&#xa;Desobediência as regras citadas serão responsabilizadas com BAN.&#xa;&#xa;10 - Respeitar as táticas e estratégias de jogo, realizadas pela cúpula de lideres.&#xa;&#xa;&#xa;Lideres da Aliança TRAK&#xa;&#xa;Lexx - Admin&#xa;Jota - Defesa&#xa;Luke - Financeiro&#xa;Eve - Diplomata&#xa;Mkon - Informações&#xa;&#xa;© 2010 | TRAK - Acesse! " left="0" right="0" top="0" height="233" fontWeight="normal" editable="false" enabled="true"/>
+		</mx:Canvas>
+		
+		<mx:Canvas 
+			label="Detalhes" 
+			width="100%" 
+			height="100%"
+			enabled="false">
+		</mx:Canvas>
+		
+	</mx:TabNavigator>
+	
+		
+</mx:TitleWindow>

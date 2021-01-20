@@ -1,0 +1,20 @@
+/* CSS file */
+
+TitleWindow
+{
+	borderColor: #000033;
+	borderStyle: solid;
+	borderThickness: 1;
+	cornerRadius: 8;
+	borderThicknessLeft: 0;
+	borderThicknessRight: 0;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 0;
+	roundedBottomCorners: true;
+	borderAlpha: 1.0;
+	backgroundAlpha: 0.31;
+	headerHeight: 23;
+	paddingTop: 6;
+	paddingBottom: 3;
+	color: #000033;
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			
+			import mx.controls.Alert;
+			
+			import mapeamento.Pessoa;
+			
+			/**
+			 * Prepara um objeto remoto para executar um método no asp.net.
+			**/
+			private function preparaRemoteObj(fncFalha:Function, fncOk:Function = null):RemoteObject{
+				//Instancia um objeto remoto pegando as configurações do nosso arquivo services-config.xml
+				var remoteObj:RemoteObject = new RemoteObject("fluorine"); //<destination id="fluorine">
+				remoteObj.source = "IntegracaoFlex.Pessoa"; // Namespace.NomeDaClasse no ASP.net
+				remoteObj.showBusyCursor = true; // Exibe o relogio no lugar do cursor durante a requisição
+				
+				//Adiciona o evento falha na lista de eventos do ojeto remoto
+				remoteObj.addEventListener(FaultEvent.FAULT, fncFalha); 
+				
+				//Verifica se é null porque nem sempre um método vai retornar algum valor.
+				if (fncOk != null)  
+					//Adiciona a funcao passada como parametro neste método,
+					//ela é responsável por tratar o retorno do método asp.net
+					remoteObj.addEventListener(ResultEvent.RESULT, fncOk);  
+																		   
+				
+				return remoteObj; //retorna o objeto remoto configurado.
+			}
+			
+			/**
+			 * Tratamento de erro do método executado no asp.net.
+			**/
+			private function rstFalha(evt:FaultEvent):void{
+				Alert.show("Ocorreu o seguinte erro ao tentar executar o método:\n" + 
+				evt.fault.message, "Erro");
+			}			
+			
+			/**
+			 * Tratamento do retorno do método Insere executado no asp.net.
+			**/
+			private function rstSucessoInsere(evt:ResultEvent):void{
+				if (evt.result != null){
+					Alert.show("Método executado com sucesso!\n\n" + 
+					(evt.result as String), "Ok");
+				}
+			}
+			
+			/**
+			 * Tratamento do retorno do método Lista executado no asp.net.
+			**/
+			private function rstSucessoLista(evt:ResultEvent):void{
+				if (evt.result != null){
+					grdPessoas.dataProvider = (evt.result as ArrayCollection);
+				}
+			}
+			
+			/**
+			 * Evento click do botão Inserir.
+			**/
+			private function btnInserir_click(evt:MouseEvent):void{
+				if (evt.type == MouseEvent.CLICK){
+					
+					//Configura a Pessoa
+					var pessoa:Pessoa = new Pessoa;
+					pessoa.Id_Pessoa = int(txtId_Cadastro.text);
+					pessoa.Nome = txtNome.text;
+					pessoa.Telefone = txtTelefone.text;
+					
+					//Executa o método no asp.net
+					var remoteObj:RemoteObject = preparaRemoteObj(rstFalha, rstSucessoInsere);					
+					remoteObj.getOperation("Insere").send(pessoa);
+				}
+			}
+			
+			/**
+			 * Evento click do botao Lista
+			**/
+			private function btnListar_click(evt:MouseEvent):void{
+				if (evt.type == MouseEvent.CLICK){
+					
+					//Executa o método no asp.net
+					var remoteObj:RemoteObject = preparaRemoteObj(rstFalha, rstSucessoLista);					
+					remoteObj.getOperation("Lista").send();
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="10" y="12" text="Id"/>
+	<mx:TextInput x="72" y="10" id="txtId_Cadastro"/>
+	
+	<mx:Label x="10" y="40" text="Nome"/>
+	<mx:TextInput x="72" y="38" id="txtNome"/>
+	
+	<mx:Label x="10" y="68" text="Telefone"/>
+	<mx:TextInput x="72" y="66" id="txtTelefone"/>
+	
+	<mx:Button x="167" y="96" 
+		label="Inserir" 
+		id="btnInserir" 
+		click="btnInserir_click(event);"/>
+	
+	
+	
+	<mx:Button y="96" right="91"
+		label="Listar"  
+		id="btnListar" 
+		click="btnListar_click(event);"/>
+	
+	<mx:DataGrid y="126" width="489" right="77" id="grdPessoas" height="200">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Id" dataField="Id_Pessoa" width="20"/>
+			<mx:DataGridColumn headerText="Nome" dataField="Nome" width="40"/>
+			<mx:DataGridColumn headerText="Telefone" dataField="Telefone" width="40"/>
+		</mx:columns>
+	</mx:DataGrid>	
+	
+</mx:Application>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0"?>
+<gallery>
+	<image>
+		<src><![CDATA[images/imageone.jpg]]></src>
+		<title><![CDATA[This is Image One Title]]></title>
+	</image>
+	<image>
+		<src><![CDATA[images/imagetwo.jpg]]></src>
+		<title><![CDATA[This is Image Two Title]]></title>
+	</image>
+	<image>
+		<src><![CDATA[images/imagethree.jpg]]></src>
+		<title><![CDATA[This is Image Three Title]]></title>
+	</image>
+	<image>
+		<src><![CDATA[images/imagefour.jpg]]></src>
+		<title><![CDATA[This is Image Four Title]]></title>
+	</image>
+	<image>
+		<src><![CDATA[images/imagefive.jpg]]></src>
+		<title><![CDATA[This is Image Five Title]]></title>
+	</image>
+	<image>
+		<src><![CDATA[images/imagesix.jpg]]></src>
+		<title><![CDATA[This is Image Six Title]]></title>
+	</image>
+	<image>
+		<src><![CDATA[images/imageseven.jpg]]></src>
+		<title><![CDATA[This is Image Seven Title]]></title>
+	</image>
+</gallery>

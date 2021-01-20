@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="750" 
+	height="500" 
+	backgroundAlpha="0.27" 
+	borderColor="#FFFFFF"
+	horizontalCenter="0"
+	verticalCenter="0"
+	creationComplete="Iniciar()" 
+	label="CvPrincipal" 
+	backgroundColor="#000000" 
+	cornerRadius="8" 
+	borderStyle="solid">
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+			import util.ObjetoRemoto;
+			import classes.autenticar_usuario;
+			import mx.core.Application;
+			import form.*;
+						
+			public var cad_menu:Cadastro;
+			public var criar_rota:Rota;
+			public var importacao:Import;
+			
+			public var cadPedidos: Pedidos_manual = new Pedidos_manual;
+						
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			//botoes
+			private function showCad():void 
+			{
+				Bt_Cad.enabled=true;
+				cad_menu = Cadastro(PopUpManager.createPopUp(this, form.Cadastro, true));
+			}
+			private function showImp():void 
+			{
+				Bt_Import.enabled=true;
+				importacao = Import(PopUpManager.createPopUp(this, form.Import, true));
+			}
+			private function showRota():void 
+			{
+				//Bt_Rotas.enabled=true;
+				//criar_rota = Rota(PopUpManager.createPopUp(this, form.Rota, true));
+				
+				cadPedidos = Pedidos_manual(PopUpManager.createPopUp(this, form.Pedidos_manual, true));
+			}
+			
+			private function logout():void
+			{
+				var remoteObj_loggin:ObjetoRemoto = new ObjetoRemoto(autenticar_usuario.NAMESPACE);                            
+				remoteObj_loggin.getOperation("logout").send(); 
+				Application.application.principal.visible = false;
+				Application.application.login.ImpLoginUser.setFocus();
+				Application.application.login.visible = true;
+			}			
+		]]>
+	</mx:Script>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FEFEFE" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0" 
+		cornerRadius="8" 
+		themeColor="#009DFF" 
+		horizontalCenter="-252" 
+		verticalCenter="-52" 
+		id="Bt_Cad" 
+		click="showCad()" 
+		icon="@Embed(source='../img/Cadastro.png')" 
+		textAlign="center" 
+		downIcon="@Embed(source='../img/Cadastro.png')" 
+		overIcon="@Embed(source='../img/Cadastro2.png')"/>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FFFFFF" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0"
+		cornerRadius="8" 
+		horizontalCenter="221" 
+		verticalCenter="-52" 
+		id="Bt_Rotas" 
+		click="showRota()" 
+		icon="@Embed(source='../img/Roteirizacao.png')"
+		downIcon="@Embed(source='../img/Roteirizacao.png')" 
+		overIcon="@Embed(source='../img/Roteirizacao2.png')"/>
+	<mx:Button 
+		height="7" 
+		width="90" 
+		borderColor="#FFFFFF" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		fillColors="[#517DB4, #517DB4]" 
+		color="#000000" 
+		alpha="1.0" 
+		cornerRadius="8" 
+		horizontalCenter="-24" 
+		verticalCenter="-52" 
+		id="Bt_Import" 
+		click="showImp()" 
+		icon="@Embed(source='../img/Importacao.png')"
+		downIcon="@Embed(source='../img/Importacao.png')" 
+		overIcon="@Embed(source='../img/Importacao2.png')"/>
+	<mx:Button 
+		label="Sair"
+		click="logout()" 
+		height="20" 
+		cornerRadius="6" 
+		width="78" 
+		color="#FFFFFF" 
+		themeColor="#5880C3" 
+		alpha="1.0" 
+		verticalCenter="219" 
+		horizontalCenter="325" 
+		fillAlphas="[1.0, 0.4, 1.0, 0.4]" 
+		fillColors="[#FF0000, #FF0000, #FF0000, #FF0000]">
+	</mx:Button>
+	
+	
+</mx:Canvas>

@@ -1,0 +1,5 @@
+R:\site\3GWedCRED\3gMASTER\3gmaster\bin\3gmaster.dll
+R:\site\3GWedCRED\3gMASTER\3gmaster\bin\3gmaster.pdb
+R:\site\3GWedCRED\3gMASTER\3gmaster\obj\Debug\ResolveAssemblyReference.cache
+R:\site\3GWedCRED\3gMASTER\3gmaster\obj\Debug\3gmaster.dll
+R:\site\3GWedCRED\3gMASTER\3gmaster\obj\Debug\3gmaster.pdb

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book title="Carousel AS3" directory="carouselas3" language="en" version="1.0.0" sort="SynergicLabs">
+<level1 href="welcome.html" name="Instructions"/>
+<level1 name="Properties"/>
+	<level2 href="borderpadding.html" name="borderPadding"/>
+	<level2 href="reflectiondistance.html" name="reflectionDistance"/>
+	<level2 href="showreflection.html" name="showReflection"/>
+	<level2 href="titlesize.html" name="titleSize"/>
+	<level2 href="borderpadding.html" name="borderPadding"/>
+	<level2 href="fadeimages.html" name="fadeImages"/>
+	<level2 href="depth.html" name="depth"/>
+	<level2 href="xRadius.html" name="xRadius"/>
+	<level2 href="autorun.html" name="autoRun"/>
+	<level2 href="imageborder.html" name="imageBorder"/>
+	<level2 href="color.html" name="color"/>
+	<level2 href="titlecolor.html" name="titleColor"/>
+	<level2 href="bordercolor.html" name="borderColor"/>
+	<level2 href="titlefont.html" name="titleFont"/>
+	<level2 href="showtitle.html" name="showTitle"/>
+	<level2 href="filename.html" name="fileName"/>
+	<level2 href="changesound.html" name="changeSound"/>
+<level1 name="Methods"/>
+	<level2 href="gettotalimages.html" name="getTotalImages()"/>
+	<level2 href="selectedimage.html" name="selectedImage()"/>
+	<level2 href="pause.html" name="pause()"/>
+	<level2 href="play.html" name="play()"/>
+	<level2 href="setcurrentimage.html" name="setCurrentImage()"/>
+<level1 name="Events" />
+	<level2 href="xmlFileLoaded.html" name="xmlFileLoaded"/>
+	<level2 href="imageClicked.html" name="imageClicked"/>
+	<level2 href="initialize.html" name="initialize"/>
+</book>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" 
+	width="902" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+	creationComplete="creationComplete();" viewSourceURL="srcview/index.html">
+	
+<mx:Script> 
+    <![CDATA[ 
+    
+    import com.google.maps.LatLng; 
+    import com.google.maps.Map; 
+    import com.google.maps.MapEvent; 
+    import com.google.maps.MapType;
+    import formulario.HelloWorld; 
+ 
+ 	private var _world:HelloWorld;
+
+    private function onMapReady(event:Event):void { 
+      this.map.setCenter(new LatLng(40.736072,-73.992062), 14, MapType.NORMAL_MAP_TYPE); 
+    } 
+    
+	private function btnAdicionar_click():void{
+			_world = new HelloWorld();
+			vBox.addChild(_world);
+	}
+    
+    ]]> 
+</mx:Script> 
+<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)" width="440" height="100%" key="your_api_key" x="0" y="0"/> 
+	<mx:Button x="448" y="10" label="Adicionar" id="btnAdicionar" click="btnAdicionar_click();"/>
+	<mx:VBox id="vBox" x="536" y="0" height="600" width="366">
+	</mx:VBox>
+</mx:Application>

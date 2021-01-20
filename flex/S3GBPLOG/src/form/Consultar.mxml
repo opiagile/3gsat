@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="838" 
+	height="438" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.Grid;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			import mx.controls.Button;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			import mx.containers.Canvas;
+			import mx.containers.TitleWindow;
+			
+			import util.ObjetoRemoto;
+			import classes.cliente;
+			import form.Cadastro_Cli;
+			
+	        [Bindable]
+	        public var _arrayCliente:ArrayCollection;
+	        
+	        public var clienteid: int;
+	        
+	        public var codcliente:int;
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+				if (Application.application._pesquisa == 0)
+				{
+					lbl_pesquisa.text = "Cliente";
+					var remoteObj_salvar:ObjetoRemoto = new ObjetoRemoto(cliente.NAMESPACE, rstSucesso);                            
+					remoteObj_salvar.getOperation("retornaclientes").send(Application.application._distribuidorid); 
+				}
+				else 
+				{
+					if (Application.application._pesquisa == 1)
+					{
+						lbl_pesquisa.text = "Veículo";	
+					}	
+					else 
+					{
+						lbl_pesquisa.text = "Rota";
+					}					
+				}					
+			}
+			
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+				{
+					_arrayCliente = ArrayCollection(evt.result);
+					_arrayCliente.filterFunction = buscacliente;
+					_arrayCliente.refresh();
+				}
+				
+				if (Application.application._pesquisa == 0)
+				{
+					Dg_Consulta.dataProvider = _arrayCliente;
+					coluna0.dataField = "clienteid";
+					coluna1.headerText = "Cód. Cliente";
+					coluna1.dataField="codcli";
+					coluna2.headerText = "Nome";
+					coluna2.dataField="fantasia";
+					coluna3.headerText = "Razão";
+					coluna3.dataField="razaosocial";
+					coluna4.headerText = "Dta Cadastro";
+					coluna4.dataField="datacadastro";	
+				}
+				else 
+				{
+					if (Application.application._pesquisa == 1)
+					{
+						lbl_pesquisa.text = "Veículo";	
+					}	
+					else 
+					{
+						lbl_pesquisa.text = "Rota";
+					}					
+				}					
+						
+			}
+			
+			private function buscacliente(item:Object):Boolean 
+			{                
+				var encontrado:Boolean = false;                                
+				
+				if (item.fantasia.toLowerCase().search(tx_consulta.text.toLowerCase()) != -1)                    
+					return true;                
+				else 
+					return false;            
+			}
+			
+			private function statuslinha(linha:int):void
+			{
+				clienteid = _arrayCliente[linha].clienteid;
+				Bt_BuscaConsulta.enabled = true;
+			}
+
+			private function voltar():void
+			{
+				if (mx.core.Application.application._pesquisa == 0)
+				{
+					mx.core.Application.application.atualizacliente();
+				}
+				
+				Fechar();
+			}
+									
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			} 
+                
+		]]>
+	</mx:Script>
+	<mx:Canvas 
+		y="43" 
+		height="236" 
+		width="467" 
+		x="309" backgroundAlpha="0.31" alpha="0.74">
+	<mx:Image 
+		source="img/fundo.png" 
+		right="-5" 
+		top="0" 
+		scaleContent="true"
+		horizontalAlign="right"/>
+		</mx:Canvas>
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3GBPLOG - Consultar" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		width="730" 
+		height="356" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="0.63" 
+ 		backgroundColor="#CCD6C8" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" 
+ 		themeColor="#FFE400" 
+ 		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+ 		id="Tw_Consulta">
+		<mx:DataGrid 
+			right="10" 
+			left="10" 
+			bottom="10" 
+			borderStyle="solid" 
+			borderColor="#2D2E44" 
+			id="Dg_Consulta" 
+			height="248" 
+			alpha="0.68"
+			verticalScrollPolicy="on"	
+			sortableColumns="false" 
+			themeColor="#3F5B93" 
+			textRollOverColor="#000000" 
+			textSelectedColor="#FFFFFF" 
+			rollOverColor="#8CBFFF" 
+			selectionColor="#001561"
+			click="statuslinha(Dg_Consulta.selectedIndex)">
+			
+			<mx:columns>
+				<mx:DataGridColumn
+					id="coluna0"
+					visible="false"/>			
+				<mx:DataGridColumn
+					id="coluna1"
+					headerText="Column 1"/>
+				<mx:DataGridColumn 
+					id="coluna2"
+					headerText="Column 2"/>
+				<mx:DataGridColumn
+					id="coluna3" 
+					headerText="Column 3"/>
+				<mx:DataGridColumn
+					id="coluna4" 
+					headerText="Column 4"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:TextInput 
+			width="467" 
+			height="22" 
+			borderColor="#2D2E44" 
+			horizontalCenter="8" 
+			bottom="266" 
+			id="tx_consulta"
+			change="{_arrayCliente.refresh()}" 
+			themeColor="#3F5B93"/>
+		<mx:Button 
+			label="Voltar" 
+			width="105" 
+			textAlign="center" 
+			height="22" 
+			borderColor="#2D2E44" 
+			horizontalCenter="302" 
+			bottom="266" id="Bt_BuscaConsulta" 
+			themeColor="#3F5B93" 
+			enabled="false"
+			click="voltar()"/>
+		<mx:Label 
+			x="10" 
+			y="8" 
+			text="Cliente" 
+			id="lbl_pesquisa" 
+			fontSize="12"/>
+		<mx:Label 
+			x="21" 
+			y="41" 
+			text="Localizar por nome"/>
+		
+		
+	</mx:TitleWindow>
+
+</mx:Canvas>

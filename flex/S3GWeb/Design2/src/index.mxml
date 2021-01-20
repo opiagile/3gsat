@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 05/01/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Tela principal, além de apresentar os objetos de interação, é utilizado também como
+				objeto global, variáveis e funções de acesso global são criadas aqui.
+*****************************************************************************************************
+-->
+
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	backgroundGradientAlphas="[1.0, 1.0]" 
+	backgroundGradientColors="[#929292, #929292]" 
+	borderStyle="none" 
+	xmlns:s3g="form.*" 
+	themeColor="#FFFFFF" 
+	backgroundColor="#000000" 
+	backgroundDisabledColor="#000000"
+	applicationComplete="Iniciar(event)"
+	preloader="com.preloader.CarregarPreloader">
+    <mx:Fade 
+    	id="fadeIn" 
+    	alphaFrom="0.0" 
+    	alphaTo="1.0" /> 
+    <mx:Fade 
+    	id="fadeOut" 
+    	alphaFrom="1.0" 
+    	alphaTo="0.0" /> 	
+	<mx:Canvas 
+		top="0" bottom="0" backgroundColor="#6B6B6B" left="0" right="0">
+		<s3g:ClienteF3G 
+			id="telamapa" 
+			left="0" 
+			right="0" 
+			top="0" 
+			bottom="0" 
+			visible="false" 
+			hideEffect="{fadeOut}" 
+			showEffect="{fadeIn}">
+		</s3g:ClienteF3G>
+		<s3g:login 
+			id="telalogin" 
+			visible="false" 
+			hideEffect="{fadeOut}" 
+			showEffect="{fadeIn}" 
+			left="0" 
+			right="0" 
+			top="0" 
+			bottom="0"/>
+	</mx:Canvas>	
+	<mx:Style source="Css_cliente.css"/>
+	<mx:Script>
+		<![CDATA[
+			import com.google.maps.LatLng;
+			import mx.events.CloseEvent;
+			import mx.containers.Form;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;            
+			import mx.controls.Alert; 
+			import mx.core.Application; 
+			
+			import mapeamento.autenticar_login;
+			
+			import flash.display.StageDisplayState;
+			import flash.display.SWFVersion;
+			
+			//Variáveis globais			
+	  		public var _arrayGlobal: ArrayCollection;
+			public var _Usuario:String;
+			public var _Senha:String;
+			public var _clienteid:int;
+			public var _grupoId:int;
+			public var _codcli:int;
+			public var _natureza:String;
+			public var _nome:String;
+			public var _endereco:String;
+			public var _cidade:String;
+			public var _estado:String;
+			public var _telefone:String;
+			public var _celular:String;
+			public var _email:String;
+			public var _observacao:String;
+			public var _ultimoacesso:String;
+
+            private function Iniciar(evt:Event):void 
+            {
+                /* Set up full screen handler. */
+                Application.application.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreenHandler);
+            }
+
+            private function fullScreenHandler(evt:FullScreenEvent):void 
+            {
+                if (evt.fullScreen) 
+                {
+                    telamapa.btn_fullscreen.label = "Tela normal";
+                    telamapa.btn_fullscreen.toolTip = "Utilizar o sistema em modo tela normal."
+                } 
+                else 
+                {
+                    telamapa.btn_fullscreen.label = "Tela cheia";
+                    telamapa.btn_fullscreen.toolTip = "Utilizar o sistema em modo tela cheia."
+                }
+            }
+
+            public function toggleFullScreen():void 
+            {
+                try {
+                    switch (Application.application.stage.displayState) 
+                    {
+                        case StageDisplayState.FULL_SCREEN:
+                            Application.application.stage.displayState = StageDisplayState.NORMAL;
+                            break;
+                        default:
+                            Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
+                            break;
+                    }
+                } 
+                catch (err:SecurityError) 
+                {
+                    // ignorar
+                }
+            }
+            
+		    public function EstaNaDireita(PoliPontoA : LatLng, PoliPontoB : LatLng, ponto : LatLng) : Boolean
+		    {
+		        var M : Number = 0;
+		        var LngEmFunction : Number = 0;
+		        
+		        if ((PoliPontoA.lat() >= ponto.lat() && PoliPontoB.lat() <= ponto.lat()) || (PoliPontoB.lat() >= ponto.lat() && PoliPontoA.lat() <= ponto.lat()))
+		        {
+		            M = (PoliPontoA.lat() - PoliPontoB.lat()) / (PoliPontoA.lng() - PoliPontoB.lng());
+		            LngEmFunction = ((ponto.lat() - PoliPontoA.lat()) / M) + PoliPontoA.lng();
+
+		            if (LngEmFunction <= ponto.lng())
+		                return true;
+		        }
+		        return false;
+		    }
+
+						
+		]]>
+	</mx:Script>	
+</mx:Application>

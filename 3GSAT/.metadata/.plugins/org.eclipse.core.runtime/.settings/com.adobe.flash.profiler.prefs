@@ -1,0 +1,4 @@
+#Tue May 25 15:02:43 BRT 2010
+eclipse.preferences.version=1
+com.adobe.flash.profiler.Excludes=,flash.*.*,mx.*.*,
+com.adobe.flash.profiler.Includes=,

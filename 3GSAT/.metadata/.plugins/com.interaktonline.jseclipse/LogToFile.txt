@@ -1,0 +1,6 @@
+25/05/2010 14:28:18 com.interaktonline.jseclipse.JavaScriptEditorPlugin start
+INFO: JSEclipse start
+25/05/2010 14:28:24 com.interaktonline.jseclipse.library.ResourceParser run
+INFO: -- JsLibraryManager -- parsing for: 0
+25/05/2010 14:28:24 com.interaktonline.jseclipse.library.ResourceParser run
+INFO: -- HtmlLibraryManager -- parsing for: 0

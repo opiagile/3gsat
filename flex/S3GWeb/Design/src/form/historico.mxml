@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 10/03/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Tela CRUD para a área de segurança.
+*****************************************************************************************************
+-->
+
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="922" 
+	height="562" 
+	horizontalAlign="center" 
+	verticalAlign="middle" 
+	showCloseButton="false" 
+	cornerRadius="8" 
+	borderColor="#FFFFFF" 
+	backgroundColor="#000000"
+	creationComplete="Iniciar()"
+	close="Fechar()"
+	xmlns:controls="com.brightPoint.controls.*" 
+	color="#D4D4D4"
+	themeColor="#FFFFFF" 
+	backgroundAlpha="1.0" 
+	borderStyle="none" 
+ 	title="Histórico de rastreamento">
+
+ <mx:Style> 
+	.controllerStyle 
+    { 
+    	top: 153; 
+        left: 0; 
+        paddingBottom: 10; 
+        paddingLeft: 6; 
+        paddingRight: 8; 
+        paddingTop: 6; 
+        alpha: 0; 
+        background-color: #000000; 
+        background-alpha: 0.5; 
+    }
+                              
+	@font-face 
+	{
+    	font-family: FontDigital;
+    	src: url('W:/cli/font/Digirtu_.ttf');
+ 	}	
+</mx:Style>
+
+	<maps:Map3D 
+		xmlns:maps="com.google.maps.*" 
+		id="map" 
+		mapevent_mapready="onMapReady(event)"  
+        key="ABQIAAAA_TQEyyv5-SbCDgXXQiIZ1xQU5CXJEcoQxTGe0PYRT24IzhECkhSvoHD1DnlPejMusOey1E8-od7CDw" 
+        top="46" 
+        bottom="145" 
+        left="3" 
+        right="3"/> 
+	<mx:VSlider 
+		id="zoomSlider" 
+		height="112" 
+		minimum="3" 
+		maximum="20" 
+		snapInterval="1" 
+		tickInterval="1" 
+		dataTipPrecision="0" 
+		value="16" 
+		showTrackHighlight="true" 
+		borderColor="#FFFFFF" 
+		tickColor="#ff0000" 
+		change="onSliderChanged(event);"  
+		width="26" 
+		themeColor="#FF0000" 
+		alpha="1.0" 
+		y="96"
+		x="16"/>
+	<mx:Button 
+		x="13" 
+		y="217" 
+		color="#000000" 
+		icon="@Embed(source='../../img/zoom-out.png')"
+		downIcon="@Embed(source='../../img/zoom-out.png')"
+		overIcon="@Embed(source='../../img/zoom-out1.png')" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		width="10" 
+		height="10" 
+		click="onZoomOut();"/>
+	<mx:Canvas 
+		height="148" 
+		id="can0" 
+		bottom="32" 
+		right="1" 
+		left="1" 
+		backgroundColor="#000000">
+		<mx:DataGrid 
+			alternatingItemColors="[#0C0D0C, #000000]" 
+			color="#D4D4D4" 
+			alpha="1.0"			
+			verticalScrollPolicy="on"
+			id="gridhistorico" 	
+			sortableColumns="false" 
+			headerColors="#787878" 
+			rowHeight="18" 
+			fontFamily="Arial" 
+			horizontalGridLineColor="#3a3a3a" 
+			verticalGridLineColor="#3a3a3a"
+			dataProvider="{_arrayHistorico}"
+			itemClick="onGridItemClick(gridhistorico.selectedIndex)" 
+			bottom="1" 
+			top="1" 
+			right="0" 
+			enabled="false" 
+			textSelectedColor="#000000" 
+			textRollOverColor="#D4D4D4" 
+			rollOverColor="#FF0000" 
+			selectionColor="#D4D4D4" left="0">
+			<mx:columns>
+				<mx:DataGridColumn 
+					headerText="Data\Hora Recebimento" 
+					dataField="datahorarecebimento"/>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Canvas>
+	<mx:MenuBar 
+		id="cabecalho" 
+		left="2" 
+		right="2" 
+		top="2" 
+		height="43" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666">
+	</mx:MenuBar>
+	<mx:Button 
+		label="Buscar" 
+		id="btn_Buscar" 
+		color="#D4D4D4"
+		click="onClickBusca();" 
+		y="13" 
+		right="312" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		borderColor="#D4D4D4" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF"/>
+	<mx:Button 
+		label="Todas as posições" 
+		id="btn_MostrarTodos" 
+		color="#D4D4D4"
+		click="MostrarHistorico();" 
+		y="13" 
+		right="172" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		borderColor="#D4D4D4" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		enabled="false"/>
+	<mx:DateField 
+		y="19" 
+		width="120" 
+		right="390" 
+		id="df_DataFinal" 
+		showToday="true" 
+		borderColor="#000000" 
+		color="#000000" 
+		enabled="true"			
+		monthNames="{_NomeMeses}"
+		dayNames="{_NomeDia}"
+		formatString="MM/DD/YYYY"
+		editable="true"/>
+	<mx:DateField 
+		y="19" 
+		width="120" 
+		left="258" 
+		id="df_DataInicial" 
+		showToday="true" 
+		color="#000000" 
+		enabled="true"
+		monthNames="{_NomeMeses}"
+		dayNames="{_NomeDia}"
+		formatString="MM/DD/YYYY"
+		editable="true"/>
+	<mx:Label 
+		y="3" 
+		text="Data inicial" 
+		right="580"/>
+	<mx:Label 
+		y="3" 
+		text="Data final" 
+		right="453"/>
+	<mx:ComboBox 
+		dataProvider="{posicoes}"
+		labelField="label"
+		color="#000000" 
+		id="cb_Posicoes" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[1.0, 0.4, 1.0, 0.4]" 
+		fillColors="[#D4D4D4, #D4D4D4]" 
+		y="20" 
+		right="656.5" cornerRadius="5">
+	</mx:ComboBox>
+	<mx:Label 
+		text="Placa do veículo" 
+		color="#D4D4D4" 
+		right="784" 
+		y="3"/>
+	<mx:Label 
+		text="Número de posições" 
+		color="#D4D4D4" 
+		right="654.5" 
+		width="118" 
+		y="3"/>
+	<mx:ComboBox 
+		dataProvider="{_arrayPlacas}"
+		labelField="placa" 
+		color="#000000" 
+		id="cb_PlacaVeiculo" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[1.0, 0.4, 1.0, 0.4]" 
+		fillColors="[#D4D4D4, #D4D4D4]" 
+		right="783" 
+		y="20" cornerRadius="5">						
+	</mx:ComboBox>
+	<mx:MenuBar 
+		id="rodape" 
+		left="1" 
+		right="1" 
+		height="32" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" 
+		bottom="1">
+	</mx:MenuBar>
+	<mx:Image 
+		height="32" 
+		source="../img/3GSAT-black.png" 
+		right="1" 
+		bottom="1" 
+		width="79" scaleContent="true"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import com.google.maps.MapAction;
+			import mx.containers.ApplicationControlBar;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.controls.Alert;
+			import form.*;
+			import form.ClienteF3G;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			import mx.core.Application;
+			
+		    import com.google.maps.InfoWindowOptions;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.interfaces.IMapType;
+			import com.google.maps.LatLngBounds;
+		    import com.google.maps.controls.ZoomControlOptions;
+		    import com.google.maps.MapOptions;	    
+		    import com.google.maps.controls.PositionControl;
+			import com.google.maps.MapEvent; 
+			import com.google.maps.MapType; 
+	        import com.google.maps.Map;
+	        import com.google.maps.LatLng;
+	        import com.google.maps.MapMouseEvent;
+	        import com.google.maps.MapZoomEvent;
+	        import com.google.maps.overlays.Polygon;
+	        import com.google.maps.overlays.Polyline;
+	        import com.google.maps.controls.ZoomControl;
+	        import com.google.maps.controls.ScaleControl;
+	        import com.google.maps.View;        
+	        import com.google.maps.services.ClientGeocoder;
+	        import com.google.maps.services.GeocodingEvent;
+	        import com.google.maps.services.GeocodingResponse;
+	        import com.google.maps.services.Placemark;
+			
+			import util.ObjetoRemoto;
+		    import util.InfoWindowComp;
+			
+			import mapeamento.get_historico_veiculos;
+			
+			private var form_mapa:ClienteF3G;
+			[Bindable]
+			public var _NomeDia:Array = ["D","S","T","Q","Q","S","S"];
+			[Bindable]
+			public var _NomeMeses:Array = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+			[Bindable]
+			public var _arrayPlacas:ArrayCollection;
+			[Bindable]
+			public var _arrayHistorico:ArrayCollection;			
+			[Bindable]
+		    private var posicoes:Array = new Array(
+		        									{data:10, label:"10"},
+		        									{data:15, label:"15"},
+		        									{data:20, label:"20"},
+		        									{data:25, label:"25"},
+		        									{data:30, label:"30"},
+		        									{data:35, label:"35"},
+		        									{data:40, label:"40"},
+		        									{data:45, label:"45"},
+		        									{data:50, label:"50"}
+		        								);				
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			private function onZoomIn():void
+			{
+				zoomSlider.value = zoomSlider.value + 1;
+				map.setZoom(zoomSlider.value);
+			}
+
+			private function onZoomOut():void
+			{
+				zoomSlider.value = zoomSlider.value - 1;
+				map.setZoom(zoomSlider.value);
+			}
+
+			private function onMapZoomChanged(event:Event):void 
+			{ 
+				zoomSlider.value = map.getZoom();
+      		}
+      		private function onSliderChanged(event:Event):void 
+      		{
+      			if (map && map.isLoaded()) 
+      			{
+      				map.setZoom(zoomSlider.value);
+           		}
+      		}
+
+	        private function onMapReady(event:Event):void 
+	        { 	
+	        	map.setCenter(new LatLng(-25.366085, -49.220698), 3, MapType.NORMAL_MAP_TYPE); 
+	        	map.addEventListener(MapEvent.MAP_READY, onMapReady);
+	        	_arrayPlacas = ArrayCollection(Application.application._arrayGlobal);
+	        } 
+	        
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+				{
+					_arrayHistorico = ArrayCollection(evt.result);
+					gridhistorico.enabled = true;
+					this.map.clearOverlays();
+					var LatLon:LatLng = new LatLng(_arrayHistorico[0].latitude, _arrayHistorico[0].longitude); 
+					CriaMarcador(_arrayHistorico[0].latitude,_arrayHistorico[0].longitude,0,_arrayHistorico[0].tipoveiculoid);
+					map.setCenter(new LatLng(_arrayHistorico[0].latitude, _arrayHistorico[0].longitude), 17, MapType.NORMAL_MAP_TYPE); 
+					zoomSlider.value = 17;
+					gauge.value = _arrayHistorico[0].velocidade;	
+					btn_MostrarTodos.enabled = true;
+				}	
+				else
+					Alert.show("A pesquisa não encontrou nenhuma informação.","Atenção");			
+			}
+				        
+	        private function onClickBusca():void
+	        {
+	        	var teste:String;
+	        	teste = String(df_DataFinal.text);
+	        	
+	        	var remoteObj:ObjetoRemoto = new ObjetoRemoto(get_historico_veiculos.NAMESPACE, rstSucesso);                            
+				remoteObj.getOperation("LocalizaHistorico").send(Application.application._clienteid,
+				                                                 cb_PlacaVeiculo.selectedItem.placa,
+				                                                 int(cb_Posicoes.selectedItem.data),
+				                                                 df_DataInicial.text,
+				                                                 df_DataFinal.text
+				                                                );  
+	        }
+	        
+			private function onGridItemClick( linha : int ):void
+			{
+				this.map.clearOverlays();
+				var LatLon:LatLng = new LatLng(_arrayHistorico[linha].latitude, _arrayHistorico[linha].longitude); 
+				CriaMarcador(_arrayHistorico[linha].latitude,_arrayHistorico[linha].longitude,linha,_arrayHistorico[linha].tipoveiculoid);
+				map.setCenter(new LatLng(_arrayHistorico[linha].latitude, _arrayHistorico[linha].longitude), 17, MapType.NORMAL_MAP_TYPE); 
+				zoomSlider.value = 17;
+				gauge.value = _arrayHistorico[linha].velocidade;
+				     				
+			}
+
+			public function CriaMarcador(lat:Number, lon:Number, Registro:int, Icone:int): void 
+			{
+				var request:URLRequest;
+				
+				if ( Icone == 1)
+			    	//request = new URLRequest("http://3gserver:84/img/carro.png")
+			    	request = new URLRequest("http://200.175.3.55:84/img/carro.png")
+			    else if (Icone == 2)
+			    	//request = new URLRequest("http://3gserver:84/img/moto.png")
+			    	request = new URLRequest("http://200.175.3.55:84/img/moto.png")
+			    else if (Icone == 3)
+			    	//request = new URLRequest("http://3gserver:84/img/caminhao.png")
+			    	request = new URLRequest("http://200.175.3.55:84/img/caminhao.png")
+			    else if (Icone == 4)
+			    	//request = new URLRequest("http://3gserver:84/img/onibus.png")
+			    	request = new URLRequest("http://200.175.3.55:84/img/onibus.png")
+			    else if (Icone == 5)
+			    	//request = new URLRequest("http://3gserver:84/img/3gsat32.png")
+			    	request = new URLRequest("http://200.175.3.55:84/img/3gsat32.png")			    	
+
+			    var Imagem:Loader = new Loader();
+						       
+		        Imagem.contentLoaderInfo.addEventListener
+		        (
+		        	Event.COMPLETE, function(event:Event):void 
+		        	{
+		        		var options:MarkerOptions = new MarkerOptions({hasShadow: true, icon: Imagem});
+		                options.iconAlignment = MarkerOptions.ALIGN_HORIZONTAL_CENTER + MarkerOptions.ALIGN_BOTTOM;
+		                options.iconOffset = new Point(3, 10); 
+																			
+		                var ponto:LatLng = new LatLng(lat, lon);
+		                var MarcarLocal:Marker = new Marker(ponto,options);
+		                var options2:InfoWindowOptions = new InfoWindowOptions
+		                (
+		                	{
+				                customContent: new InfoWindowComp(_arrayHistorico,Registro),
+				                customOffset: new Point(-5,-70),
+				                width: 312,
+								height: 160,
+								drawDefaultFrame: true
+		                    }
+		                );
+		                MarcarLocal.addEventListener
+		                (	
+		                	MapMouseEvent.CLICK, function(e:MapMouseEvent):void                                               
+		                	{
+		                		onGridItemClick(Registro);
+		                		MarcarLocal.openInfoWindow(options2);
+		          		    }
+		          		);
+		         		map.addOverlay(MarcarLocal);
+		         	}
+		        );
+		        Imagem.load(request);
+			}		
+				
+			private function MostrarHistorico():void
+			{
+				var I: int;	
+				this.map.clearOverlays();		
+				
+				for(I = 0; I < _arrayHistorico.length; I++) 
+				{
+					var LatLon:LatLng = new LatLng(_arrayHistorico[I].latitude, _arrayHistorico[I].longitude); 
+					CriaMarcador(_arrayHistorico[I].latitude,_arrayHistorico[I].longitude,I,_arrayHistorico[I].tipoveiculoid);
+				} 
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:Button 
+		x="13" 
+		y="70" 
+		color="#000000" 
+		icon="@Embed(source='../../img/zoom-in.png')" 
+		downIcon="@Embed(source='../../img/zoom-in.png')" 
+		overIcon="@Embed(source='../../img/zoom-in1.png')" 
+		height="10" 
+		width="10" fillAlphas="[0.0, 0.0, 0.0, 0.0]" click="onZoomIn();"/>
+	<controls:Gauge 
+		minValue="0" 
+		maxValue="220" 
+		showValue="true"
+		diameter="120" 
+		id="gauge" 
+		alertAlphas="[.7,.9,.6]" 
+		alertColors="[0xDD0000,0x000000,0xFF0000]" 
+		alertRatios="[0,110,220]"
+		faceColor="0x000000" 
+		ticksColor="0xffffff"			  	
+		pointerColor="0xffffff" 
+		bezelColor="0x999999"
+		faceShadowColor="0x777777"
+		fontSize="18"			    
+		fontColor="0x00FF00"
+		fontFamily="FontDigital"		    			    	    
+	 x="762" y="81"/>
+	<mx:Button 
+		label="Fechar" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		width="87" 
+		labelPlacement="left" 
+		id="btn_logout"
+		click="Fechar();"  
+		right="5" 
+		fillColors="[#FF0000, #FF0000]" 
+		textRollOverColor="#FFFFFF" 
+		textSelectedColor="#FFFFFF" 
+		icon="@Embed(source='../img/cancel.png')" 
+		toolTip="Sair do histórico." 
+		top="13"/>
+</mx:TitleWindow>

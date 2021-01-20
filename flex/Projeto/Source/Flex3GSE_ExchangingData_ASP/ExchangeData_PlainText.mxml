@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+////////////////////////////////////////////////////////////////////////////////
+// ADOBE SYSTEMS INCORPORATED
+// Copyright 2007 Adobe Systems Incorporated
+// All Rights Reserved.
+//
+// NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the 
+// terms of the Adobe license agreement accompanying it.  If you have received this file from a 
+// source other than Adobe, then your use, modification, or distribution of it requires the prior 
+// written permission of Adobe.
+////////////////////////////////////////////////////////////////////////////////
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute"
+	backgroundColor="#FFFFFF"
+	backgroundAlpha="0">
+
+	<mx:Script>
+		<![CDATA[ 
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			
+			public function handlePlain(event:ResultEvent):void
+			{
+				shippingOptions.text = event.result.toString();
+			}
+			
+			public function handleFault(event:FaultEvent):void
+			{
+				Alert.show(event.fault.faultString, "Error");
+			}
+		]]> 
+	</mx:Script>
+	
+	<!-- PHP URL: 
+	     http://examples.adobe.com/flex3/exchangingdata/text/plainHttpService.php 
+	-->
+	<!-- JSP URL: 
+	     http://examples.adobe.com/flex3app/flex3samples/exchangingdata/text/PlainHttpService.jsp 
+	-->
+	<!-- ASP.NET URL:
+	     http://aspexamples.adobe.com/flex3/exchangingdata/PlainHttpService.aspx
+	-->
+	<!-- ColdFusion URL:
+	     url="http://www.coldfusionportal.org/flex3cf/PlainHTTPService.cfm"
+	-->
+	
+	<mx:HTTPService id="plainRpc"
+		url="http://aspexamples.adobe.com/flex3/exchangingdata/PlainHttpService.aspx"
+		result="handlePlain(event)" 
+		fault="handleFault(event)" 
+		resultFormat="text">
+		<mx:request>
+			<zipcode>{zipcode.text}</zipcode>
+			<pounds>{weight_lb.text}</pounds>
+		</mx:request>
+	</mx:HTTPService>
+	
+	<mx:Label x="56" y="32" 
+		text="Zip Code" 
+		width="55" height="18" 
+		textAlign="right" 
+		fontWeight="bold" />
+	<mx:Label x="56" y="58" 
+		text="Weight" 
+		width="55" height="18" 
+		textAlign="right" 
+		fontWeight="bold" />
+	<mx:TextInput id="zipcode" 
+		x="130" y="32" 
+		width="160" height="22" />
+	<mx:TextInput id="weight_lb" 
+		x="130" y="58" 
+		width="160" height="22" />
+	<mx:Button x="130" y="95" 
+		label="Get Shipping Options" 
+		click="plainRpc.send()" 
+		width="160" height="22" />
+	<mx:Text id="shippingOptions" 
+		x="56" y="150" 
+		width="310" height="133" 
+		fontWeight="bold" />
+	
+</mx:Application>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="356" 
+	height="268" 
+	title="INOVA - Msn" 
+	alpha="1.0" 
+	showCloseButton="true"
+	color="#000000" 
+	creationComplete="Iniciar()"
+	close="Fechar()" 
+	titleIcon="@Embed(source='img/ico.png')" 
+	horizontalCenter="0" 
+	verticalCenter="0" 
+	styleName="listBaseVerticalScrollBar" 
+	backgroundAlpha="1.0"
+	backgroundImage="@Embed(source='img/prediocanto.png')">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+		
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtContato.enabled=true;
+			}
+			
+			// Exemplo efeito zoom: <mx:Button x="106" y="207" label="Clique com zoom" mouseDownEffect="Zoom"/>
+			
+		]]>
+	</mx:Script>	
+	<mx:Style source="css/inova.css"/>
+	<mx:Blur 
+		id="embace" 
+		duration="100" 
+		blurXFrom="0.0" 
+		blurXTo="3.0"
+		blurYFrom="0.0"
+		blurYTo="3.00"
+		/>
+	<mx:Blur 
+		id="desembace" 
+		duration="100" 
+		blurXFrom="3.0" 
+		blurXTo="0.0"
+		blurYFrom="3.0"
+		blurYTo="0.00"/>
+	<mx:Image 
+		source="img/msn.png" 
+		horizontalCenter="-81" 
+		verticalCenter="-72" 
+		enabled="true"/>
+	<mx:Image 
+		source="img/msn.png" 
+		horizontalCenter="-81" 
+		verticalCenter="-37" 
+		enabled="true"/>
+	<mx:Image 
+		source="img/msn.png" 
+		horizontalCenter="-81" 
+		verticalCenter="-1" 
+		enabled="true"/>
+	<mx:Image 
+		source="img/msn.png" 
+		horizontalCenter="-81" 
+		verticalCenter="36" 
+		enabled="true"/>
+	<mx:Image 
+		source="img/msn.png" 
+		horizontalCenter="-81" 
+		verticalCenter="72"
+		enabled="true"/>
+	<mx:Label 
+		text="Janilson" 
+		fontWeight="bold" 
+		horizontalCenter="-9" 
+		verticalCenter="-84" color="#000000"/>
+	<mx:Label 
+		text="Geraldo" 
+		fontWeight="bold" 
+		horizontalCenter="-10" 
+		verticalCenter="-45" color="#000000"/>
+	<mx:Label 
+		text="Dep.Fiscal" 
+		fontWeight="bold" 
+		horizontalCenter="-3" 
+		verticalCenter="-6" color="#000000"/>
+	<mx:Text 
+		text="inova_001@hotmail.com" 
+		horizontalCenter="36" 
+		verticalCenter="-69" 
+		enabled="true" color="#000000"/>
+	<mx:Text 
+		text="inova_002@hotmail.com" 
+		horizontalCenter="36" 
+		verticalCenter="-30" 
+		enabled="true" color="#000000"/>
+	<mx:Text 
+		text="inova_003@hotmail.com" 
+		horizontalCenter="36" 
+		verticalCenter="9" 
+		enabled="true" color="#000000"/>
+	<mx:Label 
+		text="Folha de Pagamento" 
+		fontWeight="bold" 
+		horizontalCenter="26" 
+		verticalCenter="31"
+		 color="#000000"/>
+	<mx:Text 
+		text="inova_004@hotmail.com" 
+		horizontalCenter="36" 
+		verticalCenter="46" 
+		enabled="true" color="#000000"/>
+	<mx:Label 
+		text="Recursos Humanos" 
+		fontWeight="bold" 
+		horizontalCenter="22" 
+		verticalCenter="68" 
+		 color="#000000"/>
+	<mx:Text 
+		text="inova_005@hotmail.com" 
+		horizontalCenter="36" 
+		verticalCenter="83" 
+		enabled="true" color="#000000"/>
+	<mx:Image 
+		x="116" 
+		y="27" 
+		source="img/l_static.gif"/>
+	<mx:Image x="116" y="68" source="img/l_static.gif"/>
+	<mx:Image x="116" y="107" source="img/l_static.gif"/>
+	<mx:Image x="116" y="143" source="img/l_static.gif"/>
+	<mx:Image x="116" y="180" source="img/l_static.gif"/>
+
+</mx:TitleWindow>

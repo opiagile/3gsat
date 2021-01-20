@@ -1,0 +1,178 @@
+﻿<html>
+<head>
+<title>Carousel 1.0 Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="JavaScript" src="../../_sharedassets/pages.js"></script>
+</head>
+<body>
+<table class="nav" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutTable-->
+<tr><td width="100%" align="left"></td>
+  <td><!--DWLayoutEmptyCell-->&nbsp;</td>
+</tr><tr><td colspan="2"><img src="../../_sharedassets/shim.gif" height="4" width="1"></td></tr><tr><td colspan="2"><img src="../../_sharedassets/pixel.gif" height="1" width="100%"></td></tr><tr><td colspan="2"><img src="../../_sharedassets/shim.gif" height="11" width="1"></td></tr></table>
+<h1>Carousel 1.0.0 Documentation</h1>
+<h4>Availability</h4>
+<p>Flash Player 7, 8, 9+.</p>
+<h4>Description</h4>
+<p>The Carousel component is a version 2 and 3 Flash component that allows you to display an array of images in carousel view format round a virtual circular space. The component makes it easy to implement carousel gallery view in Flash or Flex applications by simple drag and drop. With a great bias on flexibility, the component has been designed to give the designer a pool of properties and methods to customise the look and view of your image gallery.
+<p>The Carousel component comes in 3 different flavours categorized by the development environment which include to wit: </p>
+<p><strong>1. Flash Actionscript 2.0 version (Flash 7 &amp; 8)</strong></p>
+<p><strong>2. Flash Actionscript 3.0 version (Flash CS3)</strong></p>
+<p><strong>3. Flex Version (Flex Builder 2.0+)</strong></p>
+<p>&nbsp;</p>
+<h4>Features </h4>
+<p><strong>1. Dynamically load images:</strong> The component gives designers and developers the flexibility of loading images dynamically through xml. The generated xml also carries the image description.</p>
+<p><strong>2. Full Customization:</strong> With a variety of properties, you can customize the component to the look and feel that suits your interface so the component doesnt look odd. You can customize the borders, border color, border gap, reflection, depth and others. Please check out the documentation for a full list of the properties and methods that you can access or modify.</p>
+<p><strong>3. Image Titling:</strong> Your xml can optionally carry image title or little description that will be displayed below each corresponding image. The title view can as well be customized. You can set the title font face, color and size.</p>
+<p><strong>4. Reflection:</strong> The component can optionally display a reflection of your original image thereby giving an appeal that holds today. The reflection can optionally be customized as well. Please note that the reflection effect is only available in Flash CS3 and Flex versions.</p>
+<p><strong>5. Scroll Sound:</strong> You can optionally load and set the component to play a short sound of your choice when an image placement is changed.</p>
+<p><strong>6. Auto Run:</strong> You can set the component to automatically scroll the images within a specified number of seconds. Automatically playing the images does not hinder individual image click. You can also dynamically pause or resume the auto play by calling the play() or pause() methods of the component instance.</p>
+<p><strong>7. Mouse Scroll Wheel:</strong> Users can interact with the component using their mouse scroll wheel.</p>
+<p><strong>8. Events: </strong>The component broacasts events that can be listened to to interact with other components or classes within your application.<br>
+</p>
+<h4><br>
+  Requirements:</h4>
+<ol>
+  <li>Flash 7, 8, CS3 or Flex Builder 2+ depending on the version you obtained.</li>
+</ol>
+<p>&nbsp;</p>
+<h4>Installation </h4>
+<p>The component comes in an installable mxp archive for Flash IDE installation and as an swc package for Flex integration. You need to install the component by running the mxp file  and it will automatically install or use the Adobe extension manager to install it. Once you have installed, it will appear in your Components library under Synergic Labs. To view your library, press Ctrl+L. Also, the Flash mxp version comes with the pre-installed help file integrated into the Flash Help file system. Hit F1 in your Flash IDE to open your help panel. There, select &quot;All Books&quot; from the drop down and you'll find &quot;Carousel&quot; as one of the topics. Also, you will be prompted to create and select a folder where you wish to store your sample files. Please remember to refer to this folder later on for the sample files.</p>
+<p>For Flex installation, copy an instance of the Carousel.swc component into a folder within your application or even outside but put in mind the location because you will reference it later in your application.</p>
+<p>&nbsp;</p>
+<p><strong>Usage</strong></p>
+<p><strong>Flash IDE:</strong><br>
+To use the component in your flash application, open the library panel and you'll locate Synergic Labs in the list after installation. Drop down that node and you'll find Carousel there. Next, Drag the component unto your application stage and set the properties as appropriate. Please refer to the properties and methods list below for a complete documentation of all the parameters you need to set and how to access the methods and events within the component.</p>
+<p><strong>Flex Builder IDE:</strong><br>
+To use the Flex version of the component, simply add the SWC to your project's library path as follows:</p>
+<p>1. With your project selected in the navigator view, select Project > Properties > Flex Build Path.</p>
+<p>2. Select the "Library Path" tab.</p>
+<p>3. Select add SWC to add the Carousel component. </p>
+<p>4. Browse to the location of the swc file...</p>
+<p><img src="images/mht1B2.gif" width="576" height="335"><br>
+</p>
+<p>5. Click Ok and thats all.</p>
+<p>From your Flex Builder IDE, you can Drag and Drop the component from the customs component view unto your canvas and through the mxml or actionscript set the component properties. You need to switch to the view state to see the Customs components.</p>
+<p>Alternatively if you are using a 3rd party application like the Flash Develop application, simply add the swc reference to your project and in your actionscript, write the import statement: import Flexcubed.Carousel and you can reference the class from there. There is also a Flash Develop sample in the samples package.</p>
+<p>&nbsp;</p>
+<h4>Sample Files</h4>
+<p>
+The installation comes with asample file detailing application examples of Carousel and a sample xml file with all the required xml nodes.</p>
+<p><br>
+</p>
+<table width="233" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr>
+    <th width="233" height="19" valign="top">
+    <p>Properties</p></th>
+  </tr>  
+<tr>
+    <td height="19" valign="top" bgcolor="#F8F8F8"><a href="borderpadding.html">borderPadding</a></td>
+  </tr>
+<tr>
+    <td height="19" valign="top">
+      <a href="reflectiondistance.html">reflectionDistance</a></td>
+  </tr>
+  <tr>
+    <td height="19" valign="top" bgcolor="#F8F8F8"><a href="showreflection.html">showReflection</a></td>
+  </tr>
+  <tr>
+    <td height="19" valign="top"><a href="titlesize.html">titleSize</a>
+    </td>
+  </tr>
+  <tr>
+    <td height="19" valign="top" bgcolor="#F8F8F8"><a href="fadeimages.html">fadeImages</a></td>
+  </tr>
+   <tr>
+    <td height="19" valign="top"><a href="depth.html">depth</a></td>
+  </tr>
+   <tr>
+    <td height="19" valign="top" bgcolor="#F8F8F8"><a href="xradius.html">xRadius</a></td>
+  </tr>
+   <tr>
+     <td height="19" valign="top"><a href="showborder.html">showBorder</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top" bgcolor="#F8F8F8"><a href="color.html">color</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top" ><a href="titlecolor.html">titleColor</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top" bgcolor="#F8F8F8"><a href="bordercolor.html">borderColor</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top"><a href="titlefont.html">titleFont</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top" bgcolor="#F8F8F8"><a href="showtitle.html">showTitle</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top"><a href="filename.html">fileName</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top" bgcolor="#F8F8F8"><a href="changesound.html">changeSound</a></td>
+   </tr>
+   <tr>
+     <td height="19" valign="top"><a href="autorun.html">autoRun</a></td>
+   </tr>
+</table>
+<br><br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr>
+    <th width="223">
+      <p>Methods</p>
+    </th>
+  </tr>
+  <tr>
+    <td bgcolor="#F8F8F8"><a href="draw.html">draw()</a></td>
+  </tr>
+  <tr>
+    <td><a href="gettotalimages.html">getTotalImages()</a></td>
+  </tr>
+<tr>
+    <td bgcolor="#F8F8F8"><a href="selectedimage.html">selectedImage()</a></td>
+  </tr>
+<tr>
+    <td><a href="pause.html">pause()</a></td>
+  </tr>
+<tr>
+    <td bgcolor="#F8F8F8"><a href="play.html">play()</a></td>
+  </tr>
+<tr>
+<td><a href="setcurrentimage.html">setCurrentImage()</a></td>
+  </tr>
+</table>
+
+<br><br>
+<table border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr>
+    <th width="223">
+      <p>Events</p>
+    </th>
+  </tr>
+  <tr>
+    <td><a href="xmlfileloaded.html">xmlFileLoaded</a></td>
+  </tr>
+<tr>
+    <td bgcolor="#F8F8F8"><a href="imageclicked.html">imageClicked</a></td>
+  </tr>
+
+<tr>
+    <td><a href="initialize.html">initialize</a></td>
+  </tr>
+</table>
+<br/>
+<p>  <strong>Authors:</strong><br>
+  <br/>
+<a href="http://www.flexcubed.com" target="_blank">Synergic Laboratories </a><br>
+</p>
+<table class="nav" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="3" align="right"><h5>| <a href="borderpadding.html">Next &gt;&gt;</a> <img src="../../_sharedassets/shim.gif" height="6" width="1"></h5></td>
+</tr><tr><td colspan="3"><img src="../../_sharedassets/pixel.gif" height="1" width="100%"></td></tr><tr><td colspan="3"><img src="../../_sharedassets/shim.gif" height="4" width="1"></td></tr><tr><td width="100%" align="left"></td><td>&nbsp;&nbsp;&nbsp;</td><td><!--DWLayoutEmptyCell-->&nbsp;</td>
+</tr></table>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"
+        width="200"
+        height="100%"
+        paddingLeft="10"
+        paddingRight="10">
+    <mx:Script>
+        <![CDATA[
+            import com.diaztorres.window.RPanelBasic;
+
+            public var thispanel:RPanelBasic;
+
+            public var ready:Boolean = false;
+
+            private function sndPadre ():void
+            {
+                thispanel.proc.texto.text = texto.text;
+            }
+        ]]>
+    </mx:Script>
+    <mx:Text text="Componente externo." />
+    <mx:TextInput id="texto" />
+    <mx:Button label="Enviar texto al padre" click="sndPadre()" />
+</mx:Box>

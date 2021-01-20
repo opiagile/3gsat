@@ -1,0 +1,22 @@
+<publishData>
+  <publishTarget publishUrl="W:\cli\">
+    <file relUrl="login.aspx" publishTime="01/15/2010 16:27:15" />
+    <file relUrl="AreaSeguranca.aspx" publishTime="01/25/2010 14:59:48" />
+    <file relUrl="bin/C1.Web.C1WebSplitter.2.dll" publishTime="11/09/2009 22:31:32" />
+    <file relUrl="Web.config" publishTime="01/25/2010 10:51:53" />
+    <file relUrl="recursos/login.jpg" publishTime="01/11/2010 11:47:21" />
+    <file relUrl="bin/C1.Web.C1Input.2.dll" publishTime="11/10/2009 01:17:50" />
+    <file relUrl="recursos/S3G Server.ico" publishTime="01/08/2010 17:06:21" />
+    <file relUrl="bin/C1.Web.UI.2.dll" publishTime="11/11/2009 16:25:54" />
+    <file relUrl="bin/C1.Web.UI.Controls.2.xml" publishTime="11/11/2009 16:17:36" />
+    <file relUrl="recursos/def.css" publishTime="01/11/2010 11:12:11" />
+    <file relUrl="bin/C1.Web.UI.Controls.2.dll" publishTime="11/11/2009 16:26:02" />
+    <file relUrl="bin/3GWebCLI.dll" publishTime="01/25/2010 14:47:29" />
+    <file relUrl="bin/3GWebCLI.pdb" publishTime="01/25/2010 14:47:29" />
+    <file relUrl="bin/C1.Web.C1Input.2.xml" publishTime="11/10/2009 01:17:38" />
+    <file relUrl="Default.aspx" publishTime="01/25/2010 12:38:23" />
+    <file relUrl="bin/GMaps.dll" publishTime="12/15/2009 19:46:54" />
+    <file relUrl="MasterPage.Master" publishTime="01/16/2010 10:18:33" />
+    <file relUrl="bin/C1.Web.C1WebSplitter.2.xml" publishTime="11/09/2009 22:30:22" />
+  </publishTarget>
+</publishData>

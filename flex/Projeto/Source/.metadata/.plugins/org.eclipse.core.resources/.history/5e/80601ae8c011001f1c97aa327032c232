@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+<mx:Script> 
+    <![CDATA[
+    import mx.containers.ApplicationControlBar;
+    import mx.effects.WipeDown; 
+        
+    import com.google.maps.LatLng; 
+    import com.google.maps.Map; 
+    import com.google.maps.MapEvent; 
+    import com.google.maps.MapType; 
+	import mx.effects.easing.Elastic;
+	import form.mapa;
+    import com.google.maps.overlays.MarkerOptions;
+    import com.google.maps.MapMouseEvent;
+    import com.google.maps.overlays.Marker;
+    import com.google.maps.overlays.Polygon;
+    import mx.controls.Alert;
+               
+    private var mapas:Map;
+    private var testPoint:Marker;
+    private var polyLatLngs:Array = new Array();
+    private var polygonMode:Boolean; 	
+		
+    private function onMapReady(event:Event):void { 
+      this.map.setCenter(new LatLng(-25.366122,-49.220466), 14, MapType.NORMAL_MAP_TYPE); 
+      
+    public function onHolderResized(event:Event):void
+    {
+    	map.setSize(new Point(mapHolder.width, mapHolder.height));
+    }
+
+    private function onMapReady(event:Event):void
+    {
+    	this.map.setCenter(new LatLng(28, -90), 6);
+        this.map.addEventListener(MapMouseEvent.CLICK , mapClick);
+    }
+    
+    private function mapClick(e:MapMouseEvent):void 
+    {
+    	var latlngClicked:LatLng = e.latLng;
+        polyLatLngs.push(latlngClicked);
+        drawCoordinates();
+    }
+                 
+    private function deleteLastLatLng(e:Event):void 
+    {
+    	if (polyLatLngs.length > 0) 
+    	{
+    		polyLatLngs.pop();
+        }
+        drawCoordinates();
+    }
+                 
+    // Clear current Map
+    private function clearMap(e:Event):void 
+    {
+        map.clearOverlays();
+        polyShape = null;
+        polyLatLngs.length = 0;
+    }
+    // Toggle from Polygon PolyLine mode
+    private function toggleDrawMode(e:Event):void 
+    {
+    	map.clearOverlays();
+        polyShape = null;
+        drawCoordinates();
+    }
+
+    private function drawCoordinates():void 
+    {
+    	map.clearOverlays();
+        if (polyLatLngs.length > 1) 
+        {
+        	//Re-create Polyline/Polygon
+            polygonMode = drawmode_polygon.selected;
+            if (polygonMode) 
+            {
+            	polyShape = new Polygon(polyLatLngs);
+            } 
+            else 
+            {
+            	polyShape = new Polyline(polyLatLngs);
+            }
+            map.addOverlay(polyShape);
+        }               
+        if (polyLatLngs.length > 0) 
+        {
+        	// Grab last point of polyPoints to add new marker
+            var tmpLatLng:LatLng = polyLatLngs[polyLatLngs.length -1];
+            map.addOverlay(new Marker(tmpLatLng));
+        }
+    }
+      
+    } 
+    ]]> 
+</mx:Script>
+	<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)"  
+  width="100%" height="100%" key="ABQIAAAA60Yi54TYljE0FQ-0E4d0nBQbQQtspPKytngpyCGhFiH97vLYsRT_WtomBMsPuZncSsVrLzD7ulJ7wQ"/> 
+	<mx:Move id="entrada" target="{this}" easingFunction="Elastic.easeOut" 
+		duration="400" xFrom="-500"/>
+	<mx:WipeUp id="wipeIn" duration="1000"/>	
+	<mx:ApplicationControlBar horizontalAlign="right" fillAlphas="[1.0, 0.6]" left="0" right="0" top="-1" height="25" alpha="1.0" cornerRadius="0">
+		<mx:CheckBox label="Vizualizar monitoramento" id="Monitoramento" selected="true" fontWeight="bold" color="#18FF00" 
+			         fontStyle="normal" textAlign="center" enabled="true" highlightAlphas="white" themeColor="#FF0000" fillAlphas="[1.0, 1.0]" fillColors="[#FFFFFF, #FFFFFF, #FFFFFF, #FFFFFF]"/>
+	</mx:ApplicationControlBar>
+	<mx:TabNavigator height="130" backgroundColor="#2D2D2D" color="#FFFFFF" 
+		             backgroundAlpha="0.8"
+		             visible="{Monitoramento.selected}" hideEffect="{WipeUp}" showEffect="{WipeDown}" left="3" right="-3" top="2" themeColor="#FF0000">
+		<mx:Canvas label="Última posição" width="100%" height="100%" borderColor="#5A6165" themeColor="#FF0000">
+			<mx:DataGrid right="0" left="0" top="0" bottom="0" alternatingItemColors="[#FFFFFF, #DEDEDE]" color="#000000" alpha="0.59">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Placa" dataField="col1"/>
+					<mx:DataGridColumn headerText="Ignição" dataField="col2"/>
+					<mx:DataGridColumn headerText="Motor" dataField="col3"/>
+					<mx:DataGridColumn headerText="Velocidade" dataField="col4"/>
+					<mx:DataGridColumn headerText="Coordenada" dataField="col5"/>
+					<mx:DataGridColumn headerText="Sinal GPS" dataField="col6"/>
+					<mx:DataGridColumn headerText="Alimentação da bateria" dataField="col7"/>
+					<mx:DataGridColumn headerText="Carga da bateria" dataField="col8"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+		<mx:Canvas label="Área de Segurança" width="100%" height="100%">
+			<mx:HDividedBox left="0" right="0" top="0" bottom="0">
+				<mx:DataGrid color="#000000" borderColor="#B7BABC" alpha="0.59" width="100%" height="100%">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Sequência" dataField="col1"/>
+						<mx:DataGridColumn headerText="Status" dataField="col2"/>
+						<mx:DataGridColumn headerText="Nome da área de segurança" dataField="col3"/>
+					</mx:columns>
+				</mx:DataGrid>
+					<mx:Button
+					    label="Limpar mapa"
+					    click="clearMap(event);"
+					    x="92" y="36"/>
+					<mx:Button 
+						label="Excluir último ponto" 
+						click="deleteLastLatLng(event);" 
+						x="265" y="36"/>
+					<mx:RadioButton
+					    id="drawmode_polyline"
+					    groupName="drawmode"
+					    label="Polyline"
+					    click="toggleDrawMode(event);"
+					    x="493" y="36"/>
+					<mx:RadioButton
+					    id="drawmode_polygon"
+					    groupName="drawmode"
+					    label="Polygon"
+					    selected="true"
+					    click="toggleDrawMode(event);"
+					    x="627" y="36"/>
+			</mx:HDividedBox>
+		</mx:Canvas>
+		<mx:Canvas label="Histórico" width="100%" height="100%">
+		</mx:Canvas>
+		<mx:Canvas label="Tab 4" width="100%" height="100%">
+		</mx:Canvas>
+		<mx:Canvas label="Tab 5" width="100%" height="100%">
+		</mx:Canvas>
+	</mx:TabNavigator>		
+</mx:Canvas>

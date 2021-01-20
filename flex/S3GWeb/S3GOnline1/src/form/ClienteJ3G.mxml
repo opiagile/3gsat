@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 02/02/2010
+Responsável...: Francisco Araújo
+Objeto........: Apresenta a última posição do veículo e os respectivos dados enviados pelo rastreador
+*****************************************************************************************************
+-->
+
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" 
+	height="100%" 
+	show="Inicia_informacoes();"
+	backgroundColor="#000000"
+	themeColor="#FFFFFF" 
+	xmlns:controls="com.brightPoint.controls.*" 
+	xmlns:components="components.*" 
+	xmlns:maps="com.google.maps.*" 
+	xmlns:tx="util.*"
+	xmlns:tt="com.degrafa.*"
+	xmlns="http://www.degrafa.com/2007"
+	xmlns:filters="flash.filters.*">
+	
+ <mx:Style> 
+	.controllerStyle 
+    { 
+    	top: 153; 
+        left: 0; 
+        paddingBottom: 10; 
+        paddingLeft: 6; 
+        paddingRight: 8; 
+        paddingTop: 6; 
+        alpha: 0; 
+        background-color: #000000; 
+        background-alpha: 0.5; 
+    }
+                              
+	@font-face 
+	{
+    	font-family: FontDigital;
+    	src: url('W:/cli/font/Digirtu_.ttf');
+ 	}
+ 		
+    .requiredLabel 
+    {
+        color: #FF0000;
+        fontSize: 12;
+    }
+	
+</mx:Style>
+	<maps:Map3D 
+		id="map" 
+		mapevent_mapready="onMapReady(event);"  
+        key="ABQIAAAA60Yi54TYljE0FQ-0E4d0nBQbQQtspPKytngpyCGhFiH97vLYsRT_WtomBMsPuZncSsVrLzD7ulJ7wQ" 
+        top="40" 
+        bottom="77" 
+        left="2" 
+        right="2"/> 
+	<mx:Button 
+		label="Atualizar dados" 
+		borderColor="#D4D4D4" 
+		color="#D4D4D4" 
+		id="btn_atualizaCad" 
+		fillAlphas="[0.4, 1.0, 0.4, 1.0]"
+		click="show_AtualizaCadastro()" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		toolTip="Verificar o histórico de mensagens recebidas do rastreador." 
+		top="143" 
+		fillColors="[#000000, #000000]" 
+		right="10" 
+		width="144"/>
+	<mx:VSlider 
+		id="zoomSlider" 
+		height="112" 
+		minimum="3" 
+		maximum="20" 
+		snapInterval="1" 
+		tickInterval="1" 
+		dataTipPrecision="0" 
+		value="16" 
+		showTrackHighlight="true" 
+		borderColor="#FFFFFF" 
+		tickColor="#ff0000" 
+		change="onSliderChanged(event);"  
+		width="26" 
+		themeColor="#FF0000" 
+		alpha="1.0" 
+		x="16" top="89" toolTip="Controle de zoom do mapa."/>
+	<mx:Canvas 
+		height="170" 
+		id="can0" 
+		bottom="32" 
+		right="2" 
+		left="2" 
+		backgroundColor="#000000" 
+		backgroundAlpha="1.0">			
+		<controls:Gauge 
+			minValue="0" 
+			maxValue="220" 
+			showValue="true"
+			diameter="150" 
+			id="gauge" 
+			alertAlphas="[.7,.9,.6]" 
+			alertColors="[0xDD0000,0x000000,0xFF0000]" 
+			alertRatios="[0,110,220]"
+			faceColor="0x000000" 
+			ticksColor="0xffffff"			  	
+			pointerColor="0xffffff" 
+			bezelColor="0x999999"
+			faceShadowColor="0x777777"
+			fontSize="18"			    
+			fontColor="0x00FF00"
+			fontFamily="FontDigital"		    			    	    
+			left="2" 
+			bottom="6"/>			
+		<tx:timerfx
+			id="relogio"
+			intervalo="300000"
+			text="&gt;&gt;Verificando se há novos registros do rastreador&lt;&lt;"
+			fontSize="17" 
+		   	color="#ff0000" 
+		   	textAlign="center"
+		    right="1" 
+		    bottom="1" 
+		    left="510" 
+		    fontFamily="Arial"
+		    visible="false"
+		    show="Atualiza_tela()"/>
+		<mx:SWFLoader 
+			source="../img/tempo.swf" 
+			bottom="2" 
+			right="2" 
+			height="167"/>
+		<mx:Button 
+			height="19" 
+			id="show_SinalGPRS" 
+			fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+			fillColors="[#FF0000, #FF0000]" 
+			cornerRadius="0" 
+			borderColor="#FF0000" 
+			bottom="13.899994" 
+			alpha="0.5" 
+			width="28" 
+			left="162.95"/>
+		<mx:Image 
+			height="172.79999" 
+			source="../img/nivel.png" 
+			scaleContent="true" alpha="1.0" bottom="-0.049987793" width="71" left="147.45"/>
+	</mx:Canvas>
+
+        <mx:WipeUp duration="1000"/>
+	    <mx:WipeDown duration="1000"/>
+	    <mx:WipeLeft duration="1000"/>
+	    <mx:WipeRight duration="1000"/>
+        <mx:Fade 
+        	id="fadeIn" 
+        	alphaFrom="0.3" 
+        	alphaTo="1.0" /> 
+        <mx:Fade 
+        	id="fadeOut" 
+        	alphaFrom="1.0" 
+        	alphaTo="0.3" /> 	
+
+	<mx:Script> 
+	    <![CDATA[
+	    	import mx.managers.SystemManager;
+	    	import com.degrafa.geometry.Geometry;
+			import mx.events.ListEvent;
+			import mx.events.ItemClickEvent;
+			import mx.controls.advancedDataGridClasses.SortInfo;
+			import mx.controls.dataGridClasses.DataGridColumn;
+		    import mx.effects.Fade;
+		    import mx.containers.ControlBar;
+		    import mx.effects.WipeUp;
+		    import mx.effects.WipeDown; 	    
+	        import mx.controls.Alert;
+	        import mx.events.ResizeEvent;            
+	        import mx.containers.Form;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.core.Application;          
+	        import mx.containers.TitleWindow;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+		    import mx.effects.WipeRight;
+		    import mx.effects.WipeLeft;
+		    import mx.events.StyleEvent;
+	
+		    import com.google.maps.InfoWindowOptions;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.interfaces.IMapType;
+			import com.google.maps.LatLngBounds;
+		    import com.google.maps.controls.ZoomControlOptions;
+		    import com.google.maps.MapOptions;	    
+		    import com.google.maps.controls.PositionControl;
+			import com.google.maps.MapEvent; 
+			import com.google.maps.MapType; 
+	        import com.google.maps.Map;
+	        import com.google.maps.LatLng;
+	        import com.google.maps.MapMouseEvent;
+	        import com.google.maps.MapZoomEvent;
+	        import com.google.maps.overlays.Polygon;
+	        import com.google.maps.overlays.Polyline;
+	        import com.google.maps.controls.ZoomControl;
+	        import com.google.maps.controls.ScaleControl;
+	        import com.google.maps.View;        
+	        import com.google.maps.services.ClientGeocoder;
+	        import com.google.maps.services.GeocodingEvent;
+	        import com.google.maps.services.GeocodingResponse;
+	        import com.google.maps.services.Placemark;
+	
+			import mapeamento.get_veiculos_por_cliente;
+			import mapeamento.get_historico_veiculos;
+			import mapeamento.autenticar_login;
+	
+			import util.ObjetoRemoto;
+		    import util.InfoWindowComp;
+	
+			import flash.text.Font;		
+	        import flash.display.StageDisplayState;
+		    import flash.sampler.NewObjectSample;
+	
+			import form.*;
+	
+		    import adobe.utils.CustomActions;
+	
+	        private var polyLatLngs:Array = new Array();
+	        private var marker:Marker;
+
+			[Bindable]
+			public var _arrayVeiculos:ArrayCollection;
+			[Bindable]
+			public var _arrayNewVeiculos:ArrayCollection;
+			[Bindable]
+			public var _arrayVerifica:ArrayCollection;
+			[Bindable]
+			private var angulo:int=0;
+			private var form_historico: historico;
+			
+			
+			private function show_AtualizaCadastro():void 
+			{
+				btn_atualizaCad.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.AtualizarCadastro, true));
+			}	
+
+			private function show_historico():void 
+			{
+				btn_historico.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.historico, true));
+			}	
+
+			private function show_areaseguranca():void 
+			{
+				btn_areaseguranca.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.AreaSeguranca, true));
+			}	
+			
+			private function onZoomIn():void
+			{
+				zoomSlider.value = zoomSlider.value + 1;
+				map.setZoom(zoomSlider.value);
+			}
+
+			private function onZoomOut():void
+			{
+				zoomSlider.value = zoomSlider.value - 1;
+				map.setZoom(zoomSlider.value);
+			}
+
+		    private function onMapReady(event:Event):void 
+		    {
+		      	Inicia_informacoes();
+		    }		    
+			
+/**************************************Inicializa e configuração do mapa***************************************/            
+            public function Inicia_informacoes():void
+            {
+            	lbl_usuario.text = "Bem-vindo " + Application.application._Usuario;
+        	lbl_ultimoacesso.text = "Último acesso: " + Application.application._ultimoacesso;
+            	var remoteObj:ObjetoRemoto = new ObjetoRemoto(get_veiculos_por_cliente.NAMESPACE, rstSucesso);                            
+				remoteObj.getOperation("LocalizaVeiculos").send(Application.application._clienteid); 
+			}
+		
+			private function onMapZoomChanged(event:Event):void 
+			{ 
+				zoomSlider.value = map.getZoom();
+      		}
+      	
+      		private function onSliderChanged(event:Event):void 
+      		{
+      			if (map && map.isLoaded()) 
+      			{
+      				map.setZoom(zoomSlider.value);
+           		}
+      		}
+      		
+/**********************************Fim da inicialização e configuração do mapa*********************************/	
+
+/**********************************Inicializa as informações na Grid*******************************************/
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arrayVeiculos = ArrayCollection(evt.result);
+					Application.application._arrayGlobal = ArrayCollection(evt.result);
+	
+					var I: int;	
+						
+					for(I = 0; I < _arrayVeiculos.length; I++) 
+				    { 
+				        var LatLon:LatLng = new LatLng(_arrayVeiculos[I].latitude, _arrayVeiculos[I].longitude); 
+				        CriaMarcador(_arrayVeiculos[I].latitude,_arrayVeiculos[I].longitude,I,_arrayVeiculos[I].tipoveiculoid);
+				    } 
+	
+			}
+
+			public function CriaMarcador(lat:Number, lon:Number, Registro:int, Icone:int): void 
+			{
+				var request:URLRequest;
+				if ( Icone == 1)
+			    	request = new URLRequest("http://3gserver:84/img/carro.png")
+			    	//request = new URLRequest("http://187.53.77.208:84/img/carro.png")
+			    else if (Icone == 2)
+			    	request = new URLRequest("http://3gserver:84/img/moto.png")
+			    	//request = new URLRequest("http://187.53.77.208:84/img/moto.png")
+			    else if (Icone == 3)
+			    	request = new URLRequest("http://3gserver:84/img/caminhao.png")
+			    	//request = new URLRequest("http://187.53.77.208:84/img/caminhao.png")
+			    else if (Icone == 4)
+			    	request = new URLRequest("http://3gserver:84/img/onibus.png")
+			    	//request = new URLRequest("http://187.53.77.208:84/img/onibus.png")
+			    	
+			    var Imagem:Loader = new Loader();
+						       
+		        Imagem.contentLoaderInfo.addEventListener
+		        (
+		        	Event.COMPLETE, function(event:Event):void 
+		        	{
+		        		var options:MarkerOptions = new MarkerOptions({hasShadow: true, icon: Imagem});
+		                options.iconAlignment = MarkerOptions.ALIGN_HORIZONTAL_CENTER + MarkerOptions.ALIGN_BOTTOM;
+		                options.iconOffset = new Point(3, 10); 
+																			
+		                var ponto:LatLng = new LatLng(lat, lon);
+		                var MarcarLocal:Marker = new Marker(ponto,options);
+		                var options2:InfoWindowOptions = new InfoWindowOptions
+		                (
+		                	{
+				                customContent: new InfoWindowComp(_arrayVeiculos,Registro),
+				                customOffset: new Point(-5,-70),
+				                width: 312,
+								height: 160,
+								drawDefaultFrame: true
+		                    }
+		                );
+		                MarcarLocal.addEventListener
+		                (	
+		                	MapMouseEvent.CLICK, function(e:MapMouseEvent):void                                               
+		                	{
+		                		MarcarLocal.openInfoWindow(options2);
+		          		    }
+		          		);
+		         		map.addOverlay(MarcarLocal);
+		         	}
+		        );
+		        
+		        Imagem.load(request);
+				map.setCenter(new LatLng(_arrayVeiculos[0].latitude, _arrayVeiculos[0].longitude), 15, MapType.NORMAL_MAP_TYPE);
+				zoomSlider.value = 15; 
+				gauge.value = _arrayVeiculos[0].velocidade;
+				
+				if (_arrayVeiculos[0].sinalgprs == 1)
+				{
+					show_SinalGPRS.height = 19;
+					show_SinalGPRS.setStyle("fillColors", ["#ff0000", "#ff0000"])
+				}	
+				else if (_arrayVeiculos[0].sinalgprs == 2)
+				{
+					show_SinalGPRS.height = 39;
+					show_SinalGPRS.setStyle("fillColors", ["#ff0000", "#ff0000"])
+				}
+				else if (_arrayVeiculos[0].sinalgprs == 3)
+				{
+					show_SinalGPRS.height = 57;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#ff0000"])
+				}
+				else if (_arrayVeiculos[0].sinalgprs == 4)
+				{
+					show_SinalGPRS.height = 76;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#ff0000"])
+				}
+				else if (_arrayVeiculos[0].sinalgprs == 5)
+				{
+					show_SinalGPRS.height = 98;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#ff0000"])
+				}
+				else if (_arrayVeiculos[0].sinalgprs == 6)
+				{
+					show_SinalGPRS.height = 119;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#24ff00"])
+				}
+				else if (_arrayVeiculos[0].sinalgprs == 7)
+				{
+						show_SinalGPRS.height = 141;
+						show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#24ff00"])
+				}
+				else 
+		  			show_SinalGPRS.height = 0;
+
+		  		var GeoLocal:LatLng = new LatLng(_arrayVeiculos[0].latitude, _arrayVeiculos[0].longitude);
+		  		lbl_endereco.text="Localizando endereço...";
+				doGeocode(GeoLocal);				 				
+       		} 			       		
+/*********************************Fim da inicialização das informações na Grid*********************************/
+
+/***********************************Localiza a posição utilizando as coordenadas******************************/
+		  	private function onGridItemClick( linha : int ) : void
+		  	{	
+		  		map.setCenter( new LatLng( parseFloat( _arrayVeiculos[linha].latitude ), parseFloat( _arrayVeiculos[linha].longitude ) ) );								  		
+		  		zoomSlider.value = 15;
+		  		gauge.value = _arrayVeiculos[linha].velocidade;
+		  		
+		  		var GeoLocal:LatLng = new LatLng(_arrayVeiculos[linha].latitude, _arrayVeiculos[linha].longitude);
+		  		lbl_endereco.text="Localizando endereço...";
+				doGeocode(GeoLocal);
+				
+				if (_arrayVeiculos[linha].sinalgprs == 1)
+				{
+					show_SinalGPRS.height = 19;
+					show_SinalGPRS.setStyle("fillColors", ["#ff0000", "#ff0000"])
+				}	
+				else if (_arrayVeiculos[linha].sinalgprs == 2)
+				{
+					show_SinalGPRS.height = 39;
+					show_SinalGPRS.setStyle("fillColors", ["#ff0000", "#ff0000"])
+				}
+				else if (_arrayVeiculos[linha].sinalgprs == 3)
+				{
+					show_SinalGPRS.height = 57;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#ff0000"])
+				}
+				else if (_arrayVeiculos[linha].sinalgprs == 4)
+				{
+					show_SinalGPRS.height = 76;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#ff0000"])
+				}
+				else if (_arrayVeiculos[linha].sinalgprs == 5)
+				{
+					show_SinalGPRS.height = 98;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#ff0000"])
+				}
+				else if (_arrayVeiculos[linha].sinalgprs == 6)
+				{
+					show_SinalGPRS.height = 119;
+					show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#24ff00"])
+				}
+				else if (_arrayVeiculos[linha].sinalgprs == 7)
+				{
+						show_SinalGPRS.height = 141;
+						show_SinalGPRS.setStyle("fillColors", ["#24ff00", "#24ff00"])
+				}
+				else 
+		  			show_SinalGPRS.height = 0;
+		  	}
+/***********************************Fim da localização por coordenadas****************************************/
+			private function Atualiza_tela():void
+			{                            
+				var I: int;
+				progresso.visible = true;	
+				var remoteObj_registro:ObjetoRemoto = new ObjetoRemoto(get_veiculos_por_cliente.NAMESPACE, rstSucesso_new);
+				remoteObj_registro.getOperation("LocalizaVeiculos").send(Application.application._clienteid); 
+			}
+			
+			private function rstSucesso_new(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arrayVerifica = ArrayCollection(evt.result);
+	
+				var I: int;	
+				var Y: int;
+				
+				relogio.visible= false;		
+				
+				for(I = 0; I < _arrayVerifica.length; I++) 
+				{ 
+					if (_arrayVerifica[I].mensagemRastreamentoId != _arrayVeiculos[I].mensagemRastreamentoId)
+					{
+						_arrayNewVeiculos[Y].mensagemRastreamentoId = _arrayVerifica[I].mensagemRastreamentoId;
+						Y++;
+					}
+					Inicia_informacoes();
+				} 				
+				progresso.visible = false;
+			}
+			
+			private function logout():void
+			{
+				var remoteObj_loggin:ObjetoRemoto = new ObjetoRemoto(autenticar_login.NAMESPACE);                            
+				remoteObj_loggin.getOperation("logout").send(); 
+				Application.application.telamapa.visible = false;
+				Application.application.telalogin.ImpLoginUser.setFocus();
+				Application.application.telalogin.visible = true;
+			}
+			
+			private function doGeocode(LatLong : LatLng):void 
+			{ 
+				var geocoder:ClientGeocoder = new ClientGeocoder();     
+			    geocoder.addEventListener( 
+			           	GeocodingEvent.GEOCODING_SUCCESS, 
+			           	function(event:GeocodingEvent):void 
+			           	{ 
+				           	var placemarks:Array = event.response.placemarks; 
+				           	if (placemarks.length > 0) 
+				           	{ 
+				            	lbl_endereco.text = placemarks[0].address; 
+				            } 
+			         	}); 
+						geocoder.addEventListener( 
+	        			GeocodingEvent.GEOCODING_FAILURE, 
+	         					function(event:GeocodingEvent):void 
+	           					{ 
+	           						trace(event); 
+		             				trace(event.status); 
+	           					}); 
+	         			geocoder.reverseGeocode(LatLong);		
+	       	}            
+	       		
+	    ]]> 
+	</mx:Script>
+	<mx:MenuBar 
+		id="cabecalho" 
+		left="2" 
+		right="2" 
+		top="2" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" height="45">
+	</mx:MenuBar>
+	<mx:Button 
+		label="Tela cheia" 
+		borderColor="#D4D4D4" 
+		color="#D4D4D4" 
+		id="btn_fullscreen" 
+		fillAlphas="[0.4, 1.0, 0.4, 1.0]"
+		click="Application.application.toggleFullScreen();" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF"
+		right="10" 
+		width="144" 
+		icon="@Embed(source='../../img/fullscreen.png')" 
+		toolTip="Utilizar o sistema em modo tela cheia." 
+		top="53" fillColors="[#000000, #000000]"/>
+	<mx:Label 
+		y="7" 
+		text="usuario" 
+		id="lbl_usuario" 
+		enabled="true" 
+		color="#D4D4D4" 
+		left="632"/>
+	<mx:MenuBar 
+		id="cabecalho0" 
+		left="1" 
+		right="1" 
+		height="32" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" 
+		bottom="1">
+	</mx:MenuBar>
+	<mx:Image 
+		height="32" 
+		source="../img/3GSAT-black.png" 
+		right="1" 
+		bottom="1" 
+		width="79" scaleContent="true"/>
+	<mx:Button 
+		label="Histórico" 
+		borderColor="#D4D4D4" 
+		color="#D4D4D4" 
+		id="btn_historico" 
+		fillAlphas="[0.4, 1.0, 0.4, 1.0]"
+		click="show_historico();" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		toolTip="Verificar o histórico de mensagens recebidas do rastreador." 
+		top="113" 
+		icon="@Embed(source='../../img/historico.png')" fillColors="[#000000, #000000]" right="10" width="144"/>
+	<mx:Button 
+		label="Criar Área" 
+		color="#D4D4D4" 
+		fillAlphas="[0.4, 1.0, 0.4, 1.0]" 
+		id="btn_areaseguranca" 
+		click="show_areaseguranca();" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		toolTip="Criar a área de segurança para o veículo." 
+		top="83" 
+		icon="@Embed(source='../../img/area_seguranca.png')" fillColors="[#000000, #000000]" right="10" width="144"/>  
+	<mx:Button 
+		color="#000000" 
+		icon="@Embed(source='../../img/zoom-in.png')"
+		downIcon="@Embed(source='../../img/zoom-in.png')"
+		overIcon="@Embed(source='../../img/zoom-in1.png')" 
+		height="10" 
+		width="10" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		click="onZoomIn();" 
+		left="13" 
+		top="65" 
+		toolTip="Aproximar mapa."/>
+	<mx:Button 
+		color="#000000" 
+		icon="@Embed(source='../../img/zoom-out.png')" 
+		downIcon="@Embed(source='../../img/zoom-out.png')"
+		overIcon="@Embed(source='../../img/zoom-out1.png')" 
+		fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+		width="10" 
+		height="10" 
+		click="onZoomOut();" 
+		left="13" 
+		top="210" 
+		toolTip="Distanciar mapa."/>
+	<mx:Button 
+		label="Sair" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		width="70" 
+		labelPlacement="left" 
+		id="btn_logout"
+		click="logout();"  
+		right="10" 
+		fillColors="[#FF0000, #FF0000]" 
+		textRollOverColor="#FFFFFF" 
+		textSelectedColor="#FFFFFF" icon="@Embed(source='../img/cancel.png')" 
+		toolTip="Desconectar do sistema." top="11"/>
+	<mx:ProgressBar 
+		id="progresso"
+		visible="false"
+		labelPlacement="center" 
+		indeterminate="true" 
+		enabled="true" 
+		label="Verificando novos se há novos registros" 
+		left="1" 
+		right="1" 
+		bottom="32"/>
+	<mx:ComboBox 
+		top="11"
+		dataProvider="{_arrayVeiculos}"
+		labelField="placa" 
+		color="#D4D4D4" 
+		id="cb_PlacaVeiculo"
+		change="onGridItemClick(cb_PlacaVeiculo.selectedIndex)" 
+		left="105" 
+		borderColor="#D4D4D4" 
+		dropdownBorderColor="#D4D4D4" 
+		iconColor="#d4d4d4" 
+		textRollOverColor="#D4D4D4" 
+		textSelectedColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		themeColor="#FFFFFF" cornerRadius="4">						
+		<mx:toolTip>Selecione a placa do veículo que deseja visualizar</mx:toolTip>
+	</mx:ComboBox>
+	<mx:Label 
+		text="Último Acesso" 
+		color="#D4D4D4" 
+		left="632" 
+		y="24" 
+		id="lbl_ultimoacesso"/>
+	<mx:Label 
+		text="Placa do Veículo" 
+		color="#D4D4D4" 
+		left="10" 
+		top="12"/>
+	<mx:Label 
+		text="Proximidade:" 
+		id="lbl_endereco1" 
+		enabled="true" 
+		color="#D4D4D4" 
+		left="220" bottom="68"/>
+	<mx:Label 
+		x="220" 
+		text="Localizando endereço..." 
+		color="#D4D4D4" 
+		id="lbl_endereco" 
+		fontSize="14" 
+		bottom="46"/>			
+</mx:Canvas>

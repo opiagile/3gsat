@@ -1,0 +1,5 @@
+#Tue May 25 16:23:40 BRT 2010
+eclipse.preferences.version=1
+activeViewIDs3=org.eclipse.ui.views.ProblemView,com.adobe.flexbuilder.editors.mxml.inspector.view.PropertiesView,com.adobe.flexbuilder.editors.mxml.components.ComponentsView,com.adobe.flexbuilder.navigator
+activeViewIDs2=org.eclipse.ui.views.ProblemView
+autoViewIDs=com.adobe.flexbuilder.editors.mxml.states.StatesView\=unmanaged,com.adobe.flexbuilder.editors.mxml.inspector.view.PropertiesView\=design-mxml;design-css,com.adobe.flexbuilder.editors.mxml.components.ComponentsView\=design-mxml

@@ -1,0 +1,65 @@
+﻿<html>
+<head>
+<title>Carousel Component Help Files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="JavaScript" src="../../_sharedassets/pages.js"></script>
+<style type="text/css">
+<!--
+.style1 {color: #999999}
+-->
+</style>
+</head>
+<body>
+<h1>Carousel Component Help Reference</h1>
+<table class="nav" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutTable-->
+<tr><td width="100%" align="left"></td>
+  <td><!--DWLayoutEmptyCell-->&nbsp;</td>
+</tr><tr><td colspan="2"><img src="../../_sharedassets/shim.gif" height="4" width="1"></td></tr><tr><td colspan="2"><img src="../../_sharedassets/pixel.gif" height="1" width="100%"></td></tr><tr>
+  <td colspan="2" align="right"><h5><a href="imageclicked.html">Previous</a> | <a href="initialize.html">Next</a></h5></td>
+</tr></table>
+<h1>imageClicked</h1>
+<pre>event imageClicked <strong>[Event]</strong></pre>
+<h4>Availability</h4>
+<p>Actionscript 2.0, 3.0; Flash Player 7, 8, 9+.</p>
+
+<h4>Usage</h4>
+<pre>event imageClicked;&nbsp;<span class="style1">//An Event</span> </pre>
+<h4>Parameters</h4>
+<p><strong><em>carouselInstance:</em></strong> Instance name of the carousel component on the stage.</p>
+<h4>Returns</h4>
+<p>An Event</p>
+<h4>Description</h4>
+<p>This is an event that the component broadcasts when the an image is clicked and gains focus as the current image. When using the AS2 version, an object is passed that contains information about the clicked image. The data passed are: 
+<p>1. index: The index of the image
+<p>2. src: The source of the image (url)
+<p>3. description: The description attached to the image via the xml file.
+<p>Please see the sample below to know how to listen and use these properties.
+<p>
+<h4>Example</h4>
+<pre><strong>For Actionscript 3:</strong>
+carouselInstance.addEventListener(&quot;imageClicked&quot;, imageClickedListener);
+function imageClickedListener(evt:Event):void{
+	trace(&quot;Image Clicked&quot;);
+
+}
+
+
+<strong>For Actionscript 2:</strong>
+var imageClickedListener:Object = new Object();
+imageClickedListener.imageClicked = function(dat:Object){
+	trace(dat.description);
+}
+
+&nbsp;</pre>
+<p>&nbsp;</p>
+<p>  <strong>Authors:</strong><br>
+  <br/>
+<a href="http://www.flexcubed.com" target="_blank">Synergic Laboratories </a><br>
+</p>
+<table class="nav" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr><td colspan="3" align="right"><h5><a href="xmlfileloaded.html">Previous</a> | <a href="initialize.html">Next</a></h5></td>
+</tr><tr><td colspan="3"><img src="../../_sharedassets/pixel.gif" height="1" width="100%"></td></tr><tr><td colspan="3"><img src="../../_sharedassets/shim.gif" height="4" width="1"></td></tr><tr><td width="100%" align="left"></td><td>&nbsp;&nbsp;&nbsp;</td><td><!--DWLayoutEmptyCell-->&nbsp;</td>
+</tr></table>
+</body>
+</html>

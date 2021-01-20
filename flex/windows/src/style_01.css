@@ -1,0 +1,88 @@
+/* CSS file */
+.negrita{	
+	fontWeight:bold;
+}
+.mainBox{
+	 paddingLeft:20;
+	 paddingTop:20;
+	 paddingRight:20;
+	 paddingBottom:20;
+	 backgroundColor:#ffff00;
+	 cornerRadius:10;
+	 backgroundAlpha:.5;
+	 borderStyle:solid;
+	 borderThickness:0;
+	 dropShadowEnabled:true;
+	 shadowDirection:right;
+}
+.winPanelSty{
+	headerHeight:30;
+	headerColors:#0053E1, #026AFE;
+	headerColorsFocus:#0053E1, #026AFE;
+	headerColorsDisabled:#7998DF, #82ABE9;
+
+	cornerRadius:10;
+
+	borderThicknessLeft: 0.1;
+	borderThicknessRight: 0.1;
+	borderThicknessTop: 0.1;
+	borderThicknessBottom: 7;
+
+	titleStyleName: winPanelStyTitle;
+	
+	closeUpIcon: 		Embed(source="assets/windowicons/win/close.png");
+	closeOverIcon: 		Embed(source="assets/windowicons/win/close_over.png");
+	closeDownIcon: 		Embed(source="assets/windowicons/win/close_down.png");
+	
+	maximizeUpIcon:		Embed(source="assets/windowicons/win/maximize.png");
+	maximizeOverIcon:	Embed(source="assets/windowicons/win/maximize_over.png");
+	maximizeDownIcon:	Embed(source="assets/windowicons/win/maximize_down.png");
+
+	minimizeUpIcon:		Embed(source="assets/windowicons/win/minimize.png");
+	minimizeOverIcon:	Embed(source="assets/windowicons/win/minimize_over.png");
+	minimizeDownIcon:	Embed(source="assets/windowicons/win/minimize_down.png");
+	
+	sndMaximize:		Embed(source="assets/sound0.mp3");
+	sndMinimize:		Embed(source="assets/arcade_sound_5.mp3");
+	sndRestore:			Embed(source="assets/sound2.mp3");
+	sndClose:			Embed(source="assets/droid_beep.mp3");
+
+}
+.winPanelStyTitle{
+	fontFamily: Arial;
+	fontSize: 12;
+	color: #ffffff;
+	textAlign: left;
+}
+.mac{
+	titleStyleName: macPanelStyTitle;
+}
+.macPanelStyTitle{
+	textAlign: center;
+} 
+.macAlertStyle{
+	backgroundColor:#DDDDDD;
+	cornerRadius:7;
+	border-thickness:1;
+	border-color:#888888;
+	border-style:solid;
+	drop-shadow-enabled:true;
+	shadow-direction:right;
+}
+.macLateralStyle{
+	backgroundColor:#DDDDDD;
+	cornerRadius:10;
+}
+.winAlertStyle{
+	backgroundColor:#A7CEFB;
+	cornerRadius:7;
+	border-thickness:1;
+	border-color:#3333D1;
+	border-style:solid;
+	drop-shadow-enabled:true;
+	shadow-direction:right;
+}
+.winLateralStyle{
+	backgroundColor:#A7CEFB;
+	cornerRadius:10;
+}

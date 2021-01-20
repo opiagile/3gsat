@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 21/06/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Validar usuário e senha.
+*****************************************************************************************************
+-->
+
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="420" 
+	height="214" 
+	backgroundColor="#0A0A0A" 
+	themeColor="#FFFFFF" 
+	backgroundDisabledColor="#000000"
+	creationComplete="Iniciar()" 
+	label="Cv_login" 
+	backgroundAlpha="0.0">
+<mx:Script>
+	<![CDATA[
+		import mx.messaging.AbstractConsumer;
+		import mx.containers.Form;
+		import mx.collections.ArrayCollection;
+		import mx.rpc.remoting.mxml.RemoteObject;
+		import mx.rpc.events.ResultEvent;
+		import mx.rpc.events.FaultEvent;            
+		import mx.controls.Alert; 
+		import mx.core.Application; 
+		
+		import classes.autenticar_usuario; 
+		import util.ObjetoRemoto; 
+		
+		[Bindable]
+		public var validando: autenticar_usuario;
+		
+		private function EnterUser():void
+		{
+			LblSenha.setFocus();
+		}
+
+		private function EnterSenha():void
+		{
+			BtnLogin.setFocus();
+		}
+		
+		private function rstLoginSucesso(evt:ResultEvent):void
+		{
+			var loggin: autenticar_usuario = evt.result.valueOf();
+			
+			if ((loggin.Usuario != null) && (loggin.Senha != null) && (loggin.Usuario != "") && (loggin.Senha != ""))
+			{
+				Application.application._Usuario = loggin.Usuario;
+				Application.application._Senha = loggin.Senha;
+				Application.application._distribuidorid = loggin.distribuidorid;
+				Application.application._grupoId = loggin.grupoId;
+				Application.application._codcli = loggin.codcli;
+				Application.application._natureza = loggin.natureza;
+				Application.application._nome = loggin.nome;
+				Application.application._endereco = loggin.endereco;
+				Application.application._cidade = loggin.cidade;
+				Application.application._estado = loggin.estado;
+				Application.application._telefone = loggin.telefone;
+				Application.application._celular = loggin.celular;
+				Application.application._email = loggin.email;
+				Application.application._observacao = loggin.observacao;
+				Application.application._ultimoacesso = loggin.ultimoacesso;
+				Application.application.login.visible = false;
+				Application.application.login.ImpLoginUser.text = "";
+				Application.application.login.ImpLoginSenha.text = "";
+				Application.application.principal.visible = true;
+			}	
+			else 
+			{
+				Application.application.login.visible = true;	
+				ImpLoginUser.setFocus();
+			}
+		}
+		
+		private function Iniciar():void
+		{	
+			var remoteObj_loggin:ObjetoRemoto = new ObjetoRemoto(autenticar_usuario.NAMESPACE, rstLoginSucesso);                            
+			remoteObj_loggin.getOperation("loggin").send();    	
+		}
+				
+		private function rstSucesso(evt:ResultEvent):void
+		{    
+			validando = evt.result.valueOf();
+
+			if ((validando.Usuario != null) && (validando.Senha != null) && (validando.Usuario != "") && (validando.Senha != ""))
+			{        
+				Application.application._Usuario = validando.Usuario;
+				Application.application._Senha = validando.Senha;
+				Application.application._distribuidorid = validando.distribuidorid;
+				Application.application._grupoId = validando.grupoId;
+				Application.application._codcli = validando.codcli;
+				Application.application._natureza = validando.natureza;
+				Application.application._nome = validando.nome;
+				Application.application._endereco = validando.endereco;
+				Application.application._cidade = validando.cidade;
+				Application.application._estado = validando.estado;
+				Application.application._telefone = validando.telefone;
+				Application.application._celular = validando.celular;
+				Application.application._email = validando.email;
+				Application.application._observacao = validando.observacao;
+				Application.application._ultimoacesso = validando.ultimoacesso;				
+				Application.application.login.visible = false;
+				Application.application.login.ImpLoginUser.text = "";
+				Application.application.login.ImpLoginSenha.text = "";				
+				Application.application.principal.visible = true;	     	
+			}
+			else
+			{
+				lbl_mensagem.visible = true;
+				lbl_mensagem.text = "Usuário ou senha inválida.";	
+				ImpLoginUser.setFocus();	
+			}
+		}
+		private function btnAcessar_click(evt:MouseEvent):void
+		{    
+			if (evt.type == MouseEvent.CLICK)
+			{      
+				if ((ImpLoginUser.text == "") || (ImpLoginUser.text == " "))   
+				{
+					lbl_mensagem.text = "Obrigatório informar usuário."
+					ImpLoginUser.setFocus();
+				}
+				else if (ImpLoginSenha.text == "")
+					 {
+					 	lbl_mensagem.text = "Obrigatório informar senha."
+					 	ImpLoginSenha.setFocus();
+					 }   	 		
+				else
+				{	
+					var login:autenticar_usuario = new autenticar_usuario;        
+					
+					login.Usuario  = ImpLoginUser.text;
+					login.Senha    = ImpLoginSenha.text;
+					
+					var remoteObj:ObjetoRemoto = new ObjetoRemoto(autenticar_usuario.NAMESPACE, rstSucesso);                            
+					remoteObj.getOperation("validacao").send(login);    
+				}
+			}
+		}						
+	]]>
+</mx:Script>
+	<mx:Image 
+		source="img/Box.png" 
+		height="165" 
+		width="269" 
+		horizontalCenter="69" 
+		verticalCenter="-15"/>
+	<mx:Panel 
+		width="392" 
+		height="196" 
+		layout="absolute" 
+		horizontalCenter="0" 
+		verticalCenter="0" 
+		title="Sistema S3G.BPLOG" 
+		alpha="1.0" 
+		borderColor="#2D2E44" 
+		color="#313E56" 
+		cornerRadius="8" 
+		id="CvLogin" 
+		themeColor="#7F7E7E" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		backgroundAlpha="0.65">
+		<mx:Label 
+			x="44" 
+			y="31" 
+			text="Usuário:" 
+			width="66" 
+			color="#000000" 
+			textAlign="right" 
+			id="LblUser"/>
+		<mx:Label 
+			x="44" 
+			y="66" 
+			text="Senha:" 
+			width="66" 
+			color="#000000" 
+			textAlign="right" 
+			id="LblSenha"/>
+		<mx:TextInput 
+			x="116" 
+			y="28" 
+			id="ImpLoginUser" 
+			enter="EnterUser();" 
+			editable="true" 
+			enabled="true" 
+			toolTip="Digite seu Usuário" 
+			width="214" 
+			height="29" 
+			borderColor="#2D2E44"/>
+		<mx:TextInput 
+			x="116" 
+			y="63" 
+			displayAsPassword="true" 
+			id="ImpLoginSenha" 
+			color="#3F5B93" 
+			themeColor="#3F5B93" 
+			borderColor="#2D2E44" 
+			cornerRadius="4" 
+			borderStyle="solid" 
+			alpha="1.0"
+			enter="EnterSenha()" 
+			toolTip="Digite sua Senha" 
+			width="214" 
+			height="29" 
+			fontSize="14"/>
+		<mx:Button 
+			x="211" 
+			y="102" 
+			label="Entrar" 
+			id="BtnLogin" 
+			color="#324255" 
+			themeColor="#3F5B93" 
+			width="119" 
+			fontSize="10" 
+			borderColor="#2D2E44"  
+			height="33" 
+			click="btnAcessar_click(event)" 
+			icon="@Embed(source='../img/Security_Card.png')" 
+			fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+		<mx:Label 
+			x="67" 
+			y="69" 
+			text="Label" 
+			id="lbl_mensagem" 
+			enabled="true" 
+			color="#FF0000"
+			visible="false"/>
+	</mx:Panel>
+</mx:Canvas>

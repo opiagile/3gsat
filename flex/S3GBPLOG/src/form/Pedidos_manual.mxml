@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="982" 
+	height="562" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF" 
+	xmlns:ns1="com.flexpernambuco.controls.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.formatters.NumberFormatter;
+			import mx.controls.Text;			
+			import mx.formatters.CurrencyFormatter;
+			import mx.controls.Button;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			import mx.containers.Canvas;
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;			
+			import mx.events.DragEvent; 	
+            import mx.events.CloseEvent;
+            import mx.formatters.NumberBaseRoundType;
+            
+			import classes.pedidos;
+			import classes.veiculos;            	    
+			import classes.cliente;
+			
+			import form.*;
+			import util.ObjetoRemoto;
+
+			[Bindable]
+	        public var X:int;
+			[Bindable]
+	        public var total_peso: Number = 0;
+			[Bindable]
+	        public var total_cubico: Number = 0;
+			
+			[Bindable]
+	        public var _arraypedidos:ArrayCollection;
+			[Bindable]
+	        public var _arrayveiculos:ArrayCollection;
+			[Bindable]
+	        public var _arrayentregas:Array;
+	        
+//vai sumir tudo *********************************************************************
+		    [Bindable]
+		    private var array_pedidos:ArrayCollection = new ArrayCollection([
+	              {cliente:'Francisco Araujo', total:36.00, peso:400},
+	              {cliente:'Alexandre souza', total:6.91, peso:1500},
+	              {cliente:'Mercearia Nunes', total:20.52, peso:1296},
+	              {cliente:'Banca Avenida', total:35.55, peso:462}	              
+	            ]);
+			[Bindable]
+		    private var array_teste1:ArrayCollection = new ArrayCollection([
+	              {veiculo:'Moto'},
+	              {veiculo:'Carreta'},
+	              {veiculo:'Kombi'},
+	              {veiculo:'Perua'}
+	            ]);
+	        [Bindable]
+		    private var array_pedidos2:ArrayCollection;
+//vai sumir tudo *********************************************************************	
+        			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+				in_codcliente.text = "";
+				in_codproduto.text = "";
+				in_descproduto.text = "";
+				in_nomecliente.text = "";
+				in_quantidade.text = "";
+				
+				var remoteObj_mostrar:ObjetoRemoto = new ObjetoRemoto(pedidos.NAMESPACE, rstSucesso_seleciona);                            
+				remoteObj_mostrar.getOperation("selecionapedidos").send(mx.core.Application.application._distribuidorid); 	
+
+				var remoteObj_veiculo:ObjetoRemoto = new ObjetoRemoto(veiculos.NAMESPACE, rstSucesso_veiculo);                            
+				remoteObj_veiculo.getOperation("selecionaveiculos").send(mx.core.Application.application._distribuidorid); 												
+															
+			}
+
+			private function rstSucesso_seleciona(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arraypedidos = ArrayCollection(evt.result);	
+			}
+			
+			private function rstSucesso_veiculo(evt:ResultEvent):void
+			{
+				var max_cubico: Number;
+					
+				if (evt.result != null)
+					_arrayveiculos = ArrayCollection(evt.result);	
+		  		
+		  		in_pesomax.text = '25000 Kg'; 
+		  		in_cubico.text = '144';					
+			}
+
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function inserirpedidos():void
+			{
+				if (in_codcliente.text == "")
+				{
+					Alert.show("É obrigatório o preenchimento do Código cliente!", "atenção");
+					in_codcliente.setFocus();
+				}
+				else 
+				{
+					if (in_codproduto.text == "")
+					{
+						Alert.show("É obrigatório o preenchimento do campo Código produto!", "atenção");
+						in_codproduto.setFocus();
+					}
+					else
+					{			
+						if (in_quantidade.text == "")
+						{
+							Alert.show("É obrigatório o preenchimento do campo quantidade!", "atenção");
+							in_quantidade.setFocus();
+							
+						}
+					}
+				}		
+
+				var salvarpedido: pedidos = new pedidos;			 
+				salvarpedido.clienteid = int(in_codcliente.text);
+				salvarpedido.distribuidorid = Application.application._distribuidorid;				
+				salvarpedido.fantasia = in_nomecliente.text;
+				salvarpedido.produtoid = int(in_codproduto.text);
+				salvarpedido.descproduto = in_descproduto.text;
+				salvarpedido.altura = 0;
+				salvarpedido.comprimento = 0; 
+				salvarpedido.largura = 0; 
+				salvarpedido.mcubico = 0;
+				salvarpedido.peso_liquido = 0;				
+				salvarpedido.quantidade = Number(in_quantidade.text);
+					
+				var remoteObj_salvar:ObjetoRemoto = new ObjetoRemoto(pedidos.NAMESPACE, rstSucesso);                            
+				remoteObj_salvar.getOperation("inserirpedido").send(salvarpedido); 
+				
+				in_codcliente.setFocus();								
+			}
+
+			private function rstSucesso(evt:ResultEvent):void
+			{
+				Iniciar();
+				if (evt.result)
+				{
+					Alert.show("Pedido salvo com sucesso!", "Confirmação");
+					Iniciar();
+				}
+				else
+				{
+					Alert.show("Não foi possível salvar o pedido!", "Erro");	
+				}	
+			}
+
+		  	private function changeVeiculo( linha : int ) : void
+		  	{	
+		  		var I: int;
+		  		var max_cubico: Number;
+		  		
+		  		in_pesomax.text = String(_arrayveiculos[linha].peso_max) + " Kg"; 
+		  		max_cubico = _arrayveiculos[linha].altura * _arrayveiculos[linha].largura * _arrayveiculos[linha].comprimento;
+		  		in_cubico.text = String(max_cubico);
+		  		
+		  		if (_arrayentregas.length > 0)
+		  		{
+			  		for(I = 0; I < _arrayentregas.length; I++) 
+					{ 
+				  		total_peso = _arrayentregas[I].peso + total_peso;
+				  		total_cubico = _arrayentregas[I].total + total_cubico;						
+					}
+					X = I;
+					
+				  	 //lb_peso.text = String((total_peso * 100)/_arrayveiculos[linha].peso_max);
+				  	 //lb_cubico.text = String((total_cubico * 100)/max_cubico);
+	
+				  	 lb_peso.text = String(total_peso) + " kg";
+				  	 if (total_cubico < 98)
+				  	 	lb_cubico.text = String(total_cubico)
+				  	 else	lb_cubico.text = "98.97";	
+		  		}
+		  	}
+			public function imgExclui_click():void
+			{								
+				Alert.yesLabel = "Sim";
+				Alert.noLabel = "Não";
+ 
+				if ((grd_pedidos.selectedIndex >= 0) && (grd_pedidos.enabled))
+					Alert.show("Tem certeza que deseja excluir?", "Confirme", 3, null, exclui)
+				else
+					Alert.show("Para excluir é necessário que uma área seja selecionada, verifique a área desejada e clique sobre ela.","Atenção");	
+			}       		
+
+			private function exclui(evt:CloseEvent):void
+			{
+				if (evt.detail == Alert.YES)
+				{												
+					//var remote_exclui:ObjetoRemoto = new ObjetoRemoto(pedidos.NAMESPACE, rstExclui);
+					//remote_exclui.getOperation("excluipedido").send(Application.application._clienteid,);
+				}
+			}
+			
+			private function atribui_a_frota():void
+			{
+				array_pedidos2 = new ArrayCollection([{veiculo:'carreta', total:98.79, peso:3658}]);				
+				array_pedidos = null;	
+				grid_veiculo.dataProvider = array_pedidos;	
+				lb_peso.text = "0 kg";
+				lb_cubico.text = "0,00"
+			}
+			
+			private function abrir_mapa():void
+			{
+				var roteirizador:Roteirizador = Roteirizador(PopUpManager.createPopUp(this, form.Roteirizador, true));			
+			}			
+
+			private function rstExclui(evt:ResultEvent):void
+			{
+				Iniciar();
+			}
+			
+            // Define the event listener.
+            public function dragDropHandler(event:DragEvent):void {    
+                // dataForFormat() always returns an Array 
+                // for the list-based controls 
+                // in case multiple items were selected.
+                //var dragObj:ArrayCollection=
+                //     event.dragSource.dataForFormat("items") as ArrayCollection; 
+				
+				_arrayentregas = event.dragSource.dataForFormat("items") as Array;
+				
+				if (_arrayentregas.length > 0)
+					changeVeiculo(cb_veiculo.selectedIndex); 
+                // Get the Artist for all dragged albums.
+                /*var artistList:String='';
+                for (var i:Number = 0; i < dragObj.length; i++) { 
+                    artistList+='Artist: ' + dragObj[i].Artist + '\n';                    
+                }
+                
+                Alert.show(artistList);*/                
+            }                       
+
+		]]>
+	</mx:Script>	
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3GBPLOG - Roterização" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		width="918" 
+		height="542" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#A1B9D1" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="-12" 
+ 		themeColor="#A1B9D1" 
+ 		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+ 		id="tw_Pedidos_manual">
+		<mx:Label 
+			x="235" 
+			y="-23" 
+			text="Passo 1&gt;&gt;"/>
+		<mx:ViewStack 
+			id="vs_roteirizar" 
+			left="5" 
+			right="5" 
+			top="10" 
+			bottom="5">
+			<mx:Canvas label="View 1" width="100%" height="100%" id="vs_passo1">
+				<mx:DataGrid 
+					x="10" 
+					y="164" 
+					width="886" 
+					height="279" 
+					id="grd_pedidos" 
+					borderColor="#3F5B93" 
+					fontSize="10"
+					dataProvider="{_arraypedidos}" 
+					themeColor="#3F5B93" 
+					color="#FF0000">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Cliente" dataField="fantasia" width="300"/>
+						<mx:DataGridColumn headerText="Produto" dataField="descproduto" width="300"/>
+						<mx:DataGridColumn headerText="Quantidade" dataField="quantidade" width="100"/>
+						<mx:DataGridColumn width="20">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:VBox horizontalAlign="center">
+										<mx:Image 
+											id="imgExclui" 
+											source="@Embed('../img/del.png')" 
+											height="16" 
+											width="16" 
+											click="outerDocument.imgExclui_click();"
+											toolTip="Excluir"/>	
+									</mx:VBox>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>						
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Label 
+					x="11" 
+					y="32" 
+					text="Código cliente" color="#585454"/>
+				<mx:Label 
+					x="152" 
+					y="32" 
+					text="Nome cliente" color="#585454"/>
+				<mx:Label 
+					x="152" 
+					y="68" 
+					text="Descrição produto" color="#585454"/>
+				<mx:Label 
+					x="11" 
+					y="68" 
+					text="Código produto" color="#585454"/>
+				<mx:Label 
+					x="10" 
+					y="107" 
+					text="Quantidade" color="#585454"/>
+				<mx:Button 
+					x="134" 
+					y="57" 
+					width="6" 
+					id="bt_pesquisacli" height="0" themeColor="#3F5B93">
+				<mx:icon>@Embed(source='../img/btPesquisar.png')</mx:icon>
+				</mx:Button>
+				<mx:Button 
+					y="463" 
+					width="96" 
+					id="bt_next" 
+					label="Próximo &gt;&gt;" 
+					horizontalCenter="0"
+					click="{vs_roteirizar.selectedIndex = 1}" themeColor="#3F5B93"/>
+				<mx:Button 
+					x="136" 
+					y="94" 
+					width="2" 
+					id="bt_pesquisaprod" 
+					height="3" 
+					themeColor="#3F5B93">
+				<mx:icon>@Embed(source='../img/btPesquisar.png')</mx:icon>
+				</mx:Button>
+				<mx:Button 
+					x="129" 
+					y="122" 
+					label="Incluir" 
+					width="77" 
+					id="bt_incluir"
+					click="inserirpedidos()" 
+					themeColor="#3F5B93"/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="48" 
+					width="111" 
+					id="in_codcliente" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="150" 
+					y="48" 
+					width="529" 
+					id="in_nomecliente" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000" 
+					editable="false"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="84" 
+					width="111" 
+					id="in_codproduto" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="151" 
+					y="84" 
+					width="528" 
+					id="in_descproduto" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000" 
+					enabled="true" 
+					editable="false"
+					nextFocusOnEnter="true"/>
+				<ns1:MasterTextInput 
+					x="10" 
+					y="123" 
+					width="111" 
+					id="in_quantidade" 
+					borderColor="#3F5B93" 
+					height="20" 
+					fontSize="11" 
+					color="#FF0000"
+					onlyRestrict="number"
+					nextFocusOnEnter="true"/>
+				<mx:Label x="5" y="-7" text="Passo 1 - " fontSize="25" fontWeight="bold" fontFamily="Georgia" color="#585454"/>
+				<mx:Label x="118" y="2" text="Cadastro de pedidos" fontSize="15" color="#585454"/>
+			</mx:Canvas>
+			<mx:Canvas label="passo2" width="100%" height="100%" id="vs_passo2">
+			    <mx:DataGrid id="grid_cubagem" 
+			        allowMultipleSelection="true" 
+			        dragEnabled="true" 
+			        dropEnabled="true" 
+			        dragMoveEnabled="true" 
+			        x="10" 
+			        y="63" 
+			        themeColor="#3F5B93" 
+			        borderColor="#3F5B93" 
+			        height="200"
+			        dataProvider="{array_pedidos}">                
+			        <mx:columns>
+			            <mx:DataGridColumn headerText="Cliente" dataField="cliente" width="150"/>
+			            <mx:DataGridColumn headerText="Metro cúbico" dataField="total" width="100"/>
+			            <mx:DataGridColumn headerText="Peso" dataField="peso" width="70"/>
+			        </mx:columns>    
+			    </mx:DataGrid>
+			    <mx:DataGrid id="grid_cubagem0" 
+			        allowMultipleSelection="false" 
+			        dragEnabled="false" 
+			        dropEnabled="false" 
+			        dragMoveEnabled="false" 
+			        x="10" 
+			        y="308" 
+			        themeColor="#3F5B93" 
+			        borderColor="#3F5B93" 
+			        height="128" 
+			        width="886"
+			        dataProvider="{array_pedidos2}">                
+			        <mx:columns>
+			            <mx:DataGridColumn headerText="Veiculo" dataField="veiculo" width="100"/>
+			            <mx:DataGridColumn headerText="Cubagem total" dataField="total" width="100"/>
+			            <mx:DataGridColumn headerText="Peso total" dataField="peso" width="100"/>
+			        </mx:columns>    
+			    </mx:DataGrid>
+			    <mx:DataGrid id="grid_veiculo" 
+			        allowMultipleSelection="true" 
+			        dragEnabled="true" 
+			        dropEnabled="true" 
+			        dragMoveEnabled="true" 
+			        dragDrop="dragDropHandler(event);" 
+			        x="421" 
+			        y="86" 
+			        themeColor="#3F5B93" 
+			        borderColor="#3F5B93" 
+			        height="177">                
+			        <mx:columns>
+			            <mx:DataGridColumn headerText="Cliente" dataField="cliente" width="150"/>
+			            <mx:DataGridColumn headerText="Metro cúbico" dataField="total" width="100"/>
+			            <mx:DataGridColumn headerText="peso" dataField="peso" width="70"/>
+			        </mx:columns>    
+			    </mx:DataGrid>
+			    <mx:Button 
+			    	y="463" 
+			    	width="96" 
+			    	id="bt_next2" 
+			    	label="Gerar &gt;&gt;" 
+			    	horizontalCenter="50" 
+			    	click="abrir_mapa()"/>
+			    <mx:Button 
+			    	y="463" 
+			    	width="96" 
+			    	id="bt_anterior" 
+			    	label="&lt;&lt; Anterior" 
+			    	horizontalCenter="-50"
+			    	click="{vs_roteirizar.selectedIndex = 0}"/>
+			    <mx:Label x="5" y="-7" text="Passo 2 - " fontSize="25" fontWeight="bold" fontFamily="Georgia" color="#585454"/>
+			    <mx:Label x="122" y="2" text="Distribuir os pedidos por veículo" fontSize="15" color="#585454"/>
+			    <mx:Label x="10" y="32" text="Pedidos" fontSize="15" color="#585454"/>
+			    <mx:Label x="421" y="16" text="Veículo:" fontSize="15" color="#585454"/>
+			    <mx:ComboBox 
+			    	x="489" 
+			    	y="16" 
+			    	width="178" 
+			    	id="cb_veiculo"
+			    	dataProvider="{_arrayveiculos}"
+			    	labelField="nomeveiculo"
+			    	change="changeVeiculo(cb_veiculo.selectedIndex)">
+			    </mx:ComboBox>
+			    <mx:Button 
+			    	x="357" 
+			    	y="103" 
+			    	label="&gt;"/>
+			    <mx:Button x="357" y="133" label="&lt;"/>
+			    <mx:Button x="355" y="163" label="&gt;&gt;"/>
+			    <mx:Button x="355" y="193" label="&lt;&lt;"/>
+			    <mx:Label x="421" y="43" text="Peso Máximo:" color="#585454"/>
+			    <mx:Label x="518" y="43" text="0 Kg" color="#FF0000" id="in_pesomax"/>
+			    <mx:Label x="648" y="43" text="0 kg" color="#FF0000" id="lb_peso"/>
+			    <mx:Label x="588" y="43" text="-----" color="#585454" id="lb_peso0"/>
+			    <mx:Label x="588" y="61" text="-----" color="#585454" id="lb_cubico0"/>
+			    <mx:Label x="648" y="61" text="0,00" color="#FF0000" id="lb_cubico"/>
+			    <mx:Label x="431" y="60" text="M³ máxima:" color="#585454"/>
+			    <mx:Label x="518" y="60" text="0,00" color="#FF0000" id="in_cubico"/>
+			    <mx:ProgressBar x="508" y="54" minimum="10" maximum="100" labelPlacement="center" width="183" label=" " borderColor="#0096FF" visible="false"/>
+			    <mx:Button 
+			    	id="b2" 
+			        label="Reiniciar"
+			     	x="340" 
+			     	y="64"
+			     	visible="false"/>
+			    <mx:Button id="b0" 
+			        label="Incluir"
+			     x="763" y="241" click="atribui_a_frota()"/>
+			</mx:Canvas>
+			<mx:Canvas label="vs_passo3" width="100%" height="100%">
+			</mx:Canvas>
+		</mx:ViewStack>
+	</mx:TitleWindow>	
+</mx:Canvas>

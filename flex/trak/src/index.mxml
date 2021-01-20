@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" preloader="com.pathf.preloaders.PathfinderCustomPreloader" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #AE5302]" viewSourceURL="srcview/index.html">
+	<mx:Script>
+		<![CDATA[
+		
+			//image that shows up
+			//[Embed("Assets/IMG_0003.png") ]
+        	//[Bindable] public var Office:Class;
+        	
+        	
+        	
+		]]>
+	</mx:Script>
+	<mx:Image source="Assets/Fnd_youtube.jpg" width="800" height="600" verticalCenter="0" horizontalCenter="0" alpha="0.33"/>
+	<mx:Label 
+		text="CLAN TRAK BRASIL" 
+		fontWeight="bold" 
+		fontFamily="Verdana" fontSize="60" color="#FFFFFF" alpha="1.0" enabled="false" horizontalCenter="13" verticalCenter="-32"/>
+	<mx:Label 
+		text="Temos uma surpresa para você! Aguarde!!!" 
+		fontWeight="bold" 
+		fontFamily="Verdana" fontSize="26" color="#FFFFFF" alpha="1.0" enabled="false" horizontalCenter="13" verticalCenter="23"/>
+</mx:Application>

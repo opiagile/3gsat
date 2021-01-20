@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)"  
+  width="100%" height="100%" key="ABQIAAAA60Yi54TYljE0FQ-0E4d0nBQbQQtspPKytngpyCGhFiH97vLYsRT_WtomBMsPuZncSsVrLzD7ulJ7wQ"/> 
+<mx:Script> 
+    <![CDATA[ 
+    
+    import com.google.maps.LatLng; 
+    import com.google.maps.Map; 
+    import com.google.maps.MapEvent; 
+    import com.google.maps.MapType; 
+	import mx.effects.easing.Elastic;
+	import form.mapa;
+		
+    private function onMapReady(event:Event):void { 
+      this.map.setCenter(new LatLng(-25.366122,-49.220466), 14, MapType.NORMAL_MAP_TYPE); 
+    } 
+    ]]> 
+</mx:Script> 
+	<mx:Move id="entrada" target="{this}" easingFunction="Elastic.easeOut" 
+		duration="400" xFrom="-500"/>
+	<mx:TabNavigator x="0" y="0" width="1034" height="139" backgroundColor="#2D2D2D" color="#FFFFFF" backgroundAlpha="0.5">
+		<mx:Canvas label="Tab 1" width="100%" height="100%" borderColor="#5A6165">
+			<mx:Button x="20" y="62" label="Button"/>
+			<mx:Label x="20" y="36" text="Label"/>
+			<mx:TextInput x="120" y="62"/>
+		</mx:Canvas>
+		<mx:Canvas label="Tab 2" width="100%" height="100%">
+			<mx:TextInput x="90" y="53"/>
+			<mx:Text x="312" y="10" text="Text" width="318" height="65"/>
+		</mx:Canvas>
+		<mx:Canvas label="Tab 3" width="100%" height="100%">
+		</mx:Canvas>
+		<mx:Canvas label="Tab 4" width="100%" height="100%">
+		</mx:Canvas>
+		<mx:Canvas label="Tab 5" width="100%" height="100%">
+		</mx:Canvas>
+		<mx:Canvas label="Tab 6" width="100%" height="100%">
+		</mx:Canvas>
+		<mx:Canvas label="Tab 7" width="100%" height="100%">
+		</mx:Canvas>
+	</mx:TabNavigator>
+		
+</mx:Canvas>

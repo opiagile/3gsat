@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+******************************************************************************************
+Data..........: 23/01/2009
+Responsável...: Vinícius Sandim
+Objeto........: Formulário de inserção e edição de contatos no banco de dados
+******************************************************************************************
+-->
+
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" height="143"
+	creationComplete="creationComplete();">
+	
+	<mx:Script>
+		<![CDATA[
+			import mapeamento.Cliente;
+			import mx.managers.FocusManager;
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;			
+			import mx.rpc.events.ResultEvent;
+			import mx.events.RSLEvent;
+			import mx.effects.easing.Elastic;
+			import mx.effects.easing.Back;
+			
+			import mapeamento.Contato;
+			
+			import util.ObjetoRemoto;			
+			
+			
+			//Atributos			
+			private var _contato:Cliente;
+			public function set contato(valor:Cliente):void { this._contato = valor; }
+			
+			private var _rstOk:Function;
+			public function set rstOk(valor:Function):void { this._rstOk = valor; }
+			
+			private var _rstCancelar:Function;
+			public function set rstCancelar(valor:Function):void { this._rstCancelar = valor; }
+			
+			private var _editando:Boolean;			
+			private var _arrayValidadores:Array;
+			//**
+			
+			
+			//Handlers
+			private function rstMetodo(evt:ResultEvent):void{
+				_rstOk();
+			}
+			//**
+						
+			
+			//Functions de Componentes
+			private function creationComplete():void{				
+				_arrayValidadores = new Array();
+				_arrayValidadores.push(vldNome);
+				_arrayValidadores.push(vldEmail);
+				_arrayValidadores.push(vldTelefone);
+				_arrayValidadores.push(vldCelular);
+				
+				if (_contato != null){
+					txtNome.text = _contato.Nome;
+					txtEmail.text = _contato.Cidade;
+					txtTelefone.text = _contato.Telefone;
+					txtCelular.text = _contato.Celular;
+					txtObservacoes.text = _contato.Observacao;					
+					_editando = true;
+				}
+				else{
+					_contato = new Contato();					
+					_editando = false;
+				}
+
+				entrada.play();
+				
+				txtNome.setFocus();
+				txtNome.focusManager.showFocus();
+			} 
+			
+			private function btnOk_click():void{				
+				var arrayErros:Array = Validator.validateAll(_arrayValidadores);
+				
+				if (arrayErros.length != 0){	
+					var obj:Object = ValidationResultEvent(arrayErros[0]).currentTarget.source;
+					obj.setFocus();
+					obj.focusManager.showFocus();
+					return;
+				}
+				
+				saida.play();
+				
+				_contato.Nome = txtNome.text;
+				_contato.Cidade = txtEmail.text;
+				_contato.Telefone = txtTelefone.text;
+				_contato.Celular = txtCelular.text;
+				_contato.Observacao = txtObservacoes.text;			
+				
+				var remoto:ObjetoRemoto = new ObjetoRemoto(Contato.NAMESPACE, rstMetodo);
+				
+				if (_editando)
+					remoto.getOperation("Altera").send(_contato);
+				else
+					remoto.getOperation("Insere").send(_contato);
+			}
+			
+			private function btnCancelar_click():void{
+				saida.play();
+				_rstCancelar();	
+			}
+			
+			private function saida_effectEnd():void{
+				owner.removeChild(this);
+			}
+			//**
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Move id="entrada" target="{this}" easingFunction="Elastic.easeOut" 
+		duration="400" xFrom="-500"/>
+		
+	<mx:Move id="saida" target="{this}" easingFunction="Back.easeIn" 
+		duration="400" xTo="-500" effectEnd="saida_effectEnd();"/>
+	
+	<mx:Label y="2" text="Nome"/>
+	<mx:TextInput x="62" id="txtNome" width="200" maxChars="80"/>
+	<mx:StringValidator id="vldNome" source="{txtNome}" property="text" minLength="3"/>
+	
+	<mx:Label y="32" text="Email"/>
+	<mx:TextInput x="62" y="30" id="txtEmail" width="200" maxChars="255"/>
+	<mx:EmailValidator id="vldEmail" source="{txtEmail}" property="text" required="false"/>
+	
+	<mx:Label y="64" text="Telefone"/>
+	<mx:TextInput x="62" y="60" id="txtTelefone" width="200" maxChars="20"/>
+	<mx:PhoneNumberValidator id="vldTelefone" source="{txtTelefone}" property="text" required="false"/>
+	
+	<mx:Label y="92" text="Celular"/>
+	<mx:TextInput x="62" y="90" id="txtCelular" width="200" maxChars="20"/>	
+	<mx:PhoneNumberValidator id="vldCelular" source="{txtCelular}" property="text" required="false"/>	
+	
+	<mx:TextArea left="270" right="0" height="111" id="txtObservacoes" maxChars="1000"/>
+	
+	<mx:Button id="btnOk" right="108" top="118" label="OK" height="24" width="100"
+		click="btnOk_click();" icon="@Embed('../../imagens/Ok.png')"/>
+		
+	<mx:Button id="btnCancelar" right="0" top="118" label="Cancelar" height="24" width="100"
+		click="btnCancelar_click();" icon="@Embed('../../imagens/Cancelar.png')"/>
+</mx:Canvas>

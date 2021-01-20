@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 24/05/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Tela de criação e edição do limite de velocidade.
+*****************************************************************************************************
+-->
+
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="580" 
+	height="526" 
+	title="Limite de Velocidade" 
+	color="#D4D4D4" 
+	borderColor="#000000" 
+	xmlns:controls="com.brightPoint.controls.*" 
+	showCloseButton="false"
+	creationComplete="Iniciar()"
+	close="Fechar()"	
+	themeColor="#FFFFFF"
+	backgroundColor="#040404"
+	backgroundDisabledColor="#000000" 
+	borderStyle="none">
+
+	<mx:Canvas 
+		id="can1" 
+		bottom="150" 
+		right="2" 
+		backgroundColor="#000000" 
+		width="173" 
+		backgroundAlpha="0.85" 
+		top="44">
+		<mx:Button 
+			label="Cancelar ação" 
+			themeColor="#FFFFFF" 
+			id="btn_Cancelar" 
+			enabled="false" 
+			width="152" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			fillColors="[#FF0000, #FF0000]" 
+			color="#D4D4D4" 
+			borderColor="#D4D4D4" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			toolTip="Cancela qualquer ação que esteja sendo realizada." left="12" top="10"/>
+		<mx:Button 
+			label="Limpar" 
+			themeColor="#FFFFFF" 
+			enabled="false" 
+			id="btn_LimparMapa" 
+			width="75" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			fillColors="[#FF0000, #FF0000]" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			left="89" 
+			toolTip="Limpar o mapa." top="85"/>
+		<mx:Button 
+			label="Salvar" 
+			id="btn_salvar" 
+			enabled="false"
+			themeColor="#FFFFFF" 
+			width="75" 
+			height="22" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			borderColor="#B7BABC" 
+			fillColors="[#FF0000, #FF0000]" 
+			disabledColor="#D4D4D4" 
+			textSelectedColor="#FFFFFF" 
+			textRollOverColor="#FFFFFF" 
+			left="12" 
+			toolTip="Salvar a área." top="85"/>
+		<mx:TextInput 
+			width="152" 
+			id="txt_NomeArea" 
+			themeColor="#FF0000" 
+			enabled="false" 
+			cornerRadius="0" 
+			toolTip="Digite um nome para a nova área criada" 
+			borderColor="#000000" 
+			color="#000000" 
+			left="12" top="55"/>
+		<mx:Label 
+			text="Descrição" 
+			color="#D4D4D4" 
+			id="lbl_NomeArea" 
+			enabled="false" left="12" top="36"/>
+	</mx:Canvas>
+	<mx:MenuBar 
+		id="cabecalho" 
+		left="2" 
+		right="2" 
+		top="1" 
+		height="43" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#D4D4D4">
+	</mx:MenuBar>
+	<mx:Button 
+		x="138" 
+		y="12" 
+		label="Alterar Limite" 
+		id="btn_AlterarArea" 
+		themeColor="#FFFFFF" 
+		width="125" 
+		height="22" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		icon="@Embed(source='../../img/Editar.png')" 
+		textAlign="right" 
+		labelPlacement="right" 
+		toolTip="Alterar área de segurança existente."/>
+	<mx:Button 
+		x="266" 
+		y="12" 
+		label="Associar Veículo" 
+		id="btn_AssociarVeiculo" 
+		themeColor="#FFFFFF" 
+		width="125" 
+		height="22" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		icon="@Embed(source='../../img/Editar.png')" 
+		textAlign="right" 
+		labelPlacement="right" 
+		toolTip="Alterar área de segurança existente."/>
+	<mx:Button 
+		x="10" 
+		label="Criar Limite" 
+		id="btn_CriarArea" 
+		themeColor="#FFFFFF" 
+		width="125" 
+		height="22" 
+		top="12" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		fillColors="[#FF0000, #FF0000]" 
+		borderColor="#D4D4D4" 
+		icon="@Embed(source='../../img/area_seguranca.png')" 
+		textSelectedColor="#FFFFFF" 
+		textRollOverColor="#FFFFFF" 
+		toolTip="Clique para criar uma nova área de segurança."/>
+	<mx:Button 
+		label="Fechar" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		width="87" 
+		labelPlacement="left" 
+		id="btn_logout"
+		click="Fechar();"  
+		right="5" 
+		fillColors="[#FF0000, #FF0000]" 
+		textRollOverColor="#FFFFFF" 
+		textSelectedColor="#FFFFFF" 
+		icon="@Embed(source='../img/cancel.png')" 
+		toolTip="Sair da área de criação." 
+		top="13"/>
+	<mx:MenuBar 
+		id="rodape" 
+		left="2" 
+		right="2" 
+		height="31" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" 
+		bottom="1">
+	</mx:MenuBar>
+	<mx:Image 
+		height="32" 
+		source="../img/3GSAT-black.png" 
+		right="1" 
+		bottom="1" 
+		width="79" 
+		scaleContent="true"/>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Image;
+			import mx.effects.AddItemAction;
+			import flash.events.Event; 
+			import flash.events.MouseEvent; 
+			import flash.geom.Point; 
+			import flash.display.DisplayObject; 
+			import flash.display.Sprite; 
+			import flash.display.Shape; 
+			import flash.text.TextField; 
+			import flash.text.TextFieldAutoSize; 
+			import flash.text.TextFormat; 
+		 	import com.google.maps.ProjectionBase; 
+			import com.google.maps.controls.MapTypeControl; 
+			import com.google.maps.controls.PositionControl; 
+			import com.google.maps.controls.ControlPosition; 
+			import com.google.maps.controls.ControlBase; 
+			import com.google.maps.interfaces.IMap; 
+			 		
+			import mx.messaging.channels.StreamingAMFChannel;
+			import flash.utils.setInterval;
+			import flash.utils.setTimeout;
+			import mx.controls.Text;
+			import flash.trace.Trace;
+			import mx.events.ListEvent;
+			import mx.events.ItemClickEvent;
+			import mx.controls.advancedDataGridClasses.SortInfo;
+			import mx.controls.dataGridClasses.DataGridColumn;
+		    import mx.effects.Fade;
+		    import mx.containers.ControlBar;
+		    import mx.effects.WipeUp;
+		    import mx.effects.WipeDown; 	    
+	        import mx.controls.Alert;
+	        import mx.events.ResizeEvent;            
+	        import mx.containers.Form;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.core.Application;          
+	        import mx.containers.TitleWindow;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+		    import mx.effects.WipeRight;
+		    import mx.effects.WipeLeft;
+		    import mx.events.StyleEvent;
+			import mx.controls.Alert;
+            import mx.events.CloseEvent;	    
+	
+		    import com.google.maps.InfoWindowOptions;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.interfaces.IMapType;
+			import com.google.maps.LatLngBounds;
+		    import com.google.maps.controls.ZoomControlOptions;
+		    import com.google.maps.MapOptions;	    
+		    import com.google.maps.controls.PositionControl;
+			import com.google.maps.MapEvent; 
+			import com.google.maps.MapType; 
+	        import com.google.maps.Map;
+	        import com.google.maps.LatLng;
+	        import com.google.maps.MapMouseEvent;
+	        import com.google.maps.MapZoomEvent;
+	        import com.google.maps.overlays.Polygon;
+	        import com.google.maps.overlays.Polyline;
+	        import com.google.maps.controls.ZoomControl;
+	        import com.google.maps.controls.ScaleControl;
+	        import com.google.maps.View;        
+	        import com.google.maps.services.ClientGeocoder;
+	        import com.google.maps.services.GeocodingEvent;
+	        import com.google.maps.services.GeocodingResponse;
+	        import com.google.maps.services.Placemark;
+	
+			import mapeamento.get_veiculos_por_cliente;
+			import mapeamento.get_historico_veiculos;
+			import mapeamento.area_seguranca;
+	
+			import util.ObjetoRemoto;
+		    import util.InfoWindowComp;
+	
+			import flash.text.Font;		
+	        import flash.display.StageDisplayState;
+		    import flash.sampler.NewObjectSample;
+	
+			import form.*;
+	
+		    import adobe.utils.CustomActions;
+		
+		    private var polyLatLngs:Array = new Array();
+	        private var marker:Marker;
+	        private var status_area:int;
+	        private var area: String;
+	        private var editando: Boolean;
+	        private var cercaeletronciaid: int;
+	        private var nome_area: String;
+	        [Bindable]
+	        public var _arrayArea:ArrayCollection;
+
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+		]]>
+	</mx:Script>	
+	<mx:Canvas 
+		height="119" 
+		id="can0" 
+		bottom="32" 
+		right="2" 
+		left="2" 
+		backgroundColor="#000000">
+		<mx:DataGrid 
+			id="gridArea"
+			alternatingItemColors="[#0C0D0C, #000000]" 
+			color="#D4D4D4" 
+			alpha="1.0"			
+			verticalScrollPolicy="on"	
+			sortableColumns="false" 
+			headerColors="#787878" 
+			rowHeight="20" 
+			fontFamily="Arial" 
+			horizontalGridLineColor="#3a3a3a" 
+			verticalGridLineColor="#3a3a3a"
+			bottom="0" 
+			top="1" 
+			right="0" 
+			enabled="true" 
+			left="0" 
+			textSelectedColor="#000000" 
+			textRollOverColor="#D4D4D4" 
+			selectionColor="#D4D4D4" 
+			rollOverColor="#FF0000">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Descrição" dataField="nome"/>
+				<mx:DataGridColumn width="20">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:VBox horizontalAlign="center">
+								<mx:Image 
+									id="imgExclui" 
+									source="@Embed('../img/del.png')" 
+									height="16" 
+									width="16" 
+									toolTip="Excluir a área de segurança "/>	
+							</mx:VBox>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Canvas>	
+	<mx:Label x="28" y="58" text="Limite de Velocidade"/>
+	<mx:Label x="98" y="77" text="KM / H"/>
+	<controls:Gauge 
+		minValue="0" 
+		maxValue="220" 
+		showValue="true"
+		diameter="120" 
+		id="gauge" 
+		alertAlphas="[.7,.9,.6]" 
+		alertColors="[0xDD0000,0x000000,0xFF0000]" 
+		alertRatios="[0,110,220]"
+		faceColor="0x000000" 
+		ticksColor="0xffffff"			  	
+		pointerColor="0xffffff" 
+		bezelColor="0x999999"
+		faceShadowColor="0x777777"
+		fontSize="18"			    
+		fontColor="0x00FF00"
+		fontFamily="FontDigital"		    			    	    
+	 x="19" y="115" width="216" height="187"/>
+	<mx:NumericStepper x="30" y="75" enabled="true" minimum="5" maximum="290"/>
+	
+</mx:TitleWindow>

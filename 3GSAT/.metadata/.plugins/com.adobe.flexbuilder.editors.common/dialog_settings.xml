@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.webroot" value="W:\3GSAT\teste"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.use.iis" value="true"/>
+	<item key="com.adobe.flexbuilder.help.FlexSDKPreferencePage.columnWidth0" value="151"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.server.type" value="1"/>
+	<item key="com.adobe.flexbuilder.help.FlexSDKPreferencePage.columnWidth1" value="296"/>
+	<item key="com.adobe.flexbuilder.editors.common.use.default.location" value="true"/>
+	<item key="com.adobe.flexbuilder.help.FlexSDKPreferencePage.sortColumn" value="1"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.url" value="http://200.175.3.55:86/teste"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.apptype" value="true"/>
+	<section name="com.adobe.flexbuilder.editors.common.ui.pi.PropertiesView">
+		<item key="TreeGridImpl.TopAttribute" value=""/>
+		<item key="TreeGridImpl.ColumnZeroWidth" value="130"/>
+		<item key="AlphaTopIndex" value="0"/>
+		<item key="Style" value="true"/>
+		<item key="ViewOption" value="1"/>
+		<item key="AlphaCol1Width" value="78"/>
+		<item key="TreeGridImpl.ColumnOneWidth" value="78"/>
+		<item key="TreeGridImpl.TopCategory" value="Common"/>
+		<item key="AlphaCol0Width" value="130"/>
+		<item key="Common" value="true"/>
+		<item key="Layout" value="true"/>
+		<list key="CategoryExpanded">
+			<item value="true"/>
+			<item value="false"/>
+			<item value="false"/>
+			<item value="false"/>
+			<item value="false"/>
+			<item value="false"/>
+		</list>
+		<list key="CategoryNames">
+			<item value="Common"/>
+			<item value="Effects"/>
+			<item value="Events"/>
+			<item value="Size"/>
+			<item value="Styles"/>
+			<item value="Other"/>
+		</list>
+	</section>
+</section>

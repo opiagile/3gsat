@@ -1,0 +1,68 @@
+/* CSS file */
+
+TitleWindow
+{
+	backgroundColor: #000000;
+	borderAlpha: 1.0;
+	borderColor: #000000;
+	color: #FFFFFF;
+	borderThicknessLeft: 0;
+	borderThicknessRight: 0;
+	borderThicknessBottom: 0;
+	roundedBottomCorners: true;
+	cornerRadius: 8;
+	titleStyleName: titleWindowTitle;
+	controlBarStyleName: titleWindowControlBar;
+	closeButtonUpSkin: Embed(source="../img/close.png");
+	closeButtonOverSkin: Embed(source="../img/close2.png");
+	closeButtonDownSkin: Embed(source="../img/close3.png");
+	fontWeight: bold;
+	fontFamily: Verdana;
+	fontSize: 11;
+	statusStyleName: titleWindowStatus;
+}
+Button
+{
+	themeColor: #3B3B3B;
+	borderColor: #5E5858;
+	color: #FF3202;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #131313;
+	disabledColor: #FBF5F5;
+	fillAlphas: 1.0, 1.0;
+	fillColors: #020202, #020202;
+	errorColor: #2AFF00;
+}
+Button.Button2
+{
+	themeColor: #676767;
+	borderColor: #111111;
+	fillAlphas: 0.18, 0.18, 0.18, 0.18;
+}
+Panel
+{
+	borderThicknessLeft: 0;
+	borderThicknessRight: 0;
+	borderThicknessTop: 10;
+	borderThicknessBottom: 15;
+	cornerRadius: 2;
+	borderColor: #FF0000;
+	borderAlpha: 1.0;
+	color: #FFFFFF;
+}
+.titleWindowTitle
+{
+	borderThicknessTop: 0;
+	controlBarStyleName: titleWindowControlBar;
+	titleStyleName: titleWindowTitle;
+	backgroundColor: #000000;
+	borderColor: #000000;
+	color: #C8C7C7;
+	cornerRadius: 12;
+}
+.titleWindowControlBar
+{
+}
+.titleWindowStatus
+{
+}

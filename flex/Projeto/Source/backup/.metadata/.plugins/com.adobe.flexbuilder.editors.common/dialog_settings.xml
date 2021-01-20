@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.webroot" value="W:\cli"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.use.iis" value="true"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.project.parent" value="R:\site\flex\Projeto\Source"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.server.type" value="1"/>
+	<item key="com.adobe.flexbuilder.editors.common.use.default.location" value="false"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.asp.url" value="http://3gserver:84"/>
+	<item key="com.adobe.flexbuilder.editors.common.last.apptype" value="true"/>
+	<section name="com.adobe.flexbuilder.editors.common.ui.pi.PropertiesView">
+		<item key="Style" value="true"/>
+		<item key="ViewOption" value="1"/>
+		<item key="Common" value="true"/>
+		<item key="Layout" value="true"/>
+	</section>
+</section>

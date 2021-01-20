@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" title="S3G -" showCloseButton="true" close="Fechar()" horizontalAlign="center" verticalAlign="middle" titleIcon="@Embed(source='../../IMG/3gsatICO.png')" status="Sair" icon="@Embed(source='../../IMG/close.png')" includeInLayout="true" borderColor="#727272" borderStyle="solid" cornerRadius="15" alpha="1.0" backgroundColor="#727272">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import form.*
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:Label x="123" y="122" text="Em Desenvolvimento" color="#000000"/>
+</mx:TitleWindow>

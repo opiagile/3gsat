@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="600" 
+	height="400" 
+ 	color="#000000" 
+ 	backgroundAlpha="0.0">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.controls.Alert;
+			import mx.collections.ArrayCollection;
+			import mapeamento.Email;
+
+			/********** EVENTOS DOS CONTROLES DO FORMULÁRIO **********/
+			//Preenche o combo box com as opções de assunto
+			private function preencheCombo():void{
+				var lista:ArrayCollection = new ArrayCollection();
+				lista.addItem("Selecione o Setor");
+				lista.addItem("RH");
+				lista.addItem("Contabil");
+				lista.addItem("Fiscal");
+				lista.addItem("Assessoria Empresarial");
+				comboAssunto.dataProvider = lista;
+			}
+
+			//Retira o texto padrão dos inputs nome e email
+			private function removeTextoPadrao(t:TextInput):void{
+				if (t.text == "Informe seu Nome" || t.text == "Informe seu E-mail")
+					t.text = "";
+			}
+
+			//Adiciona o texto padrão dos inputs nome e email
+			private function addTextoPadrao(t:TextInput):void{
+				if (t.id == "txtNome" && t.text == "")
+					t.text = "Informe seu Nome";
+				else if (t.id == "txtEmail" && t.text == "")
+					t.text = "Informe seu E-mail";
+			}
+
+			//Remove texto padrão do textarea
+			private function removeTextoPadraoTextArea(ta:TextArea):void{
+				if (ta.text == "Insira sua Mensagem")
+					ta.text = "";
+			}
+
+			//Adiciona texto padrão do textarea
+			private function addTextoPadraoTextArea(ta:TextArea):void{
+				if (ta.text == "")
+					ta.text = "Insira sua Mensagem";
+			}
+
+			//Volta com todos os textos padrões
+			private function textoPadrao():void{
+				txtNome.text = "Nome não Informado";
+				txtEmail.text = "E-mail não informado";
+				txtMensagem.text = "Mensagem não informada";
+				comboAssunto.selectedIndex = 0;
+			}
+
+			/********** FUNÇÕES DE CONECXÃO COM A APLICAÇÃO .NET **********/
+			//Função que é executada se ocorreu algum erro ao enviar o e-mail
+			private function falhaEnviar(evt:FaultEvent):void{
+		    	Alert.show("Ocorreu o seguinte erro ao executar:\n" + evt.fault.message, "Ocorreu um Erro");
+			}
+
+			//Função que é executada se não ocorreu erros no envio de e-mail
+			private function resultadoEnviar(evt:ResultEvent):void{
+	        	textoPadrao();
+	        	Alert.show("E-mail enviado com sucesso!"); 
+		    }
+
+			//Função que é acionado com o clique do mouse
+			private function enviarEmail(evt:MouseEvent):void{
+		    	if (evt.type == MouseEvent.CLICK){
+		        	var email:Email = new Email;
+		        	email.Nome = txtNome.text;
+		        	email.UserMail = txtEmail.text;
+		        	email.Assunto = comboAssunto.selectedLabel;
+		        	email.Mensagem = txtMensagem.text;
+		        	roMail.getOperation("EnviarEmail").send(email);
+		    	}
+			}
+			
+			//Click Iniciar Fechar
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtContato.enabled=true;
+			}
+			
+			//Acesso Map
+			private function show_map():void {
+			Bt_map.enabled=true;
+			TitleWindow(PopUpManager.createPopUp(this, mapa, true));
+			}	
+		]]>
+	</mx:Script>
+	<mx:RemoteObject 
+		id="roMail" 
+		source="Email" 
+		destination="fluorine" 
+		showBusyCursor="true">
+		<mx:method 
+			name="EnviarEmail" 
+			result="{resultadoEnviar(event)}" 
+			fault="{falhaEnviar(event)}"/>
+	</mx:RemoteObject>
+	<mx:Image 
+			x="123.75" 
+			y="13" 
+			source="img/predio.png" 
+			width="466.25" 
+			height="367.8"/>
+	<mx:TitleWindow 
+		height="364.8" 
+		layout="absolute" 
+		width="580" 
+		horizontalCenter="0" 
+		verticalCenter="0" 
+		title="Inova - Fale Conosco" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar();" 
+		titleIcon="@Embed(source='img/ico.png')" 
+		borderColor="#414519" 
+		themeColor="#000000" 
+		alpha="1.0" 
+		backgroundAlpha="0.79" 
+		cornerRadius="6">
+		<mx:Label 
+			x="26.5" 
+			y="25.7" 
+			text="Nome:"/>
+		<mx:Label 
+			x="26.5" 
+			y="71.7" 
+			text="E-mail"/>
+		<mx:Label 
+			x="26.5" 
+			y="127.75" 
+			text="Assunto:"/>
+		<mx:Label 
+			x="26.5"
+			y="158.75" 
+			text="Mensagem:"/>
+		<mx:Button 
+			x="113.5"
+			y="283.75" 
+			label="Limpar" 
+			styleName="Button2" 
+			themeColor="#111607" enabled="false"/>
+		<mx:Button 
+			x="186.5" 
+			y="283.75" 
+			label="Enviar" 
+			themeColor="#111607"
+			click="enviarEmail(event)"
+			id="btnEnviar" 
+			styleName="Button2"/>
+		<mx:Label 
+			x="349" 
+			y="193.95" 
+			text="3352-0955" 
+			fontWeight="bold" 
+			fontSize="30"/>
+		<mx:Label 
+			x="305" 
+			y="207.95" 
+			text="(41)" 
+			fontWeight="bold" 
+			fontSize="14"/>
+		<mx:Label 
+			x="301.25" 
+			y="251.2" 
+			text="E-mail:" 
+			fontWeight="bold" color="#46513C"/>
+		<mx:VRule 
+			height="319.94998" 
+			strokeWidth="1" 
+			width="11.266666" 
+			horizontalCenter="-7" 
+			verticalCenter="0"/>
+		<mx:Text 
+			y="250.15" 
+			text="inova@inovacontabilidade.com.br&#xa;Rua São Sebastião, 558 Sl.23&#xa;Ahú - Curitiba | PR&#xa;CEP 80.540-050" 
+			width="216.5" 
+			height="46.649998" 
+			horizontalCenter="155" 
+			fontWeight="normal" 
+			textAlign="right" 
+			fontFamily="Verdana" enabled="true" color="#46513C"/>
+		
+		<mx:Image 
+			x="282.25" 
+			y="32.65" 
+			source="img/mapa.png" 
+			width="268" 
+			height="139.3" 
+			alpha="1.0" 
+			themeColor="#214215"/>
+		<mx:Button 
+				x="391.5" 
+				y="161.75" 
+				label="MAPA" 
+				id="Bt_map" 
+				width="56" 
+				height="21" 
+				textAlign="left" 
+				fontSize="9"
+				click="show_map()"
+				toolTip="Zoom Mapa" 
+				styleName="Button2" 
+				themeColor="#111607"/>
+		<mx:TextInput 
+			id="txtNome" 
+			focusIn="removeTextoPadrao(this.txtNome)" 
+			focusOut="addTextoPadrao(this.txtNome)" 
+			text="Informe seu Nome" x="26.5" y="41.7" width="222" color="#46513C" styleName="listBaseVerticalScrollBar"/>
+		<mx:TextInput 
+			id="txtEmail" 
+			width="222" 
+			focusIn="removeTextoPadrao(this.txtEmail)" 
+			focusOut="addTextoPadrao(this.txtEmail)" 
+			text="Informe seu E-mail" x="26.5" y="87.7" color="#46513C" styleName="listBaseVerticalScrollBar"/>
+		<mx:ComboBox 
+			id="comboAssunto" 
+			creationComplete="preencheCombo()" 
+			width="169" x="80" y="125.75" styleName="comboBoxDropdown">
+		</mx:ComboBox>
+		<mx:TextArea 
+			width="222" 
+			height="100" 
+			id="txtMensagem" 
+			focusIn="removeTextoPadraoTextArea(this.txtMensagem)" 
+			focusOut="addTextoPadraoTextArea(this.txtMensagem)" 
+			text="Insira sua Mensagem" x="26.5" y="175.75" color="#46513C" styleName="listBaseVerticalScrollBar"/>
+	</mx:TitleWindow>
+<mx:Style source="css/inova.css"/>
+</mx:Canvas>

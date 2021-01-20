@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="710" 
+	height="546" 
+	backgroundColor="#000000" 
+	color="#FBFBFB" 
+	alpha="0.98" 
+	borderStyle="solid" 
+	borderColor="#FFFFFF" 
+	borderThickness="2">
+	
+	<mx:TitleWindow layout="absolute" left="0" right="0" bottom="0" top="0" borderStyle="solid" backgroundAlpha="0.14" title="S3G CROQUI - Sistema de Instalação do Rastreador" horizontalAlign="center" verticalAlign="middle" showCloseButton="true">
+		<mx:TabNavigator 
+			width="693" 
+			height="486" 
+			backgroundColor="#000000" 
+			color="#FFFFFF" 
+			horizontalCenter="0" 
+			verticalCenter="0" 
+			backgroundAlpha="1.0" 
+			alpha="1.0" borderColor="#FFFFFF" themeColor="#4A5068">
+			<mx:Canvas 
+				label="CARRO" 
+				width="100%" 
+				height="100%"
+				backgroundColor="#000000" 
+				alpha="0.71" 
+				backgroundImage="@Embed(source='../../IMG/Audi.png')">
+				<mx:CheckBox x="237" y="260" label="B2" fontWeight="bold"/>
+				<mx:CheckBox x="304" y="52" label="T1" fontWeight="bold"/>
+				<mx:CheckBox x="200" y="38" label="T2" fontWeight="bold"/>
+				<mx:CheckBox x="107" y="75" label="PM" fontWeight="bold"/>
+				<mx:CheckBox x="446" y="227" label="P4" fontWeight="bold"/>
+				<mx:CheckBox x="375" y="216" label="B1" fontWeight="bold"/>
+				<mx:CheckBox x="145" y="171" label="B3" fontWeight="bold"/>
+				<mx:CheckBox x="225" y="156" label="B4" fontWeight="bold"/>
+				<mx:CheckBox x="296" y="140" label="B5" fontWeight="bold"/>
+				<mx:CheckBox x="517" y="216" label="M1" fontWeight="bold"/>
+				<mx:CheckBox x="517" y="275" label="M2" fontWeight="bold"/>
+				<mx:CheckBox x="108" y="140" label="BC" fontWeight="bold"/>
+				<mx:CheckBox x="332" y="176" label="P3" fontWeight="bold"/>
+				<mx:CheckBox x="426" y="162" label="P2" fontWeight="bold"/>
+				<mx:CheckBox x="483" y="140" label="P1" fontWeight="bold"/>
+				<mx:Label x="61" y="309" text="Central do Rastreador"/>
+				<mx:Label x="61" y="328" text="Botão de Panico"/>
+				<mx:Label x="61" y="346" text="Antena GPS"/>
+				<mx:Label x="61" y="364" text="Antena Celula"/>
+				<mx:Label x="539" y="10" text="B"/>
+				<mx:Label x="539" y="26" text="BC"/>
+				<mx:Label x="539" y="40" text="M"/>
+				<mx:Label x="539" y="54" text="PM"/>
+				<mx:Label x="539" y="68" text="T"/>
+				<mx:Label x="566" y="10" text="Bancos"/>
+				<mx:Label x="566" y="26" text="Bomba Combustivel"/>
+				<mx:Label x="566" y="40" text="Motor"/>
+				<mx:Label x="566" y="54" text="Porta Mala"/>
+				<mx:Label x="566" y="68" text="Teto do Veículo"/>
+				<mx:Label x="539" y="83" text="P"/>
+				<mx:Label x="566" y="83" text="Painel do Veículo"/>
+			</mx:Canvas>
+			<mx:Canvas 
+				label="CAMINHÃO" 
+				width="100%" 
+				height="100%">
+			</mx:Canvas>
+		</mx:TabNavigator>
+	</mx:TitleWindow>
+	
+</mx:Canvas>

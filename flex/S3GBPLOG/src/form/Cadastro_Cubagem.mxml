@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="512" 
+	height="220" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	<mx:Style source="form/layout.css"/>
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G.BPLOG - Cadastro de Veículo Tipo de Cubagem" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="496" 
+		height="200" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#B7D7DC" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" id="Tw_CadVeicTC">
+		<mx:TabNavigator 
+		color="#092A03" height="127" width="477" horizontalCenter="0" top="5" borderColor="#03334C">
+			<mx:Canvas 
+				width="100%" 
+				height="100%" 
+				color="#03334C"
+				id="Cv_CadVeic" label="Tipo de Veículo / Cubagem">
+				<mx:Label 
+					text="Tipo de Veículo" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="15.25" y="10"/>
+				<mx:TextInput 
+					width="147" 
+					color="#FF210A" 
+					borderColor="#B7BABC" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_TipoVeicTC" x="15" y="26"/>
+			</mx:Canvas>
+		</mx:TabNavigator>
+		<mx:Button 
+			label="Novo" 
+			color="#606068" 
+			id="BT_NovoCadVeicTC" 
+			borderColor="#000000" width="63" left="16" bottom="10" height="22" enabled="false"/>
+		<mx:Button 
+			label="Editar" 
+			color="#606068" 
+			id="BT_EditCadVeicTC" 
+			borderColor="#000000" width="63" left="84" bottom="10" height="22" enabled="false"/>
+		<mx:Button 
+			label="Excluir" 
+			color="#606068" 
+			id="BT_DelCadCliTC" 
+			borderColor="#000000" width="63" left="152" bottom="10" height="22"/>
+		<mx:Button 
+			label="Salvar" 
+			color="#FF0000" 
+			id="Bt_SalveCadVeicTC" borderColor="#000000" width="63" left="219" bottom="10" height="22"/>
+		<mx:Label x="375" y="143" text="Cubagem: " color="#000000"/>
+		<mx:Label 
+			x="447" 
+			y="142" 
+			text="3,72" 
+			color="#FF0202" 
+			fontWeight="bold" 
+			fontSize="12"/>
+	</mx:TitleWindow>
+</mx:Canvas>

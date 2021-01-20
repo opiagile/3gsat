@@ -1,0 +1,97 @@
+/* CSS file */
+
+TabNavigator
+{
+	borderColor: #FFFFFF;
+	tabStyleName: tabNavigatorTab;
+	backgroundColor: #423F1A;
+	firstTabStyleName: tabNavigatorFirstTab;
+	backgroundAlpha: 0.82;
+	tabOffset: 6;
+	lastTabStyleName: tabNavigatorLastTab;
+	selectedTabTextStyleName: tabNavigatorSelectedTabText;
+	horizontalAlign: left;
+	color: #FFFFFF;
+	disabledColor: #EAEDEF;
+	horizontalGap: -1;
+	paddingTop: 0;
+	borderThickness: 1;
+}
+TitleWindow
+{
+	borderColor: #1E3E37;
+	borderAlpha: 0.0;
+	color: #000000;
+	backgroundAlpha: 0.0;
+	borderThicknessTop: 0;
+	borderThicknessBottom: 0;
+	borderThicknessRight: 0;
+	borderThicknessLeft: 0;
+	roundedBottomCorners: false;
+	controlBarStyleName: titleWindowControlBar;
+	titleStyleName: titleWindowTitle;
+	paddingTop: 0;
+	paddingBottom: 0;
+	backgroundSize: auto;
+	cornerRadius: 5;
+	statusStyleName: titleWindowStatus;
+	horizontalAlign: center;
+	verticalAlign: middle;
+}
+.tabNavigatorTab
+{
+	borderColor: #FFFFFF;
+	tabStyleName: tabNavigatorTab;
+	fillAlphas: 0.56, 1.0, 1.0, 0.56;
+	fillColors: #423F1A, #423F1A;
+	color: #FFFFFF;
+	firstTabStyleName: tabNavigatorFirstTab;
+	horizontalAlign: left;
+	tabOffset: 3;
+	horizontalGap: -1;
+	cornerRadius: 8;
+	lastTabStyleName: tabNavigatorLastTab;
+	selectedTabTextStyleName: tabNavigatorSelectedTabText;
+	themeColor: #5C6746;
+	textSelectedColor: #487856;
+	textRollOverColor: #CFD2D5;
+}
+.tabNavigatorFirstTab
+{
+	cornerRadius: 8;
+	borderColor: #FFFFFF;
+	color: #FFFFFF;
+	themeColor: #5E5F2F;
+	fillAlphas: 0.56, 1.0, 1.0, 0.56;
+	fillColors: #5E5F2F, #5E5F2F;
+	textSelectedColor: #487856;
+	disabledColor: #AAB3B3;
+	textRollOverColor: #CFD2D5;
+}
+.tabNavigatorLastTab
+{
+	borderColor: #FFFFFF;
+	fillAlphas: 0.56, 1.0, 1.0, 0.56;
+	fillColors: #423F1A, #423F1A;
+	color: #F3F4F5;
+	themeColor: #66713B;
+	disabledColor: #AAB3B3;
+	textRollOverColor: #CFD2D5;
+	textSelectedColor: #487856;
+}
+.tabNavigatorSelectedTabText
+{
+}
+.titleWindowControlBar
+{
+}
+.titleWindowTitle
+{
+}
+.titleWindowStatus
+{
+}
+Canvas
+{
+	fontWeight: bold;
+}

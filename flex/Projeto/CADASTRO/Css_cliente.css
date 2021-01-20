@@ -1,0 +1,99 @@
+/* CSS file */
+
+Application
+{
+	backgroundGradientAlphas: 1.0, 1.0;
+	backgroundGradientColors: #4D4C4C, #000000;
+}
+ApplicationControlBar
+{
+	cornerRadius: 0;
+	fillAlphas: 1.0, 1.0;
+	fillColors: #000000, #000000;
+	horizontalAlign: left;
+	horizontalGap: 20;
+	color: #000000;
+	backgroundDisabledColor: #000000;
+	paddingLeft: 8;
+}
+.mapa
+{
+	backgroundColor: #363636;
+	borderColor: #000000;
+	borderStyle: solid;
+	cornerRadius: 7;
+	color: #FFFFFF;
+	controlBarStyleName: panelControlBar;
+	titleStyleName: panelTitle;
+	statusStyleName: panelStatus;
+	borderThicknessTop: 10;
+	roundedBottomCorners: false;
+	borderThicknessLeft: 0;
+	borderThicknessRight: 0;
+	borderThicknessBottom: 8;
+}
+.panelControlBar
+{
+	color: #FFFFFF;
+	horizontalAlign: right;
+	horizontalGap: 0;
+	paddingLeft: 0;
+	paddingTop: 0;
+	paddingBottom: 0;
+	paddingRight: 0;
+}
+.panelTitle
+{
+}
+.panelStatus
+{
+}
+ApplicationControlBar.MENU
+{
+	cornerRadius: 0;
+	fillAlphas: 0.16, 0.16;
+	horizontalAlign: right;
+}
+ComboBox
+{
+	color: #FBFCFC;
+	themeColor: #000000;
+	borderColor: #989898;
+	dropdownStyleName: comboBoxDropdown;
+	cornerRadius: 11;
+	fillAlphas: 0.3, 0.8, 0.8, 0.8;
+	fillColors: #7C7C7C, #7C7C7C;
+}
+.comboBoxDropdown
+{
+	selectionColor: #DF4F28;
+	rollOverColor: #A85A07;
+}
+.MenuPanel
+{
+	borderColor: #000000;
+	borderThicknessTop: 0;
+	borderThicknessRight: 0;
+	borderThicknessLeft: 0;
+	cornerRadius: 0;
+	roundedBottomCorners: true;
+	borderAlpha: 1.0;
+	backgroundSize: auto;
+	headerHeight: 0;
+	backgroundColor: #2D2D2D;
+}
+Panel
+{
+	backgroundAlpha: 0.0;
+	borderColor: #FFFFFF;
+	borderStyle: solid;
+	borderThickness: 0;
+	cornerRadius: 0;
+	borderThicknessTop: 0;
+	borderThicknessRight: 0;
+	borderThicknessLeft: 0;
+	statusStyleName: panelStatus;
+	titleStyleName: panelTitle;
+	controlBarStyleName: panelControlBar;
+	borderAlpha: 0.0;
+}

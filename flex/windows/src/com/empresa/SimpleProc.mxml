@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"
+        creationComplete="init()"
+        width="100%"
+        height="100%">
+    <mx:Script>
+        <![CDATA[
+            import mx.containers.Tile;
+            import com.diaztorres.window.*;
+            import com.empresa.SimpleProc;
+
+            public var thispanel:RPanelBasic;
+
+            private var procPadre:* = null;
+
+            private var componenteLateralExterno:lateralComp1;
+
+            private function init ():void
+            {
+                thispanel = this.parent as RPanelBasic;
+                thispanel.title = 'SimpleProc.mxml (' + new Date().toString() + ')';
+
+                if ( thispanel.padre != null )
+                    procPadre = thispanel.padre.proc;
+                componenteLateralExterno = new lateralComp1();
+                addEventListener( 'alertclose', alertclose );
+
+                thispanel.title = thispanel + '';
+            }
+
+            // Abrir nueva ventana hija de esta
+            //------------------------------------------------------------------------------------------------------------------------------------------
+            private function abrir ( windowType:Number ):void
+            {
+                var w:RPanelBasic = thispanel.ewin.open( new com.empresa.SimpleProc, "titulo", windowType, thispanel, thispanel.registeredWindowStyle );
+            }
+
+            // Enviar datos a la ventana padre
+            //------------------------------------------------------------------------------------------------------------------------------------------
+            private function enviar ():void
+            {
+                if ( thispanel.padre == null )
+                    return; // si esta ventana no tiene padre cancelar el envío, thispanel.padre sería del tipo RPanelBasic
+                procPadre.texto.text = texto.text;
+            }
+
+            // Alerta
+            //------------------------------------------------------------------------------------------------------------------------------------------
+            [Embed( source="assets/folder.png", mimeType="image/png" )]
+            private var folder:Class;
+
+            private function alerta ():void
+            {
+                var t:String = 'Este es un mensaje de <font color="#FF0000">alerta</font>, puede contener <br>texto simple o <b>HTML</b>.<br>La utilización es <u>muy sencilla</u>,<br>además puedes utilizar <font color="#008800">tu propio componente</font>.';
+                thispanel.alerta( t, [ 'Ok', 'Cancel' ], folder );
+            }
+
+            private function alertclose ( e:EventAlert ):void
+            {
+                // e.result contiene el texto del botón que se ha pulsado en la Alerta
+                texto.text = e.result;
+            }
+
+            private function customAlerta ():void
+            {
+                thispanel.alerta( new customAlert );
+            }
+
+            // Lookup
+            //------------------------------------------------------------------------------------------------------------------------------------------
+            private function lookup ():void
+            {
+                var w:RPanelBasic = thispanel.ewin.open( new com.empresa.LookupSimple, "Seleccione un registro", WindowConstants.WINDOW_NORMAL, thispanel, thispanel.registeredWindowStyle );
+                w.proc.targets = [ [ texto, "text" ] ]; // le indica a LookupSimple dónde queremos que nos devuelva el valor seleccionado
+                w.height = 400;
+                w.x += 20;
+            }
+            // Lateral 
+            //------------------------------------------------------------------------------------------------------------------------------------------
+        ]]>
+    </mx:Script>
+    <mx:Spacer height="50" />
+    <mx:TextInput id="texto"
+                  text="{new Date().toString()}"
+                  width="100%" />
+    <mx:Button label="Abrir nueva ventana hija de esta. NORMAL" click="abrir(WindowConstants.WINDOW_NORMAL)" />
+    <mx:Button label="Abrir nueva ventana hija de esta. MODAL" click="abrir(WindowConstants.WINDOW_MODAL)" />
+    <mx:Button label="Cerrar esta ventana" click="thispanel.close()" />
+    <mx:HRule width="100%" />
+    <mx:Button label="Enviar texto a la ventana padre" click="enviar()" />
+    <mx:Button label="Lookup button" click="lookup()" />
+    <mx:HRule width="100%" />
+    <mx:Button label="Mostrar alerta predefinida" click="alerta()" />
+    <mx:Button label="Mostrar alerta libre (mxml component)" click="customAlerta()" />
+    <mx:HRule width="100%" />
+    <mx:HBox>
+        <mx:Label text="Dirección de la barra lateral" />
+        <mx:RadioButtonGroup id="dirBarLat" />
+        <mx:RadioButton groupName="dirBarLat"
+                        value="left"
+                        label="left" />
+        <mx:RadioButton groupName="dirBarLat"
+                        value="right"
+                        label="right"
+                        selected="true" />
+    </mx:HBox>
+    <mx:HBox>
+        <mx:Label text="Localización de la barra lateral" />
+        <mx:RadioButtonGroup id="locBarLat" />
+        <mx:RadioButton groupName="locBarLat"
+                        value="in"
+                        label="in" />
+        <mx:RadioButton groupName="locBarLat"
+                        value="out"
+                        label="out"
+                        selected="true" />
+    </mx:HBox>
+    <mx:Button label="Mostrar barra lateral "
+               width="100%"
+               click="thispanel.openLateral( componenteLateralExterno, dirBarLat.selectedValue+'', locBarLat.selectedValue+'' )" />
+    <mx:Button label="Ocultar barra lateral "
+               width="100%"
+               click="thispanel.closeLateral()" />
+</mx:Box>

@@ -1,0 +1,10 @@
+package mapeamento
+{
+	public class Cliente
+	{
+		public function Cliente()
+		{
+		}
+
+	}
+}

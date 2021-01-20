@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:ns1="form.*" backgroundAlpha="1.0">
+<mx:Style source="Css_cliente.css"/>
+	<mx:TabNavigator width="100%" height="100%" left="0" top="0">
+		<ns1:Cart_cliente_2009 label="Cliente - CNH (NOVA)" width="100%" height="100%">
+		</ns1:Cart_cliente_2009>
+		<ns1:Cart_cliente_2008 label="Cliente - CNH (ANTIGA)" width="100%" height="100%">
+		</ns1:Cart_cliente_2008>
+	</mx:TabNavigator>
+
+			
+</mx:Canvas>

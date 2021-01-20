@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#282828, #404040]" borderColor="#1B1B1B">
+	<mx:Style source="Css_cliente.css"/>
+	<mx:ControlBar bottom="0" left="0" right="0">
+	</mx:ControlBar>
+	
+</mx:Application>

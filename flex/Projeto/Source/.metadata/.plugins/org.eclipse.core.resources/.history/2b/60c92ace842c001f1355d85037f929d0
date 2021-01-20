@@ -1,0 +1,24 @@
+package mapeamento
+{
+	[RemoteClass(alias="S3GWeb.get_veiculos_por_cliente")]
+	public class get_veiculos_por_cliente
+	{
+		public static const NAMESPACE:String = "S3GWeb.get_veiculos_por_cliente";
+		
+		public var clienteid: int;
+        public var placa: String;
+        public var tipoveiculoid: int;
+        public var marca: String;
+        public var modelo: String;
+        public var descricao: String;
+        public var status: String;
+        public var observacao: String;
+        public var estado: String;
+		
+		public function get_veiculos_por_cliente()
+		{
+			
+		}
+
+	}
+}

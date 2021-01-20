@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="750" 
+	height="438" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtCaixa.enabled=true;
+			}
+		]]>
+	</mx:Script>
+	<mx:Style source="form/layout.css"/>
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G.BPLOG - Cadastro de Veículos" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../img/ICOS3G.png')" 
+		width="730" 
+		height="320" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#D5DBCE" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#2D2E44" 
+ 		borderThickness="1" 
+ 		color="#313E56" 
+ 		verticalCenter="0" 
+ 		horizontalCenter="0" id="Tw_CadVeic">
+		<mx:TabNavigator 
+		left="10" right="10" top="10" bottom="50">
+			<mx:Canvas 
+				width="100%" 
+				height="100%" 
+				color="#585454"
+				id="Cv_CadVeic" label="Veículo">
+				<mx:Label 
+					text="Nome / Razão Social" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="106" 
+					y="3" width="172"/>
+				<mx:Label 
+					text="CNPJ" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="71" width="73"/>
+				<mx:Label 
+					text="Insc. Estadual" 
+					color="#4B5062" 
+					textAlign="left" 
+					width="91" 
+					x="228" 
+					y="71"/>
+				<mx:TextInput 
+					x="106" 
+					y="20" 
+					width="590" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_NomeCli"/>
+				<mx:Label 
+					text="Endereço" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="10" 
+					y="37"/>
+				<mx:TextInput 
+					x="10" 
+					y="54" 
+					width="415" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_NomeCli0"/>
+				<mx:TextInput 
+					x="10" 
+					y="88" 
+					width="210" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_RgCli"/>
+				<mx:Label 
+					text="Número" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="433" 
+					y="37" width="92"/>
+				<mx:Label 
+					text="CEP" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="562" 
+					y="37" width="73"/>
+				<mx:TextInput 
+					x="562" 
+					y="54" 
+					width="134" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_RgCli2"/>
+				<mx:TextInput 
+					x="433" 
+					y="54" 
+					width="121" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_RgCli0"/>
+				<mx:TextInput 
+					x="10" 
+					y="20" 
+					width="88" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_RgCli1"/>
+				<mx:TextInput 
+					x="228" 
+					y="88" 
+					width="210" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_CpfCli"/>
+				<mx:Label 
+					text="Cidade" 
+					color="#4B5062" 
+					width="57" 
+					textAlign="left" 
+					x="511" 
+					y="71"/>
+				<mx:ComboBox 
+					x="511" 
+					y="87" 
+					width="185" 
+					height="20" 
+					id="Cb_EstCivCli" 
+					color="#3D0303" 
+					dataProvider="Curitiba" 
+					fontSize="10">
+					</mx:ComboBox>
+				<mx:Label 
+					text="Estado" 
+					color="#4B5062" 
+					width="57" 
+					textAlign="left" 
+					x="446" 
+					y="71"/>
+				<mx:ComboBox 
+					x="446" 
+					y="87" 
+					width="57" 
+					height="20" 
+					id="Cb_EstCivCli0" 
+					color="#3D0303" 
+					dataProvider="PR" 
+					fontSize="10">
+					</mx:ComboBox>
+				<mx:Label 
+					text="Tel. 1" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="574" 
+					y="115" width="61"/>
+				<mx:TextInput 
+					x="574" 
+					y="132" 
+					width="121" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_TelResCli" 
+					text="(41) 3257-3879" 
+					textAlign="center" 
+					fontSize="10"/>
+				<mx:Label 
+					text="Tel. 2" 
+					color="#4B5062" 
+					textAlign="left" 
+					x="574" 
+					y="151" width="73"/>
+				<mx:TextInput 
+					x="575" 
+					y="168" 
+					width="121" 
+					color="#FF210A" 
+					borderColor="#CACED0" 
+					borderStyle="solid" 
+					height="18" 
+					id="In_TelResCli0" 
+					text="(41) 3257-3879" 
+					textAlign="center" 
+					fontSize="10"/>
+				<mx:Label 
+					x="9" 
+					y="4" 
+					text="Cód PDV" width="59"/>
+				<mx:Canvas 
+					x="10" 
+					y="114" 
+					width="556" 
+					height="76" 
+					borderStyle="solid" 
+					borderColor="#CACED0" 
+					cornerRadius="6" 
+					label="Horario de Entrega" 
+					color="#000000">
+					<mx:Label 
+						text="Dias Úteis" 
+						color="#000000" 
+						textAlign="left" 
+						width="63" 
+					verticalCenter="1" 
+					horizontalCenter="-135"/>
+					<mx:Label 
+						text="Final de Semana" 
+						color="#000000" 
+						textAlign="left" 
+						width="101" 
+					verticalCenter="18" 
+					horizontalCenter="-154"/>
+					<mx:CheckBox 
+						label="Seg" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="-54"/>
+					<mx:CheckBox 
+						label="Ter" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="-9"/>
+					<mx:CheckBox 
+						label="Qua" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="38"/>
+					<mx:CheckBox 
+						label="Manhã" 
+						toolTip="Dias Úteis" verticalCenter="1" horizontalCenter="-46"/>
+					<mx:CheckBox 
+						label="Manhã" 
+						toolTip="Dias Úteis" verticalCenter="20" horizontalCenter="-46"/>
+					<mx:CheckBox 
+						label="Tarde" 
+						toolTip="Dias Úteis" verticalCenter="20" horizontalCenter="15"/>
+					<mx:CheckBox 
+						label="Noite" 
+						toolTip="Dias Úteis" verticalCenter="20" horizontalCenter="72"/>
+					<mx:CheckBox 
+						label="Tarde" 
+						toolTip="Dias Úteis" verticalCenter="1" horizontalCenter="15"/>
+					<mx:CheckBox 
+						label="Noite" 
+						toolTip="Dias Úteis" verticalCenter="1" horizontalCenter="72"/>
+					<mx:CheckBox 
+						label="Qui" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="85"/>
+					<mx:CheckBox 
+						label="Sex" 
+						toolTip="Dias Úteis" verticalCenter="-18" horizontalCenter="131"/>
+					<mx:CheckBox 
+						label="Sáb" 
+						color="#FF0000" 
+						toolTip="Final de Semana" verticalCenter="-18" horizontalCenter="178"/>
+					<mx:CheckBox 
+						label="Dom" 
+						color="#FF0000" 
+						toolTip="Final de Semana" verticalCenter="-18" horizontalCenter="227"/>
+					<mx:Label x="48" y="10" text="Período para Entrega"/>
+				</mx:Canvas>
+			</mx:Canvas>
+		</mx:TabNavigator>
+		<mx:Button 
+			x="10" 
+			y="248" 
+			label="Novo" 
+			color="#606068" 
+			id="BT_NovoCadCli" 
+			borderColor="#000000" width="63"/>
+		<mx:Button 
+			x="78" 
+			y="248" 
+			label="Editar" 
+			color="#606068" 
+			id="BT_RegAntCli" 
+			borderColor="#000000" width="63"/>
+		<mx:Button 
+			x="146" 
+			y="248" 
+			label="Excluir" 
+			color="#606068" 
+			id="BT_RegProxCli" 
+			borderColor="#000000" width="63"/>
+		<mx:Button 
+			x="213" 
+			y="248" 
+			label="Salvar" 
+			color="#FF0000" 
+			id="Bt_PesquisarCli" borderColor="#000000" width="63"/>
+	</mx:TitleWindow>
+</mx:Canvas>

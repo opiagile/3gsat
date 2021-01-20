@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	horizontalAlign="center"
+	paddingBottom="5"
+	paddingLeft="5"
+	paddingRight="5">
+<mx:Script>
+	<![CDATA[
+		import mx.controls.Image;
+	import mx.controls.Button;
+		private function close(c:MouseEvent):void{
+			var e:EventAlert = new EventAlert('alertclose',true);
+			e.result = c.currentTarget.label;
+			dispatchEvent( e );			
+		}
+		public function creaBotones(b:Array):void{
+			if( b==null ) b=new Array('OK');
+			if( b.length==0 ) b=['OK'];
+			for( var k:String in b){
+				var bo:Button = new Button();
+				bo.label = b[k];
+				bo.addEventListener(MouseEvent.CLICK,close);
+				cb.addChild(bo);
+			}
+		}
+		public function creaIcono(i:*):void{
+			switch( typeof(i) ){
+				case "string":
+				case "object":
+					var z:Image = new Image();
+					z.source = i;
+					break;
+				default:
+					return;		
+			}
+			ct.addChildAt(z,0);
+		}
+	]]>
+</mx:Script>
+<mx:Spacer height="10"/>
+<mx:HBox id="ct" verticalAlign="middle" horizontalAlign="center">
+	<mx:Text id="msg"/>	
+</mx:HBox>
+<!--
+<mx:Label id="msg"/>
+-->
+<mx:HBox id="cb"/>
+
+</mx:Box>

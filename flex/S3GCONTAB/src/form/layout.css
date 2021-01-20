@@ -1,0 +1,44 @@
+/* CSS file */
+
+TextInput
+{
+	borderColor: #535353;
+	borderStyle: solid;
+	color: #3F5B93;
+	cornerRadius: 4;
+	fontSize: 14;
+	themeColor: #3F5B93;
+	paddingLeft: 3;
+	paddingTop: 0;
+	paddingBottom: 0;
+	paddingRight: 0;
+	textAlign: center;
+}
+Panel
+{
+	borderStyle: solid;
+	borderThickness: 1;
+	cornerRadius: 0;
+	borderThicknessLeft: 0;
+	borderThicknessTop: 0;
+	borderThicknessRight: 0;
+	borderThicknessBottom: 0;
+}
+TabNavigator
+{
+	backgroundColor: #FFFFFF;
+	borderColor: #000000;
+	color: #060606;
+	tabStyleName: tabNavigatorTab;
+	firstTabStyleName: tabNavigatorFirstTab;
+}
+.tabNavigatorTab
+{
+	borderColor: #000000;
+	fillAlphas: 1.0, 0.0, 0.0, 0.0;
+	fillColors: #A3C1D7, #A3C1D7;
+}
+.tabNavigatorFirstTab
+{
+	borderColor: #000000;
+}

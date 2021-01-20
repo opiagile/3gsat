@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" backgroundImage="../img/Credinciador.png" xmlns:ns1="form.*" >
+	<!--
+	<mx:SoundEffect id="Efect_tic" source="@Embed(source='../assets/tic.mp3')"/>
+	-->
+	<mx:Panel id="PMenu" width="185" height="397" layout="absolute" cornerRadius="10" backgroundAlpha="0.52" horizontalCenter="-243" borderStyle="solid" borderColor="#4B4B4B" alpha="1.0" themeColor="#FF4200" verticalCenter="18" >
+		<mx:Button x="57.25" y="86" label="CADASTRAMENTO" width="50" color="#FF3000" mouseDownEffect="SoundEffect" height="50" cornerRadius="20"/>
+		<mx:Button x="15.75" y="20" label="AGENDAMENTO" width="133.5" mouseDownEffect="Blur" height="58"/>
+		<mx:Button x="76.25" y="180" label="Histórico" width="50" mouseDownEffect="Blur" height="50" cornerRadius="0" fillAlphas="[0.0, 0.0, 0.0, 0.0]" alpha="1.0" enabled="true" icon="@Embed(source='../../img/sharemanager.png')"/>
+
+
+	
+	</mx:Panel>
+	<mx:Canvas y="97" width="471" height="397" borderStyle="solid" cornerRadius="8" backgroundAlpha="0.52" themeColor="#FF4200" backgroundColor="#FFFFFF" borderColor="#4B4B4B" horizontalCenter="100">
+		<ns1:Cart_cliente_2009 x="-1" y="-1">
+		</ns1:Cart_cliente_2009>
+	</mx:Canvas>
+	<mx:Image y="352" width="285" height="203" source="../img/CARRO.png" horizontalCenter="-252" />
+	<mx:Label text="© 2010 | 3GSAT Sistema de Rastreamento" color="#FFFFFF" horizontalCenter="0" bottom="5" fontWeight="bold"/>
+</mx:Canvas>

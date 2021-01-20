@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+*****************************************************************************************************
+Data..........: 10/03/2010.
+Responsável...: Francisco Araújo.
+Objeto........: Tela CRUD para a área de segurança.
+*****************************************************************************************************
+-->
+
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	width="922" 
+	height="510" 
+	horizontalAlign="center" 
+	verticalAlign="middle" 
+	showCloseButton="false" 
+	cornerRadius="8" 
+	borderColor="#FFFFFF" 
+	backgroundColor="#000000"
+	creationComplete="Iniciar()"
+	close="Fechar()"
+	xmlns:controls="com.brightPoint.controls.*" 
+	color="#D4D4D4"
+	themeColor="#FFFFFF" 
+	backgroundAlpha="1.0" 
+	borderStyle="none" 
+ title="Associar Veículo e Área de Segurança">
+
+ <mx:Style> 
+	.controllerStyle 
+    { 
+    	top: 153; 
+        left: 0; 
+        paddingBottom: 10; 
+        paddingLeft: 6; 
+        paddingRight: 8; 
+        paddingTop: 6; 
+        alpha: 0; 
+        background-color: #000000; 
+        background-alpha: 0.5; 
+    }
+                              
+</mx:Style>
+	<mx:MenuBar 
+		id="cabecalho" 
+		
+		left="2" 
+		right="2" 
+		top="2" 
+		height="43" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666">
+	</mx:MenuBar>
+	<mx:MenuBar 
+		id="rodape" 
+		left="1" 
+		right="1" 
+		height="32" 
+		fillAlphas="[1.0, 1.0, 1.0, 1.0]" 
+		fillColors="[#1A1717, #000000, #2C2929, #2C2929]" 
+		borderColor="#666666" 
+		bottom="1">
+	</mx:MenuBar>
+	<mx:Image 
+		height="32" 
+		source="../img/3GSAT-black.png" 
+		right="1" 
+		bottom="1" 
+		width="79" scaleContent="true"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Image;
+			import mx.effects.AddItemAction;
+			import flash.events.Event; 
+			import flash.events.MouseEvent; 
+			import flash.geom.Point; 
+			import flash.display.DisplayObject; 
+			import flash.display.Sprite; 
+			import flash.display.Shape; 
+			import flash.text.TextField; 
+			import flash.text.TextFieldAutoSize; 
+			import flash.text.TextFormat; 
+		 	import com.google.maps.ProjectionBase; 
+			import com.google.maps.controls.MapTypeControl; 
+			import com.google.maps.controls.PositionControl; 
+			import com.google.maps.controls.ControlPosition; 
+			import com.google.maps.controls.ControlBase; 
+			import com.google.maps.interfaces.IMap; 
+			 		
+			import mx.messaging.channels.StreamingAMFChannel;
+			import flash.utils.setInterval;
+			import flash.utils.setTimeout;
+			import mx.controls.Text;
+			import flash.trace.Trace;
+			import mx.events.ListEvent;
+			import mx.events.ItemClickEvent;
+			import mx.controls.advancedDataGridClasses.SortInfo;
+			import mx.controls.dataGridClasses.DataGridColumn;
+		    import mx.effects.Fade;
+		    import mx.containers.ControlBar;
+		    import mx.effects.WipeUp;
+		    import mx.effects.WipeDown; 	    
+	        import mx.controls.Alert;
+	        import mx.events.ResizeEvent;            
+	        import mx.containers.Form;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.remoting.mxml.RemoteObject;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.core.Application;          
+	        import mx.containers.TitleWindow;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+		    import mx.effects.WipeRight;
+		    import mx.effects.WipeLeft;
+		    import mx.events.StyleEvent;
+			import mx.controls.Alert;
+            import mx.events.CloseEvent;	    
+	
+		    import com.google.maps.InfoWindowOptions;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.interfaces.IMapType;
+			import com.google.maps.LatLngBounds;
+		    import com.google.maps.controls.ZoomControlOptions;
+		    import com.google.maps.MapOptions;	    
+		    import com.google.maps.controls.PositionControl;
+			import com.google.maps.MapEvent; 
+			import com.google.maps.MapType; 
+	        import com.google.maps.Map;
+	        import com.google.maps.LatLng;
+	        import com.google.maps.MapMouseEvent;
+	        import com.google.maps.MapZoomEvent;
+	        import com.google.maps.overlays.Polygon;
+	        import com.google.maps.overlays.Polyline;
+	        import com.google.maps.controls.ZoomControl;
+	        import com.google.maps.controls.ScaleControl;
+	        import com.google.maps.View;        
+	        import com.google.maps.services.ClientGeocoder;
+	        import com.google.maps.services.GeocodingEvent;
+	        import com.google.maps.services.GeocodingResponse;
+	        import com.google.maps.services.Placemark;
+	
+			import mapeamento.get_veiculos_por_cliente;
+			import mapeamento.get_historico_veiculos;
+			import mapeamento.area_seguranca;
+			import mapeamento.get_VeiculosAssociadosArea;
+	
+			import util.ObjetoRemoto;
+		    import util.InfoWindowComp;
+	
+			import flash.text.Font;		
+	        import flash.display.StageDisplayState;
+		    import flash.sampler.NewObjectSample;
+	
+			import form.*;
+	
+		    import adobe.utils.CustomActions;
+		
+		    private var polyLatLngs:Array = new Array();
+	        private var marker:Marker;
+	        private var status_area:int;
+	        private var area: String;
+	        private var cercaeletronciaid: int;
+	        private var nome_area: String;
+	        [Bindable]
+	        public var _arrayArea:ArrayCollection;
+	        [Bindable]
+	        public var _arrayVeiculosEmArea:ArrayCollection;
+	        [Bindable]
+	        public var _arrayVeiculosDisponiveis:ArrayCollection;
+			
+			private var form_mapa:ClienteF3G;
+			[Bindable]
+			public var _NomeDia:Array = ["D","S","T","Q","Q","S","S"];
+			[Bindable]
+			public var _NomeMeses:Array = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+			[Bindable]
+			public var _arrayPlacas:ArrayCollection;
+			[Bindable]
+			public var _arrayHistorico:ArrayCollection;
+			[Bindable]
+		    private var posicoes:Array = new Array(
+		        									{data:10, label:"10"},
+		        									{data:15, label:"15"},
+		        									{data:20, label:"20"},
+		        									{data:25, label:"25"},
+		        									{data:30, label:"30"},
+		        									{data:35, label:"35"},
+		        									{data:40, label:"40"},
+		        									{data:45, label:"45"},
+		        									{data:50, label:"50"}
+		        								);				
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+
+			    var remoteObj:ObjetoRemoto = new ObjetoRemoto(area_seguranca.NAMESPACE, rstSucesso_ini);                            
+				remoteObj.getOperation("SelecionaArea").send(Application.application._clienteid); 
+				
+				//criar função para capturar a lista de placas disponíveis 
+				
+				//criar função para capturar a lista de placas utilizadas na cerca atual
+			}
+
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}			
+
+	        private function onMapReady(event:Event):void 
+	        { 	
+	        	map.setCenter(new LatLng(-25.366085, -49.220698), 3, MapType.NORMAL_MAP_TYPE); 
+	        	map.addEventListener(MapEvent.MAP_READY, onMapReady);	        	
+	        } 	        
+
+ 			private function DesenhaCoordenadas():void 
+ 			{
+ 				map.clearOverlays();				
+                if (polyLatLngs.length > 1) 
+                {
+                	//Recria o poligono
+                    map.addOverlay(new Polygon(polyLatLngs));
+                }
+                       
+                if (polyLatLngs.length > 0) 
+                {
+                	// captura o último ponto do polyPoints para add o novo marcador
+                    var tmpLatLng:LatLng = polyLatLngs[polyLatLngs.length -1];
+                    map.addOverlay(new Marker(tmpLatLng));
+                }
+            }
+
+			private function rstSucesso_ini(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arrayArea = ArrayCollection(evt.result);
+			
+					onComboItemClick(0);	
+			}
+
+			private function rstSucesso_veiculo(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arrayVeiculosEmArea = ArrayCollection(evt.result);	
+			}
+
+			private function rstSucesso_disponivel(evt:ResultEvent):void
+			{
+				if (evt.result != null)
+					_arrayVeiculosDisponiveis = ArrayCollection(evt.result);	
+			}
+
+			private function onComboItemClick( linha : int ):void
+			{		
+				var I: int;
+				var limpa: int;
+				var _formata_area0: String = null;
+				var _formata_area1: String = null;
+				var _formata_area2: String = null;
+				var _formata_area_final: String = null;
+				var Lat: String;
+				var Long: String;
+				var _coord_area0: Array  = new Array();
+				var _coord_area1: Array  = new Array(); 
+				var _coord_area_final: Array  = new Array();
+
+				var remoteObj1:ObjetoRemoto = new ObjetoRemoto(get_VeiculosAssociadosArea.NAMESPACE, rstSucesso_veiculo);                            
+				remoteObj1.getOperation("VeiculosEmArea").send(int(_arrayArea[linha].cercaeletronicaid)); 
+					
+				var remoteObj2:ObjetoRemoto = new ObjetoRemoto(get_VeiculosAssociadosArea.NAMESPACE, rstSucesso_disponivel);                            
+				remoteObj2.getOperation("VeiculosDisponiveis").send(_arrayArea[linha].cercaeletronicaid
+				                                                   ,Application.application._clienteid); 
+
+            	this.map.clearOverlays();
+            	polyLatLngs.length = 0;
+				
+				_coord_area0.length = 0;
+				_coord_area1.length = 0;
+				_coord_area_final.length = 0;
+				
+				cercaeletronciaid = _arrayArea[linha].cercaeletronicaid;
+				nome_area = _arrayArea[linha].nome;
+				
+				_formata_area0  = _arrayArea[linha].area;	
+				_coord_area0 = _formata_area0.split("(");
+				
+				_formata_area1 = _coord_area0.valueOf();
+				_coord_area1 = _formata_area1.split(")");
+				
+				_formata_area2  = _coord_area1.valueOf();
+				_coord_area_final = _formata_area2.split(",");
+				
+				for(I = 0; I < _coord_area_final.length; I++)
+				{ 		
+					if (_coord_area_final[I].valueOf() != "")
+					{
+						Lat  = _coord_area_final[I].valueOf();
+						I++;
+						Long = _coord_area_final[I].valueOf();
+						
+						var Redesenha: LatLng = new LatLng(Number(Lat),Number(Long));
+						polyLatLngs.push(Redesenha);
+						DesenhaCoordenadas();												
+					}					
+				}
+				map.setCenter(Redesenha, 11, MapType.NORMAL_MAP_TYPE); 
+			}
+
+			private function DeDisponivelParaUtilizado():void
+			{
+				_arrayVeiculosEmArea.addItem(_arrayVeiculosDisponiveis[list_disponivel.selectedIndex].placa);
+				_arrayVeiculosDisponiveis.removeItemAt(list_disponivel.selectedIndex);	
+			}
+			private function DeUtilizadoParaDisponivel():void
+			{
+				_arrayVeiculosDisponiveis.addItem(_arrayVeiculosEmArea[list_utilizados.selectedIndex].placa);
+				_arrayVeiculosEmArea.removeItemAt(list_utilizados.selectedIndex);	
+			}
+			private function TodosDisponiveisParaUtilizados():void
+			{
+				_arrayVeiculosEmArea.addItem(_arrayVeiculosDisponiveis[list_disponivel.selectedIndex].placa);
+				_arrayVeiculosDisponiveis.removeAll();	
+			}
+			private function TodosUtilizadosParaDisponiveis():void
+			{
+				_arrayVeiculosDisponiveis.addItemAt(_arrayVeiculosEmArea[list_utilizados.selectedIndex].placa,list_utilizados.selectedIndex);
+				_arrayVeiculosEmArea.removeAll();	
+			}
+		]]>
+	</mx:Script>
+	<mx:Button 
+		label="Fechar" 
+		color="#D4D4D4" 
+		borderColor="#D4D4D4" 
+		fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+		width="87" 
+		labelPlacement="left" 
+		id="btn_logout"
+		click="Fechar();"  
+		right="5" 
+		fillColors="[#FF0000, #FF0000]" 
+		textRollOverColor="#FFFFFF" 
+		textSelectedColor="#FFFFFF" 
+		icon="@Embed(source='../img/cancel.png')" 
+		toolTip="Sair do histórico." 
+		top="13"/>
+	<mx:Canvas 
+		backgroundColor="#D4D4D4" 
+		backgroundAlpha="0.7" 
+		borderStyle="solid" 
+		cornerRadius="0" 
+		borderColor="#D4D4D4" 
+		top="46" 
+		bottom="34" 
+		left="2" 
+		right="2">
+		<mx:List 
+			x="533" 
+			y="121" 
+			dataProvider="{_arrayVeiculosDisponiveis}"
+			labelField="placa"
+			height="209" 
+			width="136" 
+			backgroundColor="#FFFFFF" 
+			color="#000000" 
+			cornerRadius="5" 
+			borderColor="#FFFFFF" 
+			themeColor="#FF0000" id="list_disponivel">
+		</mx:List>
+		<mx:List 
+			x="733" 
+			y="121" 
+			dataProvider="{_arrayVeiculosEmArea}"
+			labelField="placa"
+			height="209" 
+			width="136" 
+			backgroundColor="#FFFFFF" 
+			color="#000000" 
+			cornerRadius="5" 
+			borderColor="#FFFFFF" 
+			themeColor="#FF0000" id="list_utilizados">
+		</mx:List>
+		<mx:Button 
+			x="681" 
+			y="172" 
+			icon="@Embed(source='../../img/1rigtharrow.png')" 
+			fillAlphas="[1.0, 1.0]" 
+			fillColors="[#424242, #424242]" 
+			textRollOverColor="#FFFFFF" 
+			textSelectedColor="#ffffff"
+			click="DeDisponivelParaUtilizado()"/>
+		<mx:Button 
+			x="681" 
+			y="202" 
+			icon="@Embed(source='../../img/1leftarrow.png')" 
+			fillAlphas="[1.0, 1.0]" 
+			fillColors="[#424242, #424242]" 
+			textRollOverColor="#ffffff" 
+			textSelectedColor="#ffffff"
+			click="DeUtilizadoParaDisponivel()"/>
+		<mx:Button 
+			x="681" 
+			y="232" 
+			icon="@Embed(source='../../img/2rightarrow.png')" 
+			fillAlphas="[1.0, 1.0]" 
+			fillColors="[#424242, #424242]" 
+			textRollOverColor="#ffffff" 
+			textSelectedColor="#ffffff"
+			click="TodosDisponiveisParaUtilizados()"/>
+		<mx:Button 
+			x="681" 
+			y="262" 
+			icon="@Embed(source='../../img/2leftarrow.png')" 
+			fillAlphas="[1.0, 1.0]" 
+			fillColors="[#424242, #424242]" 
+			textRollOverColor="#ffffff" 
+			textSelectedColor="#ffffff"
+			click="TodosUtilizadosParaDisponiveis()"/>
+		<mx:Canvas 
+			width="152" 
+			height="56" 
+			borderColor="#D4D4D4" left="724" top="29" borderStyle="solid">
+			<mx:RadioButton x="10" y="5" label="Ao entrar na área" id="chk_Entrar" color="#000000" borderColor="#FF0000" themeColor="#FF0000"/>
+			<mx:RadioButton x="10" y="30" label="Ao sair da área" id="chk_Sair" color="#000000" borderColor="#FF0000" themeColor="#FF0000"/>
+		</mx:Canvas>
+		<mx:Label 
+			text="Tipo de ação:" 
+			color="#000000" 
+			left="723" top="12"/>
+		<mx:Label 
+			text="Veículos disponíveis" 
+			color="#000000" 
+			left="529" top="104"/>
+		<mx:Label 
+			text="Veículos incluidos na área" 
+			color="#000000" 
+			left="729" top="104"/>
+		<maps:Map3D 
+			xmlns:maps="com.google.maps.*" 
+			id="map" 
+			mapevent_mapready="onMapReady(event)"  
+		    key="ABQIAAAA_TQEyyv5-SbCDgXXQiIZ1xQU5CXJEcoQxTGe0PYRT24IzhECkhSvoHD1DnlPejMusOey1E8-od7CDw" 
+		    top="0" 
+		    bottom="0" 
+		    left="-1" 
+		    right="375"/>
+		<mx:Canvas 
+			height="46" 
+			id="can0" 
+			bottom="0" 
+			right="0" 
+			left="0" 
+			backgroundColor="#000000">
+		</mx:Canvas>
+		<mx:Label 
+			text="Definir Área de Segurança" 
+			color="#000000" 
+		horizontalCenter="170" y="11"/>
+		<mx:ComboBox 
+			dataProvider="{_arrayArea}"
+			change="onComboItemClick(cb_AreaSeguranca.selectedIndex)"
+			labelField="nome" 
+			color="#000000" 
+			id="cb_AreaSeguranca" 
+			borderColor="#D4D4D4" 
+			fillAlphas="[0.8, 0.5, 0.8, 0.5]" 
+			fillColors="[#FF0000, #FF0000]" 
+			cornerRadius="5" 
+			themeColor="#FFFFFF" 
+			horizontalCenter="170" 
+			y="31">						
+		</mx:ComboBox>
+	</mx:Canvas>
+</mx:TitleWindow>

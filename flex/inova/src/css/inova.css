@@ -1,0 +1,75 @@
+/* CSS file */
+Alert
+{
+	background-color: #747c60;
+	border-color: #747c60;
+	
+}
+ComboBox
+{
+	themeColor: #111607;
+	
+	color: #FFFFFF; 
+	borderColor: #4B5A3A;
+	textRollOverColor: #373C2B;
+	textSelectedColor: #3C3C2B;
+	dropdownStyleName: comboBoxDropdown;
+	fillAlphas: 0.54, 1.0, 1.0, 0.54;
+	fillColors: #747C60, #747C60;
+	disabledColor: #777A57;
+	cornerRadius: 4
+		
+}
+
+
+Button
+{
+	borderColor: #495330;
+	fillAlphas: 1.0, 0.0, 0.1, 1.0;
+	fillColors: #4E4F1E, #4E4F1E;
+	themeColor: #1B1901;
+	textRollOverColor: #E2E3CF;
+	textSelectedColor: #000000;
+	color: #FFFFFF;
+	disabledColor: #000000;
+}
+Button.Button2
+{
+	borderColor: #747C60;
+	fillAlphas: 0.54, 1.0, 1.0, 0.54;
+	fillColors: #747C60, #747C60;
+}
+Canvas
+{
+	backgroundAlpha: 0.52;
+}
+.comboBoxDropdown
+{
+	color: #313C0B;
+	textRollOverColor: #3A3C2B;
+	textSelectedColor: #7E805E;
+	selectionColor: #BEC697;
+	rollOverColor: #FCFFB2;
+	selectionDisabledColor: #E0DFC7;
+	verticalScrollBarStyleName: listBaseVerticalScrollBar;
+	borderColor: #A9B598;
+	disabledColor: #A9AE93;
+	backgroundColor: #F8FAEB;
+	backgroundDisabledColor: #000000;
+}
+.listBaseVerticalScrollBar
+{
+	borderColor: #B4BA9B;
+	fillAlphas: 0.5, 1.0, 1.0, 0.5;
+	fillColors: #BCC19F, #777A69;
+	trackColors: #52554E, #ABB899;
+}
+.alertControlBar
+{
+}
+.alertTitle
+{
+}
+.alertStatus
+{
+}

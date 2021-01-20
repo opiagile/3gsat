@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	backgroundColor="#181616" 
+	backgroundGradientAlphas="[1.0, 0.16]" 
+	backgroundGradientColors="[#0E0D0D, #0D0F1B]" 
+	backgroundImage="@Embed(source='img/fnd.png')">
+	
+	<mx:Fade 
+		id="fadein" 
+		alphaFrom="0"
+		alphaTo="1.0"
+		
+		duration="500"/>
+	<mx:Fade 
+		id="fadeout"
+		alphaFrom="1.0" 
+		alphaTo="0"
+		duration="1000"
+		/>	
+	
+	<mx:Style source="css/css3g.css"/>
+	<mx:Script>
+		<![CDATA[
+			
+		
+		]]>
+	</mx:Script>
+	<mx:TitleWindow 
+		width="804" 
+		height="520" 
+		layout="absolute" 
+		horizontalCenter="0" 
+		verticalCenter="0" 
+		styleName="titleWindowTitle" 
+		title="3GSAT Sistema de Rastreamento &amp; Logistica" 
+		showCloseButton="false" 
+		titleIcon="@Embed(source='img/3gsatICO.png')" 
+		horizontalAlign="left" 
+		verticalAlign="middle" 
+		themeColor="#FF0000" 
+		backgroundAlpha="0.93" 
+		color="#C8C7C7" 
+		borderStyle="solid" 
+		borderColor="#3B3737" 
+		borderThickness="1">
+		<mx:Label 
+			x="82" 
+			y="470" 
+			text="CARRO"/>
+		<mx:Label 
+			x="223.55" 
+			y="470" 
+			text="MOTO" 
+			width="54.621212" 
+			height="19.015152"/>
+		<mx:Label 
+			x="363.95" 
+			y="470" 
+			text="FROTAS"/>
+		<mx:Label 
+			x="496.9" 
+			y="470" 
+			text="PATRIMONIAL"/>
+		<mx:Label 
+			x="673.5" 
+			y="470" 
+			text="3G-LIVE"/>
+		<mx:Button 
+			id="Bt_MenuCar"
+			cornerRadius="0" 
+			height="0" 
+			width="0" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#797979, #797979]" 
+			horizontalCenter="-285" 
+			textAlign="center" 
+			verticalCenter="216" 
+			icon="@Embed(source='img/MenuCar.png')"
+			overIcon="@Embed(source='img/MenuCar_R.png')" 
+			downIcon="@Embed(source='img/MenuCar_D.png')" 
+			alpha="1.0" 
+			borderColor="#010101"
+			rollOver="CvMenuCar.visible=true"
+			rollOut="CvMenuCar.visible=false"
+			click=""/>
+		<mx:Button 
+			id="Bt_MenuMoto"
+			cornerRadius="0" 
+			height="0" 
+			width="0" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#797979, #797979]" 
+			horizontalCenter="-142" 
+			icon="@Embed(source='img/MenuCar.png')"
+			overIcon="@Embed(source='img/MenuCar_R.png')" 
+			downIcon="@Embed(source='img/MenuCar_D.png')" 
+			textAlign="center" 
+			verticalCenter="216"
+			rollOver="CvMenuMoto.visible=true"
+			rollOut="CvMenuMoto.visible=false"/>
+		<mx:Button 
+			id="Bt_MenuFrota"
+			cornerRadius="0" 
+			height="0" 
+			width="0" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#797979, #797979]" 
+			horizontalCenter="5" 
+			icon="@Embed(source='img/MenuCar.png')"
+			overIcon="@Embed(source='img/MenuCar_R.png')" 
+			downIcon="@Embed(source='img/MenuCar_D.png')" 
+			textAlign="center" 
+			verticalCenter="216"
+			rollOver="CvMenuFrota.visible=true"
+			rollOut="CvMenuFrota.visible=false"/>
+		<mx:Button 
+			id="Bt_MenuPatr"
+			cornerRadius="0" 
+			height="0" 
+			width="0" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#797979, #797979]" 
+			horizontalCenter="148" 
+			icon="@Embed(source='img/MenuCar.png')"
+			overIcon="@Embed(source='img/MenuCar_R.png')" 
+			downIcon="@Embed(source='img/MenuCar_D.png')" 
+			textAlign="center" 
+			verticalCenter="216"
+			rollOver="CvMenuFrota.visible=true"
+			rollOut="CvMenuFrota.visible=false"/>
+		<mx:Button 
+			id="BtMenuLive"
+			cornerRadius="0" 
+			height="0" 
+			width="0" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#797979, #797979]" 
+			horizontalCenter="292" 
+			icon="@Embed(source='img/MenuCar.png')"
+			overIcon="@Embed(source='img/MenuCar_R.png')" 
+			downIcon="@Embed(source='img/MenuCar_D.png')" 
+			textAlign="center" 
+			verticalCenter="216"
+			rollOver="CvMenuFrota.visible=true"
+			rollOut="CvMenuFrota.visible=false"/>
+		<mx:Canvas 
+			id="CvMenuCar"
+			xmlns:mx="http://www.adobe.com/2006/mxml" 
+			width="198" 
+			height="213" 
+			alpha="0" 
+			backgroundAlpha="0.0" 
+			x="11.5" 
+			y="270"
+			hideEffect="{fadeout}" 
+			showEffect="{fadein}" 
+			 visible="false">
+			<mx:Image 
+				source="img/Menu_Car.png" 
+				horizontalCenter="0" 
+				verticalCenter="0"/>
+		</mx:Canvas>
+		<mx:Canvas 
+			id="CvMenuMoto"
+			xmlns:mx="http://www.adobe.com/2006/mxml" 
+			width="198" 
+			height="213" 
+			alpha="1.0" 
+			backgroundAlpha="0.0" 
+			x="154.95" 
+			y="270"
+			hideEffect="{fadeout}" 
+			showEffect="{fadein}"  visible="false">
+			<mx:Image 
+				source="img/Menu_Moto.png" 
+				horizontalCenter="0" 
+				verticalCenter="0"/>
+		</mx:Canvas>
+		<mx:Canvas 
+			id="CvMenuFrota"
+			xmlns:mx="http://www.adobe.com/2006/mxml" 
+			width="198" 
+			height="213" 
+			alpha="1.0" 
+			backgroundAlpha="0.0"  
+			x="301" 
+			y="270"
+			hideEffect="{fadeout}" 
+			showEffect="{fadein}"  visible="false">
+			<mx:Image 
+				source="img/Menu_Cam.png" 
+				horizontalCenter="0" 
+				verticalCenter="0"/>
+			<mx:Canvas 
+				id="CvMenuFrota0"
+				xmlns:mx="http://www.adobe.com/2006/mxml" 
+				width="198" 
+				height="213" 
+				alpha="1.0" 
+				backgroundAlpha="0.0"  
+				x="301" 
+				y="270"
+				hideEffect="{fadeout}" 
+				showEffect="{fadein}" >
+				<mx:Image 
+					source="img/Menu_Cam.png" 
+					horizontalCenter="0" 
+					verticalCenter="0"/>
+			</mx:Canvas>
+		</mx:Canvas>
+		<mx:Canvas 
+			id="CvMenuPatr"
+			xmlns:mx="http://www.adobe.com/2006/mxml" 
+			width="198" 
+			height="213" 
+			alpha="1.0" 
+			backgroundAlpha="0.0"  
+			x="443" 
+			y="270"
+			hideEffect="{fadeout}" 
+			showEffect="{fadein}"  visible="false">
+			<mx:Image 
+				source="img/Menu_Cam.png" 
+				horizontalCenter="0" 
+				verticalCenter="0"/>
+			<mx:Canvas 
+				id="CvMenuFrota2"
+				xmlns:mx="http://www.adobe.com/2006/mxml" 
+				width="198" 
+				height="213" 
+				alpha="1.0" 
+				backgroundAlpha="0.0"  
+				x="301" 
+				y="270"
+				hideEffect="{fadeout}" 
+				showEffect="{fadein}" >
+				<mx:Image 
+					source="img/Menu_Cam.png" 
+					horizontalCenter="0" 
+					verticalCenter="0"/>
+			</mx:Canvas>
+		</mx:Canvas>
+		<mx:Canvas 
+			id="CvMenuLive"
+			xmlns:mx="http://www.adobe.com/2006/mxml" 
+			width="198" 
+			height="213" 
+			alpha="1.0" 
+			backgroundAlpha="0.0"  
+			x="587" 
+			y="270"
+			hideEffect="{fadeout}" 
+			showEffect="{fadein}"  visible="false">
+			<mx:Image 
+				source="img/Menu_Car.png" 
+				horizontalCenter="0" 
+				verticalCenter="0"/>
+			<mx:Canvas 
+				id="CvMenuFrota4"
+				xmlns:mx="http://www.adobe.com/2006/mxml" 
+				width="198" 
+				height="213" 
+				alpha="1.0" 
+				backgroundAlpha="0.0"  
+				x="301" 
+				y="270"
+				hideEffect="{fadeout}" 
+				showEffect="{fadein}" >
+				<mx:Image 
+					source="img/Menu_Cam.png" 
+					horizontalCenter="0" 
+					verticalCenter="0"/>
+			</mx:Canvas>
+		</mx:Canvas>
+	</mx:TitleWindow>
+</mx:Application>

@@ -1,0 +1,10 @@
+package mapeamento
+{
+	public class get_veiculos_por_cliente
+	{
+		public function get_veiculos_por_cliente()
+		{
+		}
+
+	}
+}

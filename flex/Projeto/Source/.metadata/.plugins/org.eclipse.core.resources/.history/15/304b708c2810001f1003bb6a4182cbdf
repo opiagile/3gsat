@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+******************************************************************************************
+Data..........: 23/01/2009
+Responsável...: Vinícius Sandim
+Objeto........: Aplicação central do projeto Agenda de Contatos
+******************************************************************************************
+-->
+
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	verticalScrollPolicy="off" horizontalScrollPolicy="off"
+	pageTitle="Teste de acesso à Base 3GSAT"
+	creationComplete="creationComplete();" viewSourceURL="srcview/index.html">
+	
+	<mx:Style source="css/estilo.css" />
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.ResultEvent;
+			import mx.collections.ArrayCollection;
+			
+			import mapeamento.Cliente;
+			
+			import util.ObjetoRemoto;
+			
+			import formularios.CnvContato;			
+			
+			
+			//Atributos
+			[Bindable]
+			private var _arrayContatos:ArrayCollection;
+			
+			private var _cnvContato:CnvContato;
+			//**
+			
+			
+			//Handlers
+			private function rstSelecionaTodos(evt:ResultEvent):void{
+				if (evt.result != null)
+					_arrayContatos = ArrayCollection(evt.result);
+			}
+			
+			private function rstCancelar():void{
+				habilitaDesabilitaGrid(true);
+			}
+			
+			private function rstOk():void{
+				habilitaDesabilitaGrid(true);
+				atualizaTela();
+			}
+			//**
+			
+			
+			//Functions de componentes
+			private function creationComplete():void{
+				atualizaTela();
+			}
+			
+//			private function dataGrid_doubleClick():void{				
+//				chamaTela(Contato(dataGrid.selectedItem));				
+//			}			
+			
+//			private function btnAdicionar_click():void{
+//				chamaTela();
+//			}
+			//**
+			
+			//Outras Functions
+			public function atualizaTela():void{
+				var remoto:ObjetoRemoto = new ObjetoRemoto(Contato.NAMESPACE, rstSelecionaTodos);
+				remoto.getOperation("SelecionaTodos").send();
+			}		
+			
+			private function habilitaDesabilitaGrid(valor:Boolean):void{
+				dataGrid.enabled = valor
+				dataGrid.doubleClickEnabled = valor;
+				btnAdicionar.enabled = valor;
+			}
+			
+	//		private function chamaTela(contato: Contato = null):void{
+	//			habilitaDesabilitaGrid(false);
+	//			
+	//			_cnvContato = new CnvContato();
+	//			_cnvContato.contato = contato;
+	//			_cnvContato.rstOk = rstOk;
+	//			_cnvContato.rstCancelar = rstCancelar;
+				
+	//			vBox.addChild(_cnvContato);
+	//		}
+			//**
+			
+		]]>
+	</mx:Script>
+		
+	<mx:Image x="10" y="6" source="@Embed('../imagens/Icone.png')"/>
+	<mx:Label x="50" y="7" text="Agenda de Contatos" fontSize="20"/>
+	
+	<mx:Button id="btnAdicionar" right="10" top="10" label="Adicionar" height="24" width="100"
+		icon="@Embed('../imagens/Adicionar.png')" disabledIcon="@Embed('../imagens/AdicionarDesab.png')" 
+		click="btnAdicionar_click();"/>
+		
+	<mx:Resize id="resize" />
+	<mx:VBox id="vBox" top="44" left="10" right="10" bottom="10">
+	
+		<mx:DataGrid id="dataGrid" width="100%" height="100%" dataProvider="{_arrayContatos}"
+			doubleClickEnabled="true" doubleClick="dataGrid_doubleClick();"
+			resizeEffect="{resize}">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Nome" dataField="Nome" width="35"/>
+				<mx:DataGridColumn headerText="Email" dataField="Email" width="35"/>
+				<mx:DataGridColumn headerText="Telefone" dataField="Telefone" width="14"/>
+				<mx:DataGridColumn headerText="Celular" dataField="Celular" width="14"/>
+				<mx:DataGridColumn width="2">
+					<mx:itemRenderer>
+						<mx:Component>
+							<mx:VBox horizontalAlign="center">
+							
+								<mx:Script>
+									<![CDATA[
+										import mx.rpc.events.ResultEvent;
+										import util.ObjetoRemoto;
+										import mapeamento.Cliente;
+										import mx.events.CloseEvent;
+										import mx.controls.Alert;
+										import mx.controls.DataGrid;
+										
+										private function rstExclui(evt:ResultEvent):void{
+											outerDocument.atualizaTela();
+										}
+										
+										private function imgExclui_click():void{
+											var grid:DataGrid = DataGrid(outerDocument.dataGrid);
+											
+								//			if ((grid.selectedIndex >= 0) && (grid.enabled))
+								//				Alert.show("Tem certeza?", "Confirme", 3, null, exclui);
+										}
+										
+									//	private function exclui(evt:CloseEvent):void{
+									//		if (evt.detail == Alert.YES){												
+									//			var contato:Contato = Contato(outerDocument.dataGrid.selectedItem);
+									//			
+									//			var remote:ObjetoRemoto = new ObjetoRemoto(Contato.NAMESPACE, rstExclui);
+									//			remote.getOperation("Exclui").send(contato.Id_Contato);
+									//		}
+									//	}
+										
+									]]>
+								</mx:Script>									
+							
+								<mx:Image id="imgExclui" source="@Embed('../imagens/Excluir.png')" 
+									height="16" width="16" click="imgExclui_click();"/>	
+							</mx:VBox>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:DataGridColumn>
+			</mx:columns>
+		</mx:DataGrid>
+	
+	</mx:VBox>
+		
+</mx:Application>

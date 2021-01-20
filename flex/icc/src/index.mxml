@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	backgroundGradientAlphas="[0.58, 1.0]" 
+	backgroundGradientColors="[#000000, #000000]"
+	creationComplete="play()"
+	>
+	<mx:Script>
+		<![CDATA[
+			import form.Contato;
+			import mx.effects.Glow;
+	    	import mx.effects.Effect;
+	    	import mx.effects.SoundEffect;
+	    	import mx.containers.TitleWindow;
+	    	import mx.managers.PopUpManager;
+	    	
+	    	private var _transforma:SoundTransform = new SoundTransform();
+            private var _canal:SoundChannel;
+            private var _som:Sound;
+            private var _request:URLRequest = null;
+            
+            public function play():void 
+            {
+                btStop.enabled = false;
+                btStop.enabled = true;
+                
+                _request = new URLRequest("assets/bigSound.mp3");
+                
+                _som = new Sound(_request);
+                _canal = _som.play(0,0);
+            }
+               
+            private function Stop():void 
+            {
+                btStop.enabled = true;
+                btStop.enabled = false;
+                _canal.stop();
+            }
+               
+            private function volume():void
+           {
+               if(_canal != null)
+               {
+                   _transforma.volume    = vol.value;
+                   _canal.soundTransform = _transforma;
+               }
+           }
+            
+		private function get rollOverEffect():Effect {
+           		var effect:Glow = new Glow();
+            	effect.blurXTo = effect.blurYTo = 10;
+            	effect.alphaFrom = 0;
+            	effect.alphaTo = 0.6;
+            	effect.color = 0xFFFFFF;
+            	return effect;
+         		}
+
+        private function get rollOutEffect():Effect {
+	            var effect:Glow = new Glow();
+	            effect.blurXTo = effect.blurYTo = 0;
+	            effect.alphaFrom = 0.6;
+	            effect.alphaTo = 0;
+	            effect.color = 0xFFFFFF;
+            	return effect;
+        		}
+    
+      		//Acesso Contato
+		private function show_Contato():void {
+				Bt_contato.enabled=false;
+				TitleWindow(PopUpManager.createPopUp(this, form.Contato, true));
+				}
+		
+		]]>
+	</mx:Script>
+			 	
+	<mx:Glow 
+	    	id="glowImage" 
+	    	duration="1000" 
+	    	alphaFrom="1.0" 
+	    	alphaTo="0.3" 
+	    	blurXFrom="0.0" 
+	    	blurXTo="50.0" 
+	    	blurYFrom="0.0" 
+	    	blurYTo="50.0" 
+	    	color="#0030ff"/>
+	    			  
+    <mx:Glow 
+    		id="unglowImage" 
+    		duration="1000" 
+    		alphaFrom="0.3" 
+    		alphaTo="1.0" 
+    		blurXFrom="50.0" 
+    		blurXTo="0.0" 
+    		blurYFrom="50.0" 
+    		blurYTo="0.0" 
+    		color="#8a6911"/>
+			
+	<mx:Image 
+			id="Logo"
+			horizontalCenter="0" 
+			verticalCenter="-10" 
+			toolTip="Soluções em Teleatendimento (Televendas, Telemarketing, Telecobrança, Ouvidoria, Sac e Suporte Técnico)" source="img/intelecto - logo.png"/>
+			
+	<mx:Label 
+			text="© 2010 | S3G Develop" 
+			fontSize="10" 
+			fontWeight="bold" 
+			fontFamily="Arial" 
+			color="#FFFFFF" 
+			toolTip="Criação: Grupo S3G Develop - www.3gsat.com.br"
+			bottom="10" 
+			left="10" 
+			width="117"
+			click="navigateToURL(new URLRequest('http://www.3gsat.com.br'),'_blank');"/>
+	    	
+	<mx:Button 
+		width="8"  
+		height="8" 
+		labelPlacement="right" 
+		icon="@Embed(source='img/logoContato.png')"
+	    right="44" 
+	    top="34" 
+	    id="Bt_contato"
+	    click="show_Contato()"
+	    rollOverEffect="{unglowImage}" 
+	    rollOutEffect="{rollOutEffect}"
+	    mouseUpEffect="{rollOverEffect}"
+	    mouseDownEffect="{glowImage}" 
+	     downIcon="@Embed(source='img/right_symbol2.png')"/>
+	    
+    <mx:HSlider 
+    	id="vol" 
+    	minimum="0" 
+    	maximum="1" 
+        snapInterval="0.01" 
+        value="1" 
+        change="volume()" 
+        liveDragging="true" 
+        bottom="14" 
+        right="71" 
+        themeColor="#E8AC0B"/>
+        
+    <mx:Button 
+    	id="btPlay" 
+    	click="play()" 
+    	bottom="10" 
+    	right="44" 
+    	width="16" 
+    	height="19" 
+    	themeColor="#E8AC0B" 
+    	color="#000000" 
+    	fontWeight="normal" 
+    	fontSize="9" 
+    	icon="@Embed(source='img/right_symbol.png')" 
+    	disabledIcon="@Embed(source='img/right_symbol.png')" 
+    	overIcon="@Embed(source='img/right_symbol2.png')"/>
+    	
+    <mx:Button 
+    	id="btStop" 
+    	click="Stop()" 
+    	right="10" 
+    	bottom="10" 
+    	fontSize="10" 
+    	width="18" 
+    	height="19" 
+    	themeColor="#E8AC0B" 
+    	icon="@Embed(source='img/x_symbol.png')" 
+    	overIcon="@Embed(source='img/x_symbol2.png')" 
+    	disabledIcon="@Embed(source='img/x_symbol.png')"/>
+    	
+    <mx:Label 
+    	text="Volume" 
+    	bottom="4" 
+    	right="136" 
+    	fontSize="7" color="#FFFFFF"/>
+    <mx:Label text="CONTATO" color="#FFFFFF" right="18" top="66"/>
+    	
+</mx:Application>

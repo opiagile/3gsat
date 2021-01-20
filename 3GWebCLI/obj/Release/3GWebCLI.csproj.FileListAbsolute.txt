@@ -1,0 +1,12 @@
+R:\site\3GWebCLI\bin\3GWebCLI.dll
+R:\site\3GWebCLI\bin\3GWebCLI.pdb
+R:\site\3GWebCLI\obj\Release\ResolveAssemblyReference.cache
+R:\site\3GWebCLI\obj\Release\3GWebCLI.dll
+R:\site\3GWebCLI\obj\Release\3GWebCLI.pdb
+R:\site\3GWebCLI\bin\C1.Web.UI.Controls.2.dll
+R:\site\3GWebCLI\bin\C1.Web.UI.2.dll
+R:\site\3GWebCLI\bin\C1.Web.UI.Controls.2.xml
+R:\site\3GWebCLI\bin\C1.Web.C1Input.2.dll
+R:\site\3GWebCLI\bin\C1.Web.C1WebSplitter.2.dll
+R:\site\3GWebCLI\bin\C1.Web.C1WebSplitter.2.xml
+R:\site\3GWebCLI\bin\C1.Web.C1Input.2.xml

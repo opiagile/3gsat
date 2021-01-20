@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="0xffffff" creationComplete="initApp()" xmlns:ns1="*">
+    <mx:Script source="MainCode.as"/>
+	
+</mx:Application>

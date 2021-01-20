@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"
+        horizontalAlign="center"
+        paddingBottom="5"
+        paddingLeft="5"
+        paddingRight="5">
+    <mx:Script>
+        <![CDATA[
+            import com.diaztorres.window.EventAlert;
+
+            private function close ():void
+            {
+                var e:EventAlert = new EventAlert( 'alertclose', true );
+                e.result = grupo.selectedValue as String;
+                dispatchEvent( e );
+            }
+        ]]>
+    </mx:Script>
+    <mx:Spacer height="10" />
+    <mx:Label text="Esta es una alerta propia. (MXML Component)" />
+    <mx:RadioButtonGroup id="grupo" />
+    <mx:RadioButton groupName="grupo"
+                    value="one"
+                    label="one"
+                    selected="true" />
+    <mx:RadioButton groupName="grupo"
+                    value="two"
+                    label="two" />
+    <mx:RadioButton groupName="grupo"
+                    value="three"
+                    label="three" />
+    <mx:RadioButton groupName="grupo"
+                    value="four"
+                    label="four" />
+    <mx:RadioButton groupName="grupo"
+                    value="five"
+                    label="five" />
+    <mx:RadioButton groupName="grupo"
+                    value="six"
+                    label="six" />
+    <mx:RadioButton groupName="grupo"
+                    value="seven"
+                    label="seven" />
+    <mx:Button label="Aceptar" click="close()" />
+</mx:Box>

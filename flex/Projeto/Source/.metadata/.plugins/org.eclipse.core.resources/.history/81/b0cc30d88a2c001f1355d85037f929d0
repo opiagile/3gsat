@@ -1,0 +1,40 @@
+package mapeamento
+{
+	[RemoteClass(alias="S3GWeb.ValidaLogin")]
+	public class ValidaLogin
+	{
+		public static const NAMESPACE:String = "S3GWeb.ValidaLogin";
+		public var usuario: String;
+		public var senha: String;      
+		public var clienteid: int;   
+		public var grupoId: int;    
+		public var codcli: int;
+		public var natureza: String; 
+		public var nome: String;     
+		public var endereco: String; 
+		public var cidade: String;   
+		public var estado: String;   
+		public var telefone: String; 
+		public var celular: String;  
+		public var email: String;    
+		public var observacao: String;	
+		public var validado: Boolean;
+		
+/*-		private var _Usuario:String;
+		public function get Usuario():String { return this._Usuario; }                
+		public function set Usuario(valor:String):void { this._Usuario = valor; }	
+		
+		private var _Senha:String;
+		public function get Senha():String { return this._Senha; }                
+		public function set Senha(valor:String):void { this._Senha = valor; }	
+
+		private var _Validado:Boolean;
+		public function get Validado():Boolean { return this._Validado; }                
+		public function set Validado(valor:Boolean):void { this._Validado = valor; }	
+		*/
+		public function ValidaLogin()
+		{
+		}
+
+	}
+}

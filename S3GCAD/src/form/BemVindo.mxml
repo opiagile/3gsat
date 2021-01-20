@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="610" 
+	height="327" 
+	backgroundAlpha="1.0" 
+	backgroundColor="#000000" 
+	borderColor="#000000" 
+	alpha="1.0" 
+	cornerRadius="20" 
+	borderStyle="solid">
+	<mx:TextArea 
+		width="470.95" 
+		height="294" 
+		color="#FFFFFF" 
+		text="Seja Bem-Vindo, Sr(a) FULADO DE TAL ao Sistema 3GSAT ONLINE&#xa;&#xa;Você acaba de Adquirir um dos melhores equipamentos e sistemas online do mercado, agora você poderá interagir com seu veículo, terá informações em tempo real, conforto e segurança. &#xa;O Sistema 3GSAT ONLINE foi desenvolvido pensando em você, linguagem moderna e de fácil entendimento, suporte online, relatórios para simples conferência, entre outras ferramentas para auxiliá-lo.&#xa;&#xa;A 3GSAT tem orgulho de tê-lo(a) como cliente.&#xa;&#xa;&#xa;Diretores&#xa;&#xa;3GSAT &#xa;Nessa você pode confiar!&#xa;" 
+		backgroundAlpha="0.0" 
+		alpha="0.0" 
+		fontSize="12" 
+		fontFamily="Arial" 
+		textAlign="left" top="10" left="60"/>
+</mx:Canvas>

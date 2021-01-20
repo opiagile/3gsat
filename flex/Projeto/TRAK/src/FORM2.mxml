@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	pageTitle=":: CLAN TRAK BRASIL ::"
+	layout="absolute" 
+	backgroundGradientAlphas="[1.0, 0.56]" 
+	backgroundGradientColors="[#CECDCC, #D6AB98]" 
+	>
+    <mx:Script>
+        <![CDATA[
+            import mx.controls.Alert;
+            private function handleAccChange():void {
+                Alert.show("Seja Bem Vindo ao CLAN TRAK BRASIL.");
+            }
+        ]]>
+    </mx:Script>
+    
+    <!-- The Accordion control dispatches a change event when the 
+            selected child container changes.  -->
+    <mx:Accordion id="myAcc" 
+        height="60" 
+        width="200" 
+        change="handleAccChange();" x="29" y="101">
+        <mx:HBox label="Teste 1">
+            <mx:Label text="Primeiro View."/>
+        </mx:HBox>
+
+        <mx:HBox label="Teste 2">
+            <mx:Label text="Segundo View."/>
+        </mx:HBox>
+    </mx:Accordion>
+   
+</mx:Application>

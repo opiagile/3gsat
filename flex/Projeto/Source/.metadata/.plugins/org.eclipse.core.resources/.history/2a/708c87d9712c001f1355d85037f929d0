@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" rollOver="showControls()" rollOut="hideControls()">
+<!--
+******************************************************************************************
+Data..........: 02/02/2010
+Responsável...: Francisco Araújo
+Objeto........: Objeto responsável pela configuração e monitoramento do sistema de rastreamento
+******************************************************************************************
+-->
+
+ <mx:Style> 
+           .controllerStyle { top: 153; left: 0; paddingBottom: 10; paddingLeft: 6; paddingRight: 8; paddingTop: 6; alpha: 0; 
+                              background-color: #000000; background-alpha: 0.5; }
+</mx:Style>
+
+	<maps:Map xmlns:maps="com.google.maps.*" id="map" mapevent_mapready="onMapReady(event)"  
+         width="100%" height="100%" key="ABQIAAAA60Yi54TYljE0FQ-0E4d0nBQbQQtspPKytngpyCGhFiH97vLYsRT_WtomBMsPuZncSsVrLzD7ulJ7wQ"/> 
+
+        <mx:WipeUp duration="1000"/>
+	    <mx:WipeDown duration="1000"/>
+        <mx:Fade id="fadeIn" alphaFrom="0.3" alphaTo="1.0" /> 
+        <mx:Fade id="fadeOut" alphaFrom="1.0" alphaTo="0.3" /> 	
+
+		<mx:UIComponent id="mapHolder" left="0" right="0" top="0" bottom="0"/> 
+			<mx:HBox id="controls" styleName="controllerStyle" y="163" height="181" width="55" cornerRadius="20" horizontalGap="1" verticalAlign="middle">
+			<mx:VSlider id="zoomSlider" height="164" minimum="3" maximum="20" snapInterval="1" tickInterval="1" dataTipPrecision="0" 
+				value="16" showTrackHighlight="true" borderColor="#FFFFFF" tickColor="#ff0000" change="onSliderChanged(event);"  
+				width="26" themeColor="#FF0000" alpha="1.0" /> 
+		</mx:HBox>
+	
+	    <mx:ApplicationControlBar horizontalAlign="right" fillAlphas="[1.0, 0.6]" left="0" right="0" 
+	    	                      top="-1" height="25" alpha="1.0" cornerRadius="0">
+			<mx:CheckBox label="Vizualizar monitoramento" id="Monitoramento" selected="true" fontWeight="bold" color="#18FF00" 
+				         fontStyle="normal" textAlign="center" enabled="true" highlightAlphas="white" themeColor="#FF0000" 
+				         fillAlphas="[1.0, 1.0]" fillColors="[#FFFFFF, #FFFFFF, #FFFFFF, #FFFFFF]"/>
+	    </mx:ApplicationControlBar>
+	    
+	    
+	    <mx:TabNavigator height="153" backgroundColor="#2D2D2D" color="#FFFFFF" 
+		             backgroundAlpha="0.8"
+		             left="0" right="0" top="0" themeColor="#FF0000"
+		             visible="{Monitoramento.selected}" hideEffect="{WipeUp}" showEffect="{WipeDown}">
+
+
+		<mx:Canvas label="Última posição" width="100%" height="100%" borderColor="#5A6165" themeColor="#FF0000" id="UltimaPosicao">
+			<mx:DataGrid right="0" left="0" top="0" bottom="0" alternatingItemColors="[#FFFFFF, #DEDEDE]" color="#000000" alpha="0.59">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Placa" dataField="col1"/>
+					<mx:DataGridColumn headerText="Ignição" dataField="col2"/>
+					<mx:DataGridColumn headerText="Motor" dataField="col3"/>
+					<mx:DataGridColumn headerText="Velocidade" dataField="col4"/>
+					<mx:DataGridColumn headerText="Coordenada" dataField="col5"/>
+					<mx:DataGridColumn headerText="Qualidade sinal GPRS" dataField="col6"/>
+					<mx:DataGridColumn headerText="Alimentação da bateria" dataField="col7"/>
+					<mx:DataGridColumn headerText="Carga da bateria" dataField="col8"/>
+				</mx:columns>
+			</mx:DataGrid>
+		</mx:Canvas>
+
+		<mx:Canvas label="Área de Segurança" width="100%" height="100%" id="AreaSeguranca">
+			<mx:HDividedBox left="0" right="0" top="0" bottom="0">
+				<mx:DataGrid width="100%" height="100%" alpha="0.59" color="#000000">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Sequência" dataField="col1"/>
+						<mx:DataGridColumn headerText="Nome" dataField="col2"/>
+						<mx:DataGridColumn headerText="Status" dataField="col3"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:HBox height="100%" width="100%">  
+					<mx:Panel width="100%" height="100%" layout="absolute" title="Criar área de segurança" backgroundAlpha="0.5">
+						<mx:Button
+						   label="Criar área"
+						   click="AtivaModoDesenho(event);"
+						   id="btnCriaArea" x="7" y="10" color="#000000"/>
+						<mx:Button
+						   label="Limpar mapa"
+						   enabled="false" id="btnLimpaMapa"
+						   click="LimparMapa(event);" x="176" y="40" color="#000000" width="139"/>
+						<mx:Button
+						   label="Excluir último ponto"	           
+						   enabled="false" id="btnExcluiPonto"
+						   click="DeletarUltimoPonto(event);" x="176" y="10" color="#000000"/>
+						<mx:Button
+						   label="Cancelar"	           
+						   enabled="false" id="btnCancelar"
+						   click="Cancelar(event);" x="97" y="10" color="#000000"/>
+					</mx:Panel>
+                </mx:HBox>
+				
+			</mx:HDividedBox>
+		</mx:Canvas>
+
+		<mx:Canvas label="Histórico" width="100%" height="100%" id="Historico">
+			<mx:ComboBox x="27" y="40" width="203"></mx:ComboBox>
+			<mx:ComboBox x="248" y="40" width="104" selectedIndex="1"></mx:ComboBox>
+			<mx:Button x="371" y="40" label="Button"/>
+			<mx:Label x="27" y="24" text="Label"/>
+			<mx:Label x="248" y="24" text="Label"/>
+		</mx:Canvas>
+
+	</mx:TabNavigator>		
+
+	<mx:Script> 
+	    <![CDATA[
+	    	import com.google.maps.controls.PositionControl;
+	    	import mx.effects.Fade;
+	    	import com.google.maps.MapOptions;
+	    	import mx.containers.ControlBar;
+	    	import com.google.maps.controls.ZoomControlOptions;
+    /*OBSERVAÇÃO: * implementar código que não permite o usuário sair da aba "Area de Segurança" com o modo 
+                    "criar area" ativado;
+                  * Testar o sistema em vários browsers e definir um padrão de acesso para os usuários
+                    sobre o melhor browser;
+                  * Criar uma chamada de componentes. Quando logar como credenciado, chamar canvas de cadastro de cliente
+                    e quando logar como usuário chamar canvas do Sistema 3G.  
+	*/
+	    	import mx.effects.WipeUp;
+	    	import mx.effects.WipeDown; 
+	    
+		    import com.google.maps.LatLng; 
+		    import com.google.maps.Map; 
+		    import com.google.maps.MapEvent; 
+		    import com.google.maps.MapType; 
+	    
+            import com.google.maps.overlays.MarkerOptions;
+            import com.google.maps.Map;
+            import com.google.maps.LatLng;
+
+            import com.google.maps.MapEvent;
+            import com.google.maps.MapMouseEvent;
+            import com.google.maps.MapZoomEvent;
+
+            import com.google.maps.overlays.Marker;
+            import com.google.maps.overlays.Polygon;
+            import com.google.maps.overlays.Polyline;
+            import mx.controls.Alert;
+            
+            import com.google.maps.controls.ZoomControl;
+            import com.google.maps.controls.ScaleControl;
+            import com.google.maps.View;
+            import com.google.maps.services.ClientGeocoder;
+            import com.google.maps.services.GeocodingEvent;
+            import com.google.maps.services.GeocodingResponse;
+            import com.google.maps.services.Placemark;
+            import mx.controls.Alert;
+            import mx.events.ResizeEvent;
+               
+            import com.google.maps.View;
+            import com.google.maps.geom.Attitude;
+   
+            private var polyLatLngs:Array = new Array();
+	 
+/**************************************Inicializa e configuração do mapa***************************************/
+			private function showControls():void 
+			{
+				fadeIn.play([controls]);
+      		}
+
+      		private function hideControls():void 
+      		{
+      			fadeOut.play([controls]);
+      		}
+            private function TipoMapa():void
+            {
+            	this.map.addMapType(MapType.PHYSICAL_MAP_TYPE);
+            }
+
+	        private function onMapReady(event:Event):void 
+	        { 	
+	        	map.setCenter(new LatLng(-25.366085, -49.220698), 3, MapType.NORMAL_MAP_TYPE); 
+	        	map.addEventListener(MapEvent.MAP_READY, onMapReady);
+        		map.viewMode =View.VIEWMODE_PERSPECTIVE;
+			    map.attitude=new Attitude( 0, 0, 0 );
+		        map.setInitOptions( myMapOptions );
+	        } 
+		
+			private function onMapZoomChanged(event:Event):void 
+			{ 
+				zoomSlider.value = map.getZoom();
+      		}
+      		private function onSliderChanged(event:Event):void 
+      		{
+      			if (map && map.isLoaded()) 
+      			{
+      				map.setZoom(zoomSlider.value);
+           		}
+      		}
+/**********************************Fim da inicialização e configuração do mapa*********************************/	
+                
+        
+        
+/*********************************Criação da área de segurança*********************************/
+	        private function mapClick(e:MapMouseEvent):void 
+	        {
+            	var latlngClicked:LatLng = e.latLng;
+            	polyLatLngs.push(latlngClicked);
+            	DesenhaCoordenadas();
+            }
+            
+            // Ativar o mapa para aceitar a criação do poligono
+            private function AtivaModoDesenho(e:Event):void 
+            {
+                this.map.clearOverlays();
+                map.addEventListener(MapMouseEvent.CLICK , mapClick);
+                DesenhaCoordenadas();
+                btnExcluiPonto.enabled=true;
+                btnLimpaMapa.enabled=true;
+                btnCancelar.enabled=true;
+                btnCriaArea.enabled=false;
+            }
+            
+            //Exclui o último ponto criado
+            private function DeletarUltimoPonto(e:Event):void 
+            {
+            	if (polyLatLngs.length > 0) 
+            	{
+            		polyLatLngs.pop();
+                }
+                DesenhaCoordenadas();
+            }
+            
+            private function Cancelar(e:Event):void
+            {
+            	this.map.clearOverlays();
+            	this.map.removeEventListener(MapMouseEvent.CLICK , mapClick);
+                polyLatLngs.length = 0;
+                btnExcluiPonto.enabled=false;
+                btnLimpaMapa.enabled=false;
+                btnCancelar.enabled=false;
+                btnCriaArea.enabled=true;            	
+            }
+                        
+            //Função que limpa o mapa de qualquer ponto inserido
+            private function LimparMapa(e:Event):void 
+            {
+            	this.map.clearOverlays();
+                polyLatLngs.length = 0;
+            }
+
+ 			private function DesenhaCoordenadas():void 
+ 			{
+ 				map.clearOverlays();
+                if (polyLatLngs.length > 1) 
+                {
+                	//Recria o poligono
+                    map.addOverlay(new Polygon(polyLatLngs));
+                }
+                       
+                if (polyLatLngs.length > 0) 
+                {
+                	// captura o último ponto do polyPoints to add o novo marcador
+                    var tmpLatLng:LatLng = polyLatLngs[polyLatLngs.length -1];
+                    map.addOverlay(new Marker(tmpLatLng));
+                }
+            }
+/*********************************Fim da criação da área de segurança*********************************/
+	    ]]> 
+	</mx:Script>
+</mx:Canvas>

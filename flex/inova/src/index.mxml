@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	backgroundGradientAlphas="[1.0, 1.0]" 
+	backgroundGradientColors="[#585A34, #858582]" 
+	backgroundColor="#111109"
+	xmlns:custom="nl.wietseveenstra.extensions.panel.*"
+	xmlns:fx="nl.wietseveenstra.managers.*">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+			
+			private function Iniciar():void 
+			{
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function Fechar():void 
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			//Acesso Contato
+			private function show_contato():void {
+			BtContato.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, Contato, true));
+			}	
+			//Acesso Reflection
+			private function show_reflect():void {
+			BtInova.enabled=false;
+			TitleWindow(PopUpManager.createPopUp(this, ReflectionExplorer, true));
+			}	
+			//Click Home
+			private function show_home(): void {
+			navigateToURL(new URLRequest('http://www.inovacontabilidade.com.br'),'_self');
+			} 
+			//Click Quem somos
+			private function show_inova():void {
+			BtInova.enabled=true;
+			TitleWindow(PopUpManager.createPopUp(this, inova, true));
+			}	
+			//Click Copyright
+			private function show_copyright(): void {
+			navigateToURL(new URLRequest('http://www.prohar.com.br'),'_blank');
+			} 
+			
+			//Click Clima Tempo
+			private function show_climatempo(): void {
+			navigateToURL(new URLRequest('http://www.climatempo.com.br'),'_blank');
+			}
+			
+			
+			//Click Logo
+			private function show_logo(): void {
+			navigateToURL(new URLRequest('http://www.inovacontabilidade.com.br'),'_self');
+			} 
+			
+			//Chamada para o efeito reflexo
+			//<fx:ReflectionManager id="reflection" target="{teste}"
+			//width="{this.teste.value='361'}"
+			//height="{(this.sPanel01.height / 100) * this.distance.value}"
+			//fadeFrom="{this.alphaFrom.value}"
+			//fadeTo="{this.alphaTo.value}"
+			//blur="{this.blur.value}"/>
+			
+		]]>
+	</mx:Script>
+	
+		
+		
+	<mx:Canvas 
+		backgroundColor="#262716" 
+		borderStyle="none" 
+		bottom="0" 
+		top="282" 
+		width="100%" 
+		x="0" 
+		id="canvas1">
+		
+	</mx:Canvas>
+	<mx:Image 
+		source="img/logo.png"
+		toolTip=".: Inovando em serviços contábeis :."
+		click="show_logo();" 
+		left="5" 
+		top="40"/>
+	<mx:Image 
+		source="img/prediocanto.png" 
+		right="0" 
+		top="0" 
+		alpha="0.32"/>
+	
+	<mx:Canvas width="160" 
+			   height="188" 
+			   cornerRadius="10" 
+			   borderStyle="solid" 
+			   backgroundColor="#0F0F0F" 
+			   borderColor="#3B3A1E" 
+			   right="10" 
+			   bottom="0">
+		<mx:SWFLoader 
+			source="img/tempo.swf" 
+			height="167" 
+			horizontalCenter="0" 
+			verticalCenter="0"/>
+	</mx:Canvas>
+	<mx:Canvas 
+		width="160" 
+		height="188" 
+		right="10" 
+		bottom="0" 
+		backgroundAlpha="0.0" 
+		backgroundColor="#732727">
+		<mx:Button 
+			label="CLIMA TEMPO" 
+			bottom="10" 
+			left="3" 
+			right="7" 
+			fillAlphas="[1.0, 1.0]" 
+			fillColors="[#000000, #000000]" 
+			borderColor="#000000" 
+			themeColor="#3B3A34" 
+			color="#AFB27E" 
+			height="18" 
+			cornerRadius="6" 
+			id="ClickClima"
+			click="show_climatempo()"/>
+	</mx:Canvas>
+	<mx:ApplicationControlBar 
+		right="0" 
+		left="0"
+		horizontalAlign="right" 
+		top="0">
+		<mx:Button 
+			id="BtContato"
+			label="Home"
+			click="show_home();" 
+			enabled="true" 
+			color="#FFFFFF"/>
+		<mx:Button 
+			id="BtInova"
+			label="Quem Somos"
+			click="show_inova();" 
+			enabled="true" 
+			color="#FFFFFF"/>
+		<mx:Button 
+			id="BtContato1"
+			label="Fale Conosco"
+			click="show_contato();" 
+			enabled="true"
+			 color="#FFFFFF"/>
+	</mx:ApplicationControlBar>
+	<mx:Label 
+			text="© 2010 | inova" 
+			fontSize="10" 
+			fontWeight="bold" 
+			fontFamily="Arial" 
+			color="#ffffff" 
+			toolTip="Criação: Grupo Prohar - www.prohar.com.br"
+			click="show_copyright();" 
+			bottom="10" 
+			left="10" 
+			width="76"/>
+	<mx:Style source="css/inova.css"/>
+ </mx:Application>

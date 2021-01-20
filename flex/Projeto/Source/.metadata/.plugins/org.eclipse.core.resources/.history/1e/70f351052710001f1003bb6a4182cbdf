@@ -1,0 +1,27 @@
+/*
+******************************************************************************************
+Data..........: 23/01/2009
+Responsável...: Vinícius Sandim
+Objeto........: Classe responsável por fazer o mapeamento da classe Contato do ASP.net
+******************************************************************************************
+*/
+
+package mapeamento
+{
+	[RemoteClass(alias="Agenda.Net.Cliente")]
+	public class Cliente
+	{		
+		public static const NAMESPACE:String = "Agenda.Net.Cliente";
+
+		public var Id_Pessoa:int;
+		public var Nome:String;
+		public var Cidade:String;
+		public var Telefone:String;
+		public var Celular:String;
+		public var Observacao:String;			
+
+		public function Cliente()
+		{
+		}
+	}
+}

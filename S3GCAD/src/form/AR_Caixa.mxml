@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="750" 
+	height="500" 
+	backgroundAlpha="0.0" 
+	alpha="1.0" 
+	backgroundColor="#FCFAFA" 
+	borderColor="#FFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.containers.Form;
+			import mx.core.Application;
+			
+			
+			private function Iniciar():void {
+			PopUpManager.centerPopUp(this);
+			}
+			private function Fechar():void {
+			PopUpManager.removePopUp(this);
+			Application.application.BtCaixa.enabled=true;
+			}
+		]]>
+	</mx:Script>
+	<mx:TitleWindow 
+		layout="absolute" 
+		title="S3G Cadastro - CAIXA" 
+		showCloseButton="true" 
+		creationComplete="Iniciar()"
+		close="Fechar()" 
+		titleIcon="@Embed(source='../../IMG/3gsatICO.png')" 
+		width="730" 
+		height="462" 
+		alpha="1.0"
+ 		fontWeight="bold" 
+ 		backgroundAlpha="1.0" 
+ 		backgroundColor="#01334C" 
+ 		borderStyle="solid" 
+ 		cornerRadius="15" 
+ 		borderColor="#FFFFFF" 
+ 		borderThickness="2" 
+ 		horizontalCenter="0" 
+ 		verticalCenter="0" 
+ 		color="#FFFFFF" 
+ 		backgroundImage="@Embed(source='../../IMG/fnd_plasma.png')">
+	
+		<mx:TextInput 
+			x="123" 
+			y="9" 
+			width="123" 
+			height="22.7" 
+			borderColor="#33313D" 
+			alpha="1.0" 
+			borderStyle="solid" 
+			themeColor="#DA9026" 
+			backgroundColor="#FFFFFF" 
+			cornerRadius="5" 
+			text="012365" 
+			textAlign="center" 
+			fontSize="11" 
+			color="#21064A" id="In_CodCliCx"/>
+		<mx:TextInput 
+			x="529" 
+			y="10" 
+			width="123" 
+			height="22.7" 
+			borderColor="#33313D" 
+			alpha="1.0" 
+			borderStyle="solid" 
+			themeColor="#DA9026" 
+			backgroundColor="#FFFFFF" 
+			cornerRadius="5" 
+			text="012365" 
+			textAlign="center" 
+			fontSize="11" 
+			color="#21064A" id="In_CodVendCx"/>
+		<mx:Button 
+			x="657" 
+			y="12" 
+			width="16" 
+			cornerRadius="20" 
+			id="Bt_CodVendCx" 
+			height="16" 
+			toolTip="Pesquisa de Produtos" 
+			icon="@Embed(source='../../IMG/Pesquisar.png')" 
+			downIcon="@Embed(source='../../IMG/Pesquisar.png')" 
+			overIcon="@Embed(source='../../IMG/Pesquisar2.png')"/>
+		<mx:Canvas 
+			x="28" 
+			y="54" 
+			width="111" 
+			height="113" 
+			borderStyle="solid" 
+			cornerRadius="8" 
+			borderColor="#193B53" 
+			backgroundColor="#FFFFFF" 
+			borderThickness="2">
+		</mx:Canvas>
+		<mx:Label 
+			x="416" 
+			y="13" 
+			text="Código Vendedor" 
+			color="#55546A"/>
+		
+		<mx:Label 
+			x="30" 
+			y="12" 
+			text="Código Cliente" 
+			color="#55546A"/>
+		
+		<mx:Label 
+			x="30" 
+			y="181" 
+			text="Código do Produto" 
+			color="#55546A"/>
+		<mx:Label 
+			x="30" 
+			y="211" 
+			text="Quantidade" 
+			color="#55546A"/>
+		<mx:Label 
+			x="30" 
+			y="240" 
+			text="Vr. Unitário" 
+			color="#55546A"/>
+		<mx:Label 
+			x="30" 
+			y="266" 
+			text="Vr. Total" 
+			color="#55546A"/>
+		
+		<mx:Image 
+			x="41" 
+			y="72.85" 
+			source="../IMG/rastread.png" 
+			width="84" 
+			height="62" 
+			id="Im_ProdCx"/>
+		<mx:TextInput 
+			x="147" 
+			y="54.3" 
+			width="533.9" 
+			height="42.700005" 
+			borderColor="#FFFFFF" 
+			alpha="1.0" 
+			borderStyle="solid" 
+			themeColor="#DA9026" 
+			backgroundColor="#01334C" 
+			cornerRadius="8" 
+			text="    Rastreador 3GSAT RptII" 
+			textAlign="left" 
+			fontSize="26" id="In_DescProdCx"/>
+		<mx:Button 
+			x="172" 
+			y="115.85" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_OrcCx" 
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/orcamento.png')" 
+			downIcon="@Embed(source='../../IMG/orcamento.png')" 
+			overIcon="@Embed(source='../../IMG/orcamento2.png')"/>
+		<mx:Button 
+			x="235" 
+			y="115.85" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_DelCx" 
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/x_symbol.png')" 
+			downIcon="@Embed(source='../../IMG/x_symbol.png')" 
+			overIcon="@Embed(source='../../IMG/x_symbol2.png')"/>
+		<mx:Button 
+			x="295" 
+			y="115.85" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_ClearCx" 
+			icon="@Embed(source='../../IMG/trash.png')"
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			downIcon="@Embed(source='../../IMG/trash.png')" 
+			overIcon="@Embed(source='../../IMG/trash2.png')"/>
+		<mx:TextInput 
+			x="147" 
+			y="180" 
+			cornerRadius="4" 
+			borderStyle="solid" 
+			textAlign="center" 
+			text="Código Prod." 
+			color="#FF0000" 
+			width="162"/>
+		<mx:Button 
+			x="313" 
+			y="181" 
+			width="16" 
+			cornerRadius="20" 
+			id="Bt_ClearCx0" 
+			height="16" 
+			toolTip="Pesquisa de Produtos" 
+			icon="@Embed(source='../../IMG/Pesquisar.png')" 
+			downIcon="@Embed(source='../../IMG/Pesquisar.png')" 
+			overIcon="@Embed(source='../../IMG/Pesquisar2.png')"/>
+		<mx:TextInput 
+			x="147" 
+			y="210" 
+			cornerRadius="4" 
+			borderStyle="solid" 
+			textAlign="center" 
+			text="Quantidade" 
+			color="#FF0000" 
+			width="162"/>
+		<mx:TextInput 
+			x="147" 
+			y="240" 
+			cornerRadius="4" 
+			borderStyle="solid" 
+			textAlign="center" 
+			text="R$ Unitário" 
+			color="#FF0000" 
+			width="162"/>
+		<mx:TextInput 
+			x="147" 
+			y="270" 
+			cornerRadius="4" 
+			borderStyle="solid" 
+			textAlign="center" 
+			text="R$ Total" 
+			color="#FF0000" 
+			width="162"/>
+		<mx:Button 
+			x="53" 
+			y="331" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_ForPagCx" 
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/Bt_FormaPagamento.png')" 
+			downIcon="@Embed(source='../../IMG/Bt_FormaPagamento.png')" 
+			overIcon="@Embed(source='../../IMG/Bt_FormaPagamento2.png')"/>
+		<mx:Button 
+			x="128" 
+			y="331" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_ImpCx" 
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/print.png')" 
+			downIcon="@Embed(source='../../IMG/print.png')" 
+			overIcon="@Embed(source='../../IMG/print2.png')"/>
+		<mx:Button 
+			x="203" 
+			y="331" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_FinOrcCx" 
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/Bt_FinalizaOrçamento.png')" 
+			downIcon="@Embed(source='../../IMG/Bt_FinalizaOrçamento.png')" 
+			overIcon="@Embed(source='../../IMG/Bt_FinalizaOrçamento2.png')"/>
+		<mx:Button 
+			x="274" 
+			y="332" 
+			width="19" 
+			cornerRadius="20" 
+			id="Bt_FinalizaCx" 
+			height="19" 
+			fillAlphas="[0.0, 0.0, 0.0, 0.0]" 
+			fillColors="[#01334C, #FFFFFF]" 
+			labelPlacement="bottom" 
+			fontSize="9" 
+			fontFamily="Arial" 
+			borderColor="#000000" 
+			color="#000000" 
+			icon="@Embed(source='../../IMG/bt_subtotal.png')" 
+			downIcon="@Embed(source='../../IMG/bt_subtotal.png')" 
+			overIcon="@Embed(source='../../IMG/bt_subtotal2.png')"/>
+		<mx:Image 
+		x="325" 
+		y="103" 
+		source="../IMG/CupomCaixa.png"/>
+		<mx:TextArea 
+			x="591.65" 
+			y="122.3" 
+			height="23.566666" 
+			width="72.33333" 
+			backgroundAlpha="0.0" 
+			color="#D01F1F" 
+			fontSize="14" 
+			borderStyle="none" 
+			id="Txa_NumCupomCx" 
+			text="00002" editable="false"/>
+		<mx:TextArea 
+			x="346" 
+			y="181.2" 
+			color="#262626" 
+			height="111.8" 
+			width="333" 
+			id="Txa_CupomCx" 
+			verticalScrollPolicy="on" editable="false"/>
+		<mx:TextArea 
+			x="391" 
+			y="292" 
+			height="15.5" 
+			width="275" 
+			backgroundAlpha="0.0" 
+			color="#1A9660" 
+			fontSize="10" 
+			borderStyle="none" 
+			id="Txa_CLiCupomCx" 
+			text="3Gsat Sistema ERP" editable="false"/>
+		<mx:TextInput 
+			x="327" 
+			width="354" 
+			height="67" 
+			borderColor="#D4D4D4" 
+			alpha="1.0" 
+			borderStyle="none" 
+			themeColor="#DA9026" 
+			backgroundColor="#01334C" y="318"/>
+		<mx:TextArea 
+			x="458" 
+			y="328" 
+			height="42.833336" 
+			width="208" 
+			backgroundAlpha="0.0" 
+			color="#FFFFFF" 
+			fontSize="40" 
+			borderStyle="none" 
+			id="Txa_SubtotalCx" 
+			text="900.000,00" 
+			fontFamily="Arial" 
+			textAlign="right" editable="false"/>
+		<mx:Label 
+			x="337" 
+			y="324.5" 
+			text="Sub-Total" 
+			color="#DCDCE0" 
+			fontSize="20"/>
+		<mx:Label 
+			x="418" 
+			y="353" 
+			text="R$" 
+			color="#C7C7C7" 
+			fontSize="18" 
+			fontWeight="bold"/>
+		<mx:Label 
+			x="110" 
+			y="367" 
+			text="Imprimir" 
+			color="#403A56"/>
+		
+		<mx:Label 
+			x="256" 
+			y="367" 
+			text="Finalizar" 
+			color="#403A56"/>
+		
+		
+		<mx:Label 
+			x="220" 
+			y="145.85" 
+			text="Cancelar" 
+			color="#403A56"/>
+		
+		<mx:Label 
+			x="148" 
+			y="145.85" 
+			text="Orçamento" 
+			color="#403A56"/>
+		<mx:Label 
+			x="283" 
+			y="146" 
+			text="Limpar" 
+			color="#403A56"/>
+		<mx:HRule 
+			y="42" 
+			left="27" 
+			right="27"/>
+		<mx:HRule 
+			y="309" 
+			left="27" 
+			right="27" 
+			strokeWidth="3"/>
+		
+		<mx:TextArea 
+			x="27" 
+			y="365" 
+			text="Forma de&#xa;Pagamento" 
+			color="#403A56" 
+			textAlign="center" 
+			width="74" 
+			height="33" 
+			borderStyle="none" 
+			backgroundAlpha="0.0" editable="false"/>
+		<mx:TextArea 
+			x="174" 
+			y="367" 
+			text="Finalizar&#xa;Orçamento" 
+			color="#403A56" 
+			textAlign="center" 
+			width="74" 
+			height="33" 
+			borderStyle="none" 
+			backgroundAlpha="0.0" editable="false"/>
+	</mx:TitleWindow>
+</mx:Canvas>
